@@ -2,7 +2,7 @@
  * created by chenletian on 16/5/21.
  */
 
-var pccontrollers = angular.module('PCControllers', [
+var PCControllers = angular.module('PCControllers', [
     'ngStorage',
     'PCServices'
 ]);
