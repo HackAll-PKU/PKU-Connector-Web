@@ -21,6 +21,10 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
         templateUrl: '/app/views/login.html',
         controller: 'loginController'
     }).
+    when('/talking', {
+        templateUrl: '/app/views/talking.html',
+        controller: 'talkingController'
+    }).
     when('/signup', {
         templateUrl: '/app/views/signup.html',
         controller: 'signupController'

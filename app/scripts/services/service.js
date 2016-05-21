@@ -27,7 +27,6 @@ PCServices.factory('Talking', ['$resource', function ($resource) {
         {
             'get': {method: 'GET'},
             'save': {method: 'POST'},
-            'remove': {method: 'DELETE'},
             'delete': {method: 'DELETE'},
             'query': {url: baseURL + '/talkings', method: 'GET'},
             'queryCount': {url: baseURL + '/talkings/new', method: 'GET'},
@@ -41,7 +40,6 @@ PCServices.factory('Comment', ['$resource', function ($resource) {
         {
             'get': {method: 'GET'},
             'save': {method: 'POST'},
-            'remove': {method: 'DELETE'},
             'delete': {method: 'DELETE'},
             'query': {url: baseURL + '/comment/t/:tid', method: 'GET'}
         });
@@ -50,12 +48,9 @@ PCServices.factory('Comment', ['$resource', function ($resource) {
 PCServices.factory('UserRelation', ['$resource', function ($resource) {
     return $resource(baseURL + '/follow/user/:uid', null,
         {
-            'get': {url: '/relation/user/:uid/me', method: 'GET'},
             'save': {method: 'POST'},
-            'follow': {method: 'POST'},
-            'remove': {method: 'DELETE'},
             'delete': {method: 'DELETE'},
-            'unfollow': {method: 'DELETE'},
+            'get': {url: baseURL + '/relation/user/:uid/me', method: 'GET'},
             'queryFollows': {url: baseURL + '/relation/user/:uid/follows', method: 'GET'},
             'queryFollowers': {url: baseURL + '/relation/user/:uid/followers', method: 'GET'},
             'maybeknow': {url: baseURL + '/relation/maybeknow', method: 'GET'}
@@ -65,12 +60,9 @@ PCServices.factory('UserRelation', ['$resource', function ($resource) {
 PCServices.factory('GroupRelation', ['$resource', function ($resource) {
     return $resource(baseURL + '/follow/group/:gid', null,
         {
-            'get': {url: '/relation/group/:uid/me', method: 'GET'},
             'save': {method: 'POST'},
-            'follow': {method: 'POST'},
-            'remove': {method: 'DELETE'},
             'delete': {method: 'DELETE'},
-            'unfollow': {method: 'DELETE'},
+            'get': {url: baseURL + '/relation/group/:gid/me', method: 'GET'},
             'queryFollowers': {url: baseURL + '/relation/group/:gid/followers', method: 'GET'}
         });
 }]);
@@ -78,11 +70,10 @@ PCServices.factory('GroupRelation', ['$resource', function ($resource) {
 PCServices.factory('Group', ['$resource', function ($resource) {
     return $resource(baseURL + '/group/:gid', null,
         {
-            'get': {url: '/relation/group/:uid/me', method: 'GET'},
             'save': {method: 'POST'},
-            'remove': {method: 'DELETE'},
             'delete': {method: 'DELETE'},
-            'update':{method: 'PUT'},
+            'update': {method: 'PUT'},
+            'get': {method: 'GET'},
             'query': {url: baseURL + '/group/suggest/name/:gname', method: 'GET'}
         });
 }]);
