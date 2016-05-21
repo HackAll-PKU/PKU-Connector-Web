@@ -1,36 +1,37 @@
 /**
- * Created by ChenLetian on 16/5/21.
+ * created by chenletian on 16/5/21.
  */
 
-var PCControllers = angular.module('PCControllers', [
+var pccontrollers = angular.module('PCControllers', [
     'ngStorage',
     'UserService'
-]);
-PCControllers.controller('indexController', ['$scope', function ($scope) {
+])
+.controller('indexController', ['$scope', function ($scope) {
     $scope.name = "index"
-}]);
-PCControllers.controller('loginController', ['$scope', 'User', '$localStorage', function ($scope, User, $localStorage) {
-    $scope.indicator = 'Welcome';
+}])
+.controller('loginController', ['$scope', '$location', 'User', function ($scope, $location, User) {
+    $scope.indicator = 'welcome';
     $scope.login = function() {
         uname = $scope.uname;
         password = $scope.password;
-        User.login(uname, password, function successCallback(response) {
-            $scope.indicator = 'OK';
-            $localStorage.token = response.data.token;
-        }, function errorCallback(response) {
-            $scope.indicator = 'Wrong';
+        User.login(uname, password, function successcallback(response) {
+            $scope.indicator = 'ok';
+            $location.path('/');
+        }, function errorcallback(response) {
+            $scope.indicator = response.data.msg;
         });
     };
-}]);
-PCControllers.controller('signupController', ['$scope', 'User', function ($scope, User) {
-    $scope.indicator = 'Welcome';
+}])
+.controller('signupController', ['$scope', '$location', 'User', function ($scope, $location, User) {
+    $scope.indicator = 'welcome';
     $scope.signup = function() {
         uname = $scope.uname;
         password = $scope.password;
         User.save({uname: uname, password: password}, function(response) {
-            $scope.indicator = 'OK!';
+            $scope.indicator = 'ok!';
+            $location.path('login');
         }, function () {
-            $scope.indicator = 'Failed!';
+            $scope.indicator = 'failed!';
         });
     };
 }]);

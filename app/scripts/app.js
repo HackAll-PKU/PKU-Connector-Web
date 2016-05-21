@@ -25,6 +25,10 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
         templateUrl: '/app/views/signup.html',
         controller: 'signupController'
     }).
+    when('/profile', {
+        templateUrl: '/app/views/profile.html',
+        controller: 'profileController'
+    }).
     otherwise({redirectTo: '/login'});
 
     $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
