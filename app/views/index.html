@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="PKU-Connector-Web">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>PKU Connector</title>
+  <meta name="description" content="a platform for PKUers">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="../bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="/app/styles/styles.css">
+  <script src="../bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+
+  <a href="#/">index</a>
+  <a href="#/login">login</a>
+  <a href="#/signup">signup</a>
+  <div ng-view></div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <script src="../scripts/controllers/mainControllers.js"></script>
+  <script src="../scripts/app.js"></script>
+  <script src="../scripts/controllers/test.js"></script>
+</body>
+</html>

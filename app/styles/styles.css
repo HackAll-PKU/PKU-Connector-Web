@@ -1,0 +1,551 @@
+/* global settings */
+body {
+    margin: 0;
+    padding: 0;
+    font: 14px Helvetica Neue, 方正楷体简体, 方正喵呜体, 方正综艺简体, Arial, sans-serif;
+    background-color: #0d3b6c;
+}
+
+.global_whole {
+    padding-top: 50px;
+    width: 100%;
+    background: url("../images/background.jpg") top center no-repeat;
+    background-size: auto auto;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+/* some classes that can be used  */
+div.center1000 {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+div.clear {
+    clear: both;
+}
+
+div.clear_fix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+a.no_decoration {
+    text-decoration: none;
+}
+
+a.always_black, a.always_black:hover, a.always_black:visited, a.always_black:active {
+    color: black;
+}
+
+a.always_white, a.always_white:hover, a.always_white:visited, a.always_white:active {
+    color: white;
+}
+
+a.always_inherit, a.always_inherit:hover, a.always_inherit:visited, a.always_inherit:active {
+    color: inherit;
+}
+
+.font-size12 {
+    font-size: 12px;
+}
+
+.font-size18 {
+    font-size: 18px;
+}
+
+.font-size25 {
+    font-size: 25px;
+}
+
+.background_dark_blue {
+    background-color: #071a37;
+}
+
+.color_light_gray {
+    color: #b0bdd0;
+}
+
+/* 导航栏 */
+.global_nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 48px;
+    width: 100%;
+    z-index: 9999;
+    padding: 0;
+    border-top: 2px solid #fa7d3c;
+    background-color: white;
+    display: block;
+}
+
+/* logo */
+.logo_large {
+    float: left;
+    height: 48px;
+}
+
+.logo_large h1 {
+    margin: 9px 0;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+/* 搜索框 */
+div.search {
+    float: left;
+    margin: 9px 0 9px 15px;
+    border: 1px solid #ccc;
+    width: 288px;
+    height: 28px;
+    position: relative;
+    background-color: #f2f2f5;
+    border-radius: 8px;
+}
+
+div.search span.placeholder, div.search input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 245px;
+    padding: 4px 33px 4px 10px;
+    height: 20px;
+    line-height: 20px;
+    background-color: transparent;
+    overflow: hidden;
+    color: #808080;
+    border: none;
+}
+
+input, textarea{
+    outline: none;
+}
+
+/* 导航的列表 */
+.global_nav .right_position {
+    float: right;
+}
+
+.global_nav div.nav_list {
+    float: left;
+    margin: 14px 20px 14px 0;
+    padding: 0 10px 0 0;
+    border-right: 1px solid #ccc;
+}
+
+ul.nav_list {
+    list-style: none;
+    float: left;
+}
+
+ul.nav_list li.horizontal, ul.nav_list li.vertical {
+    float: left;
+    margin-left: 30px;
+}
+
+ul.nav_list li.horizontal {
+    display: inline;
+}
+
+ul.nav_list li.vertical {
+    display: block;
+    color: white;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-size: 120%;
+}
+
+li.horizontal a, li.vertical a {
+    display: block;
+    padding: 5px 0 5px 10px;
+}
+
+li.vertical a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 主页面 */
+.global_main {
+    display: block;
+    background-color: rgba(8, 23, 44, 0.25);
+}
+
+/* 左栏 */
+.PC_left {
+    display: inline-block;
+    width: 150px;
+    margin-top: 10px;
+    float:left;
+    position: fixed;
+}
+
+/* 左栏中的导航栏 */
+.PC_left div.nav_list {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* 左栏中的分隔线 */
+.PC_left .border {
+    border-top: 1px solid #22456b;
+}
+
+/* 主内容页面 */
+.PC_main {
+    display: inline-block;
+    width: 600px;
+    margin: 10px 0 10px 150px;
+    float: left;
+}
+
+/* say_something */
+.say_something {
+    margin: 0 0 10px 0;
+    padding: 10px 10px 0 10px;
+    display: block;
+}
+
+.say_something div.title {
+    position: relative;
+    overflow: hidden;
+    height: 30px;
+    color: skyblue;
+}
+
+.say_something div.input {
+    padding: 5px;
+    margin: 0;
+    border: 1px solid #163156;
+    background-color: #0c2343;
+}
+
+.say_something div.input textarea {
+    background-color: transparent;
+    height: 80px;
+    width: 100%;
+    outline: none;
+    border: none;
+    overflow: hidden;
+    resize: none;
+}
+
+.say_something div.func_area {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.say_something div.func_area div.func_kind {
+    width: 380px;
+    display: block;
+    float: left;
+}
+
+.say_something div.func_area div.func_kind a {
+    display: inline;
+    float: left;
+    color: white;
+    padding: 10px 0;
+    margin: 10px 10px;
+}
+
+.say_something div.func_area a.submit {
+    display: inline;
+    float: right;
+    color: white;
+    width: 100px;
+    background-color: #ff8140;
+    padding: 10px 0;
+    margin: 10px 0;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/*  talking  */
+
+.talking_whole {
+
+}
+
+.talking {
+    margin-top: 10px;
+    padding: 20px 20px 4px 20px;
+}
+
+.talking div.thumb_image {
+    float: left;
+    width: 50px;
+}
+
+.talking div.thumb_image img {
+    border-radius: 50%;
+}
+
+.talking div.detail {
+    margin: 0 0 0 60px;
+    padding: 0;
+}
+
+.talking div.detail div.username {
+    margin-bottom: 7px;
+    padding: 5px 0 0 0;
+}
+
+.talking div.detail div.info {
+    margin-bottom: 2px;
+    color: #38547b;
+}
+
+.talking div.detail div.text {
+    margin-bottom: 2px;
+}
+
+/* 右栏 */
+.PC_right {
+    display: inline-block;
+    width: 230px;
+    margin: 10px 0 0 10px;
+    float: left;
+}
+
+/*  用户信息的小框  */
+.person_info_box {
+    margin: 0 0 10px 0;
+}
+
+.person_info_box .image_box {
+    height: 75px;
+    z-index: 1;
+    display: block;
+    position: relative;
+    background: url("../images/default_background.jpg") no-repeat;
+}
+
+.person_info_box .image_box .thumb_image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin-left: -30px;
+    padding: 3px;
+}
+
+.person_info_box .image_box .thumb_image img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+
+.person_info_box .inner_info_box {
+    padding: 16px 16px 9px 16px;
+}
+
+.person_info_box .inner_info_box .name_box {
+    height: 16px;
+    line-height: 16px;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.person_info_box .inner_info_box .name_box a {
+    max-width: 114px;
+    display: inline-block;
+    overflow: hidden;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+.person_info_box .inner_info_box .name_box a:hover {
+    color: #257cde;
+}
+
+.person_info_box .inner_info_box ul.user_attention {
+    overflow: hidden;
+    padding: 0;
+    width: 182px;
+    margin: 10px auto 0;
+}
+
+ul.user_attention li {
+    float: left;
+    width: 60px;
+    text-align: center;
+    border-right: solid 1px;
+    border-color: #162e4f;
+}
+
+ul.user_attention li:last-child {
+    border: 0;
+}
+
+ul.user_attention li a {
+    text-decoration: none;
+    display: block;
+}
+
+ul.user_attention li a:hover {
+    color: #257cde;
+}
+
+ul.user_attention li a strong {
+    display: block;
+    font-weight: bold;
+    width: 60px;
+    overflow: hidden;
+}
+
+ul.user_attention li a span {
+    display: block;
+    color: #38547b;
+    text-decoration: none;
+}
+
+/* U Maybe Know */
+.maybe_know {
+    width:230px;
+    position: relative;
+}
+
+.maybe_know .title_box {
+    border-bottom: solid 1px #122642;
+    position: relative;
+    height: 38px;
+    padding: 0 16px;
+    line-height: 38px;
+}
+
+.maybe_know .title_box h3 {
+    font-size: 150%;
+    font-weight: normal;
+    text-decoration: none;
+    margin: 0;
+}
+
+.maybe_know .inner_box {
+    padding: 0 16px;
+}
+
+.maybe_know .inner_box .one_friend {
+    margin: 10px 0;
+}
+
+.maybe_know .inner_box .one_friend .thumb_image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    float: left;
+}
+
+.maybe_know .inner_box .one_friend .thumb_image img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.maybe_know .inner_box .one_friend .detail {
+    float: left;
+    width: 140px;
+    margin: 0 0 0 10px;
+}
+
+.maybe_know .inner_box .one_friend .detail h5 {
+    font-size: 120%;
+    font-weight: normal;
+    text-decoration: none;
+    margin: 0;
+}
+
+.maybe_know .inner_box .one_friend .detail span.number {
+    font-size: 100%;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.maybe_know .inner_box .one_friend .detail span.words {
+    font-size: 100%;
+    font-weight: normal;
+    color: #38547b;
+    text-decoration: none;
+}
+
+/* 脚注 */
+.global_footer {
+    width: 100%;
+    text-align: center;
+    background-color: #041142;
+    clear: both;
+    margin: 10px auto 0;
+    padding: 10px 0;
+}
