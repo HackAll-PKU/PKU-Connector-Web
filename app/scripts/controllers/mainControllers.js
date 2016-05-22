@@ -35,38 +35,19 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
         });
     };
 }])
-.controller('talkingController', ['$scope', 'Talking', function ($scope, Talking) {
-    $scope.indicator = 'Welcome';
-    $scope.save = function() {
-        var text = $scope.text;
-        Talking.save({text: text}, function(response) {
-            $scope.indicator = 'OK!'+response;
-        }, function () {
-            $scope.indicator = 'Failed!';
-        });
-    };
-    $scope.get = function() {
-        var text = $scope.text;
-        Talking.get({tid: text}, function(response) {
-            $scope.indicator = 'OK!'+response.data.timestamp;
-        }, function () {
-            $scope.indicator = 'Failed!';
-        });
-    };
-    $scope.delete = function() {
-        var text = $scope.text;
-        Talking.delete({tid: text}, function(response) {
-            $scope.indicator = 'OK!';
-        }, function () {
-            $scope.indicator = 'Failed!';
-        });
-    };
-    $scope.query = function() {
-        var text = $scope.text;
-        Talking.query(function(response) {
-            $scope.indicator = 'OK!';
-        }, function () {
-            $scope.indicator = 'Failed!';
-        });
-    };
-}]);
+.controller('youMayBeKnowController', ['$scope', 'UserRelation', 'User'], function($scope, UserRelation, User) {
+    UserRelation.maybeknow(function (response) {
+        $scope.persons = response.data;
+        for (var person in $scope.persons) {
+            User.query(person.uid, function (res) {
+                person.nickname = res.data.nickname;
+                person.avatar = res.data.avatar;
+                person.gender = res.data.gender;
+                person.signature = res.data.signature;
+                User.query(person.mid, function (res) {
+                    person.midNickname = res.nickname;
+                });
+            });
+        }
+    });
+});
