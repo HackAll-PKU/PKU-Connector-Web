@@ -49,7 +49,7 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
                 }, error);
             },
             query: function(uid, success, error) {
-                $http.get(baseURL + '/user/:uid', {params: {uid: uid}}).then(success, error);
+                $http.get(baseURL + '/user/' + uid).then(success, error);
             },
             update: function(uid, data, success, error) {
                 $http.put(baseURL + '/user/' + uid, data).then(success, error);
