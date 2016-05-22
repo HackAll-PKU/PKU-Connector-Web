@@ -24,17 +24,7 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
         }
 
         function getUserFromToken() {
-            var user = $localStorage.user;
-            if (user) {
-                return user;
-            }
-            var token = $localStorage.token;
-            if (typeof token !== 'undefined') {
-                var encoded = token.split('.')[1];
-                user = JSON.parse(urlBase64Decode(encoded));
-                $localStorage.user = user;
-            }
-            return user;
+            return $localStorage.user;
         }
 
         return {
@@ -44,7 +34,8 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
             login: function(uname, password, success, error) {
                 $http.post(baseURL + '/authentication', {uname: uname, password: password}).then(function successHandler(response) {
                     $localStorage.token = response.data.token;
-                    $localStorage.user = getUserFromToken();
+                    var encoded = response.data.token.split('.')[1];
+                    $localStorage.user = JSON.parse(urlBase64Decode(encoded));
                     success();
                 }, error);
             },
