@@ -6,11 +6,32 @@ var PCControllers = angular.module('PCControllers', [
     'ngStorage',
     'PCServices'
 ]);
-PCControllers.controller('indexController', ['$scope', '$location', 'User', function ($scope, $location, User) {
+PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking', 
+    function ($scope, $location, User, Group, UserRelation, GroupRelation) {
     if(!User.getCurrentUser()) {
         $location.path('#/login');
         return;
     }
+    User.query(User.getCurrentUser().uid, function (res) {
+        $scope.me = res.data.data;
+        UserRelation.queryFollows({uid: $scope.me.uid}, function (res) {
+            $scope.me.follows = res.data.users.length + res.data.groups.length;
+            $scope.groups = res.data.groups;
+            function getGroupInfo(index) {
+                Group.get({gid: $scope.groups[index].gid}, function (res) {
+                    $scope.groups[index].gname = res.data.gname;
+                    $scope.groups[index].avatar = res.data.avatar;
+                });
+            }
+            for (var index in res.data.groups){
+                getGroupInfo(index);
+            }
+        });
+        UserRelation.queryFollowers({uid: $scope.me.uid}, function (res) {
+            $scope.me.followers = res.data.length;
+        });
+        $scope.me.talkings = 10;
+    });
     $scope.name = "index"
 }])
 .controller('loginController', ['$scope', '$location', 'User', function ($scope, $location, User) {

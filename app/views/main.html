@@ -4,10 +4,14 @@
     </div>
     <div class="global_main center1000 clear_fix">
         <div class="PC_left" ng-include="'./leftPanel.html'"></div>
-        <div class="PC_main" ng-include="'./wantToSaySomething.html'"></div>
-        <div class="PC_main" ng-include="'./talkings.html'"></div>
-        <div class="PC_right" ng-include="'./personInfoBox.html'"></div>
-        <div class="PC_right" ng-include="'./youMayBeKnow.html'"></div>
+        <div class="PC_main">
+            <ng-include src="'./wantToSaySomething.html'"></ng-include>
+            <ng-include src="'./talkings.html'"></ng-include>
+        </div>
+        <div class="PC_right">
+            <ng-include src="'./personInfoBox.html'"></ng-include>
+            <ng-include src="'./youMayBeKnow.html'"></ng-include>
+        </div>
     </div>
     <div class="global_footer" ng-include="'./footer.html'"></div>
 </div>

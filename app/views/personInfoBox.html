@@ -1,1 +1,51 @@
-<p>here is personInfoBox</p>
+<div class="person_info_box background_dark_blue" ng-controller="indexController">
+    <div class="image_box">
+        <div class="thumb_image">
+            <a ng-href="#/user/{{me.uid}}"><img ng-src="../{{me.avatar}}"></a>
+        </div>
+    </div>
+    <div class="inner_info_box">
+        <div class="name_box">
+            <a class="color_light_gray font-size18" ng-href="#/user/{{me.uid}}">{{me.nickname}}</a>
+        </div>
+        <ul class="user_attention font-size18">
+            <li>
+                <a class="color_light_gray" href="/">
+                    <strong>{{me.follows}}</strong><span class="font-size12">关注</span>
+                </a>
+            </li>
+            <li>
+                <a class="color_light_gray" href="/">
+                    <strong>{{me.followers}}</strong><span class="font-size12">粉丝</span>
+                </a>
+            </li>
+            <li>
+                <a class="color_light_gray" href="/">
+                    <strong>{{me.talkings}}</strong><span class="font-size12">说说</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--
+div.person_info_box.background_dark_blue
+    div.image_box
+        div.thumb_image
+            img(src="../images/default_avatar.jpg")
+    div.inner_info_box
+        div.name_box
+            a(href="/").color_light_gray.font-size18= username
+        ul.user_attention.font-size18
+            li
+                a.color_light_gray(href="/")
+                    strong 68
+                    span.font-size12 关注
+            li
+                a.color_light_gray(href="/")
+                    strong 11
+                    span.font-size12 关注者
+            li
+                a.color_light_gray(href="/")
+                    strong 19
+                    span.font-size12 说说
+>
