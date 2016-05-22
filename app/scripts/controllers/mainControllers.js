@@ -34,9 +34,8 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
             $scope.indicator = 'failed!';
         });
     };
-}]);
-
-PCControllers.controller('talkingController', ['$scope', 'Talking', function ($scope, Talking) {
+}])
+.controller('talkingController', ['$scope', 'Talking', function ($scope, Talking) {
     $scope.indicator = 'Welcome';
     $scope.save = function() {
         var text = $scope.text;
