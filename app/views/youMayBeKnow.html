@@ -4,6 +4,18 @@
         <h3 class="color_light_gray">U maybe know...</h3>
     </div>
     <div class="inner_box clear_fix">
-        <!--toDo-->
+       <div ng-repeat='person in persons'>
+           <div class="one_friend clear_fix">
+               <div class="thumb_image">
+                  <img ng-src="../images/default_avatar.jpg">
+               </div>
+           </div>
+       </div>
     </div>
 </div>
+<!--
+.detail
+h5.color_light_gray= person.username
+span.number.color_light_gray= person.numberOfCommmonFriends
+span.words  common friends
+-->
