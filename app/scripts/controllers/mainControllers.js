@@ -123,7 +123,7 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', func
             $scope.contents = newRows.concat($scope.contents);
             $scope.hasNew = false;
         });
-        lastCheckTime = new Date().toLocaleTimeString();
+        lastCheckTime = new Date().toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ").replace(/ GMT\+8 /g, "");
     };
 
     $scope.getNextPageContents();
@@ -139,4 +139,13 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', func
     $scope.$on("$destroy", function() {
         $interval.cancel(interval);
     });
+
+    $scope.submit = function () {
+        Talking.save({text: $scope.text},function () {
+            alert('您的说说发布成功!');
+        },function () {
+            alert('您的说说发布失败!');
+        });
+    };
+
 }]);
