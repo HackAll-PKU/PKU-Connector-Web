@@ -6,7 +6,11 @@ var PCControllers = angular.module('PCControllers', [
     'ngStorage',
     'PCServices'
 ]);
-PCControllers.controller('indexController', ['$scope', function ($scope) {
+PCControllers.controller('indexController', ['$scope', '$location', 'User', function ($scope, $location, User) {
+    if(!User.getCurrentUser()) {
+        $location.path('#/login');
+        return;
+    }
     $scope.name = "index"
 }])
 .controller('loginController', ['$scope', '$location', 'User', function ($scope, $location, User) {
@@ -62,6 +66,8 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
     });
 }])
 .controller('youMayBeKnowController', ['$scope', 'UserRelation', 'User', function ($scope, UserRelation, User) {
+    if (!User.getCurrentUser()) return;
+
     UserRelation.maybeknow(function (response) {
         $scope.persons = response.data;
         function getUserInfo(index) {
@@ -77,6 +83,8 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
     });
 }])
 .controller('homepageTalkingsController', ['$scope', 'Talking', 'User', '$interval', function ($scope, Talking, User, $interval) {
+    if (!User.getCurrentUser()) return;
+
     var lastCheckTime;
     var currentPage = 0;
     var pages = 0;
@@ -120,11 +128,15 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
 
     $scope.getNextPageContents();
 
-    $interval(function () {
+    var interval = $interval(function () {
         Talking.queryCount({after: lastCheckTime}, function (response) {
             $scope.newCount = response.data;
             $scope.hasNew = $scope.newCount > 0;
         });
     }, 10 * 1000
     );
+
+    $scope.$on("$destroy", function() {
+        $interval.cancel(interval);
+    });
 }]);
