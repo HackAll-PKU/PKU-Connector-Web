@@ -13,11 +13,11 @@ describe('indexController', function() {
 });
 
 describe('loginController', function() {
-    var scope, controller, $httpBackend, storage, location;
+    var scope, controller, $httpBackend, storage, location, user;
 
     beforeEach(module('PCControllers'));
 
-    beforeEach(inject(function($controller, $localStorage, $rootScope, _$httpBackend_, $location) {
+    beforeEach(inject(function($controller, $localStorage, $rootScope, _$httpBackend_, $location, User) {
         $httpBackend = _$httpBackend_;
         $httpBackend.expectPOST('http://pikkacho.cn/api/v1/authentication').respond({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmFtZSI6ImNsdCIsInVpZCI6NCwiaWF0IjoxNDYzODUwNjIxLCJleHAiOjE0NjQwMjM0MjF9.n22c1SBeeLsFl6-5Vqv03mDe8bX3VkdwBnY9q3wcl8c'});
         scope = $rootScope.$new();
@@ -26,6 +26,7 @@ describe('loginController', function() {
         storage.token = undefined;
         storage.user = undefined;
         location = $location;
+        user = User;
     }));
 
     it('should store token and user info', function() {
@@ -41,6 +42,8 @@ describe('loginController', function() {
         expect(storage.user.uname).toEqual("clt");
         expect(storage.user.uid).toEqual(4);
         expect(location.path()).toBe('/');
+        expect(user.getCurrentUser().uname).toEqual("clt");
+        expect(user.getCurrentUser().uid).toEqual(4);
     });
 });
 
