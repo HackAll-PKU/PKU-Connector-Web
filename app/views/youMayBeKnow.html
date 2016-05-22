@@ -1,4 +1,5 @@
 <!---U may be know小模块-->
+<div ng-controller='youMayBeKnowController'>
 <div class="maybe_know background_dark_blue">
     <div claas="title_box">
         <h3 class="color_light_gray">U maybe know...</h3>
@@ -6,12 +7,19 @@
     <div class="inner_box clear_fix">
        <div ng-repeat='person in persons'>
            <div class="one_friend clear_fix">
-               <div class="thumb_image">
-                  <img ng-src="../images/default_avatar.jpg">
-               </div>
+               <a href ="{{person.uid}}" class="thumb_image">
+                      <img ng-src="{{person.avatar}}">
+                   <div class="detail">
+                       <h5 class="color_light_gray">{{person.nickname}}</h5>
+                       <span class="number color_light_gray">{{person.cnt}}</span>
+                       <span class="words">common friends</span>
+                   </div>
+               </a>
+
            </div>
        </div>
     </div>
+</div>
 </div>
 <!--
 .detail
