@@ -52,7 +52,7 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
                 $http.get(baseURL + '/user/:uid', {params: {uid: uid}}).then(success, error);
             },
             update: function(uid, data, success, error) {
-                $http.put(baseURL + '/user/:uid', data, {params: {uid: uid}}).then(success, error);
+                $http.put(baseURL + '/user/' + uid, data).then(success, error);
             },
             getCurrentUser: function() {
                 return getUserFromToken();

@@ -72,3 +72,24 @@ describe('signupController', function() {
     });
 
 });
+
+describe('UserService', function() {
+    var $httpBackend, user;
+
+    beforeEach(module('PCServices'));
+
+    beforeEach(inject(function(User, _$httpBackend_) {
+        $httpBackend = _$httpBackend_;
+        $httpBackend.expectPUT('http://pikkacho.cn/api/v1/user/4').respond({msg: "OK"});
+        user = User;
+    }));
+
+    it('should update user\'s profile', function () {
+        user.update(4, {uname: "clt"}, function(response){
+            expect(response.data.msg).toBe("OK");
+        }, function() {
+
+        });
+        $httpBackend.flush();
+    });
+});
