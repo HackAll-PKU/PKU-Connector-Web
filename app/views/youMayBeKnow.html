@@ -7,12 +7,15 @@
     <div class="inner_box clear_fix">
        <div ng-repeat='person in persons'>
            <div class="one_friend clear_fix">
-               <a href ="{{person.uid}}" class="thumb_image">
-                      <img ng-src="{{person.avatar}}">
+               <a href ="#/user/{{person.uid}}" class="thumb_image">
+                      <img ng-src="../{{person.avatar}}">
                    <div class="detail">
                        <h5 class="color_light_gray">{{person.nickname}}</h5>
+                       <span class="words">你关注的</span>
+                       <a href ="#/user/{{person.mid}}" class="word">{{person.midNick}}</a>
+                       <span class="words">等</span>
                        <span class="number color_light_gray">{{person.cnt}}</span>
-                       <span class="words">common friends</span>
+                       <span class="words">个好友也关注了Ta</span>
                    </div>
                </a>
 

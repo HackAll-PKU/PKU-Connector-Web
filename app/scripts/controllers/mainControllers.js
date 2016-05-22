@@ -35,19 +35,18 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
         });
     };
 }])
-.controller('youMayBeKnowController', ['$scope', 'UserRelation', 'User'], function($scope, UserRelation, User) {
+.controller('youMayBeKnowController', ['$scope', 'UserRelation', 'User', function ($scope, UserRelation, User) {
     UserRelation.maybeknow(function (response) {
         $scope.persons = response.data;
-        for (var person in $scope.persons) {
-            User.query(person.uid, function (res) {
-                person.nickname = res.data.nickname;
-                person.avatar = res.data.avatar;
-                person.gender = res.data.gender;
-                person.signature = res.data.signature;
-                User.query(person.mid, function (res) {
-                    person.midNickname = res.nickname;
+        function getUserInfo(index) {
+            User.query($scope.persons[index].uid, function (res) {
+                $scope.persons[index].nickname = res.data.data.nickname;
+                $scope.persons[index].avatar = res.data.data.avatar;
+                User.query($scope.persons[index].mid, function (res2) {
+                    $scope.persons[index].midNick = res2.data.data.nickname;
                 });
             });
         }
+        for (var index in $scope.persons) getUserInfo(index);
     });
-});
+}]);
