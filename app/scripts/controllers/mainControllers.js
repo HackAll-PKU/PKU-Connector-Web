@@ -76,7 +76,7 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
         for (var index in $scope.persons) getUserInfo(index);
     });
 }])
-.controller('homepageTalkingsController', ['$scope', 'Talking', 'User', function ($scope, Talking, User) {
+.controller('homepageTalkingsController', ['$scope', 'Talking', 'User', '$interval', function ($scope, Talking, User, $interval) {
     var lastCheckTime;
     var currentPage = 0;
     var pages = 0;
@@ -87,6 +87,7 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
     $scope.newCount = 0;
 
     function getUserInfo(Array, index) {
+        Array[index].timestamp = new Date(Array[index].timestamp).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ").replace(/ GMT\+8 /g, "");
         User.query(Array[index].user_uid, function (res) {
             Array[index].user_nickname = res.data.data.nickname;
             Array[index].user_avatar = res.data.data.avatar;
@@ -95,7 +96,7 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
 
     $scope.getNextPageContents = function () {
         ++currentPage;
-        if (currentPage == 1) lastCheckTime = new Date().toLocaleTimeString();
+        if (currentPage == 1) lastCheckTime = new Date().toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ").replace(/ GMT\+8 /g, "");
 
         Talking.query((currentPage == 1) ? null : {page: currentPage}, function (response) {
             var newRows = response.data.rows;
@@ -107,24 +108,23 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
 
     };
 
-    function checkNew() {
-        Talking.queryCount({after: lastCheckTime}, function (response) {
-            $scope.newCount = response.data;
-            $scope.hasNew = $scope.newCount > 0;
-        });
-    }
-
     $scope.getNewContents = function () {
         Talking.query({after: lastCheckTime}, function (response) {
             var newRows = response.data.rows;
             for (var index in newRows) getUserInfo(newRows, index);
             $scope.contents = newRows.concat($scope.contents);
-            checkNew();
+            $scope.hasNew = false;
         });
         lastCheckTime = new Date().toLocaleTimeString();
     };
 
     $scope.getNextPageContents();
-    setInterval("checkNew()", 30*1000);
 
+    $interval(function () {
+        Talking.queryCount({after: lastCheckTime}, function (response) {
+            $scope.newCount = response.data;
+            $scope.hasNew = $scope.newCount > 0;
+        });
+    }, 10 * 1000
+    );
 }]);

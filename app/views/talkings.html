@@ -1,1 +1,23 @@
-<p>here is talkings</p>
+<div class="talking_whole" ng-controller="homepageTalkingsController">
+    <div ng-show="hasNew">
+        <button ng-click="getNewContents()">有{{newCount}}条新说说,点击查看</button>
+    </div>
+
+    <div class="talking background_dark_blue" ng-repeat="talking in contents">
+        <div class="thumb_image">
+            <a ng-href ="#/user/{{talking.user_uid}}"><img ng-src="../{{talking.user_avatar}}"></a>
+        </div>
+        <div class="detail">
+            <div class="username color_light_gray">
+                <a class="no_decoration always_inherit" ng-href ="#/user/{{talking.user_uid}}">{{talking.user_nickname}}</a>
+            </div>
+            <div class="info font-size12">{{talking.timestamp}}</div>
+            <div class="text color_light_gray">{{talking.text}}</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div ng-show="hasNextPage">
+        <button ng-click="getNextPageContents()">下一页</button>
+    </div>
+</div>
