@@ -22,18 +22,44 @@ PCControllers.controller('indexController', ['$scope', function ($scope) {
         });
     };
 }])
-.controller('signupController', ['$scope', '$location', 'User', function ($scope, $location, User) {
-    $scope.indicator = 'welcome';
+.controller('signupController', ['$scope', '$location', 'User' , '$timeout', function ($scope, $location, User, $timeout) {
+    $scope.indicator = 'Sign Up';
+    $scope.loading = false;
+    $scope.failed = false;
     $scope.signup = function() {
+        $scope.loading = true;
         uname = $scope.uname;
         password = $scope.password;
-        User.save({uname: uname, password: password}, function(response) {
-            $scope.indicator = 'ok!';
-            $location.path('login');
-        }, function () {
-            $scope.indicator = 'failed!';
+        nickname = $scope.nickname;
+        signature = $scope.signature;
+        enrollmentYear = $scope.enrollmentYear;
+        User.save({uname: uname, password: password, nickname: nickname, signature: signature, enrollmentYear: enrollmentYear}, function(response) {
+            $scope.indicator = '注册成功! 正在跳转.';
+            $timeout(function () {
+                $scope.indicator = '注册成功! 正在跳转..';
+            }, 500);
+            $timeout(function () {
+                $scope.indicator = '注册成功! 正在跳转...';
+            }, 1000);
+            $timeout(function () {
+                $location.path('login');
+            }, 1500);
+            $scope.loading = false;
+        }, function (response) {
+            $scope.indicator = '注册失败' + response.data.msg;
+            $scope.failed = true;
+            $timeout(function () {
+                $scope.indicator = 'Sign Up';
+                $scope.failed = false;
+            }, 2000);
+            $scope.loading = false;
         });
     };
+    $scope.$watch('uname', function(newValue, oldValue, scope) {
+        if (scope.nickname == oldValue) {
+            scope.nickname = newValue;
+        }
+    });
 }])
 .controller('youMayBeKnowController', ['$scope', 'UserRelation', 'User', function ($scope, UserRelation, User) {
     UserRelation.maybeknow(function (response) {

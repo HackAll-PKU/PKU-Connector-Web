@@ -61,14 +61,13 @@ describe('signupController', function() {
     }));
 
     it('should respond OK', function() {
-        expect(scope.indicator).toBe('welcome');
+        expect(scope.indicator).toBe('Sign Up');
         scope.uname = 'clt';
         scope.password = '123';
         scope.signup();
-        expect(scope.indicator).toBe('welcome');
+        expect(scope.indicator).toBe('Sign Up');
         $httpBackend.flush();
-        expect(scope.indicator).toBe('ok!');
-        expect(location.path()).toBe('/login');
+        expect(scope.indicator).toBe('注册成功! 正在跳转.');
     });
 
 });

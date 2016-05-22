@@ -1,4 +1,46 @@
-<input ng-model="uname" type="text" required>
-<input ng-model="password" type="password" required>
-<button ng-click="signup()"></button>
-<p>{{indicator}}</p>
+<div id="signup_whole">
+    <section>
+        <h1>Sign up for PKU Connector</h1>
+        <h2>Start your PKU Life</h2>
+        <div id="signup_box">
+            <form name="signupForm">
+                <div class="field">
+                    <div class="instruction_box"><label>用户名</label></div>
+                    <input name="uname" ng-model="uname" type="text" placeholder="Your Username" required>
+                    <span class="error_icon" ng-hide="signupForm.uname.$valid || signupForm.uname.$pristine"></span>
+                    <span class="ok_icon" ng-show="signupForm.uname.$valid && signupForm.uname.$dirty"></span>
+                </div>
+                <div class="field">
+                    <div class="instruction_box"><label>密码</label></div>
+                    <input name="password" ng-model="password" type="password" ng-minlength="7" placeholder="Your Password (at least 7 characters)" required>
+                    <span class="error_icon" ng-hide="signupForm.password.$valid || signupForm.password.$pristine"></span>
+                    <span class="ok_icon" ng-show="signupForm.password.$valid && signupForm.password.$dirty"></span>
+                </div>
+                <div class="field">
+                    <div class="instruction_box"><label>昵称</label></div>
+                    <input name="nickname" ng-model="nickname" type="text" placeholder="Your Nickname">
+                    <span class="error_icon" ng-hide="signupForm.nickname.$valid || signupForm.nickname.$pristine"></span>
+                    <span class="ok_icon" ng-show="signupForm.nickname.$valid && signupForm.uname.$dirty"></span>
+                </div>
+                <div class="field">
+                    <div class="instruction_box"><label>个性签名</label></div>
+                    <input name="signature" ng-model="signature" type="text" placeholder="Your Signature">
+                    <span class="error_icon" ng-hide="signupForm.signature.$valid || singupForm.signature.$pristine"></span>
+                    <span class="ok_icon" ng-show="signupForm.signature.$valid && signupForm.signature.$dirty"></span>
+                </div>
+                <div class="field">
+                    <div class="instruction_box"><label>入学年份</label></div>
+                    <input name="enrollmentYear" ng-model="enrollmentYear" min="2010" max="2017" type="number" placeholder="入学年份">
+                    <span class="error_icon" ng-hide="signupForm.enrollmentYear.$valid || singupForm.enrollmentYear.$pristine"></span>
+                    <span class="ok_icon" ng-show="signupForm.enrollmentYear.$valid && signupForm.enrollmentYear.$dirty"></span>
+                </div>
+                <div class="clear"></div>
+            </form>
+            <button ng-click="signup()" ng-disabled="!signupForm.$valid" ng-class="{disabled: !signupForm.$valid, red: failed}">
+                <p ng-hide="loading">{{indicator}}</p>
+                <div class="round_circle round_circle_large round_circle_green" ng-show="loading"></div>
+            </button>
+        </div>
+        <span class="already">Already have an account? <a href="#/login">login</a> </span>
+    </section>
+</div>
