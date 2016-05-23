@@ -9,7 +9,7 @@
                 <a href="#/user/{{person.uid}}"><img ng-src="../{{person.avatar}}"></a>
             </div>
             <div class="detail">
-                <h5 class="color_light_gray">{{person.nickname}}</h5>
+                <a class="no_decoration always_white" href="#/user/{{person.uid}}"><h5>{{person.nickname}}</h5></a>
                 <span class="words">你关注的</span>
                 <a class="no_decoration always_white" ng-href="#/user/{{person.mid}}">{{person.midNick}}</a>
                        <span ng-show="person.cnt > 1">

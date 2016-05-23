@@ -1,6 +1,10 @@
 <div class="talking_whole" ng-controller="homepageTalkingsController">
+
     <div ng-show="hasNew">
-        <button ng-click="getNewContents()">有{{newCount}}条新说说,点击查看</button>
+        <a href="" class="no_decoration color_orange" ng-click="getNewContents()">
+            <div class="notice background_light_yellow">有{{newCount}}条新说说，点击查看</div>
+        </a>
+        <div class="clear"></div>
     </div>
 
     <div class="talking background_dark_blue" ng-repeat="talking in contents">
@@ -18,6 +22,9 @@
     </div>
 
     <div ng-show="hasNextPage">
-        <button ng-click="getNextPageContents()">下一页</button>
+        <a href="" class="no_decoration color_black" ng-click="getNextPageContents()">
+            <div class="notice background_white">点击加载下一页</div>
+        </a>
+        <div class="clear"></div>
     </div>
 </div>

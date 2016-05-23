@@ -184,7 +184,7 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
     $scope.submit = function () {
         Talking.save({text: $scope.text},function () {
             alert('您的说说发布成功!');
-        },function () {
+        },function (res) {
             alert('您的说说发布失败!');
         });
     };

@@ -124,6 +124,14 @@ a.always_inherit, a.always_inherit:hover, a.always_inherit:visited, a.always_inh
     background-color: #071a37;
 }
 
+.background_light_yellow {
+    background-color: #fff8bf;
+}
+
+.background_white {
+    background-color: #FFF;
+}
+
 .color_light_gray {
     color: #b0bdd0;
 }
@@ -333,37 +341,56 @@ li.vertical a:hover {
 
 }
 
-.talking {
+.talking_whole .talking {
     margin-top: 10px;
     padding: 20px 20px 4px 20px;
+    border-radius: 2px;
 }
 
-.talking div.thumb_image {
+.talking_whole .talking div.thumb_image {
     float: left;
     width: 50px;
 }
 
-.talking div.thumb_image img {
+.talking_whole .talking div.thumb_image img {
     border-radius: 50%;
 }
 
-.talking div.detail {
+.talking_whole .talking div.detail {
     margin: 0 0 0 60px;
     padding: 0;
 }
 
-.talking div.detail div.username {
+.talking_whole .talking div.detail div.username {
     margin-bottom: 7px;
     padding: 5px 0 0 0;
 }
 
-.talking div.detail div.info {
+.talking_whole .talking div.detail div.info {
     margin-bottom: 2px;
     color: #38547b;
 }
 
-.talking div.detail div.text {
+.talking_whole .talking div.detail div.text {
     margin-bottom: 2px;
+}
+
+.talking_whole div.notice{
+    margin-top: 10px;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.talking_whole a.color_orange{
+    color: #eb7350;
+}
+
+.talking_whole a.color_black{
+    color: #333;
 }
 
 /* 右栏 */
