@@ -31,9 +31,12 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
                 $http.put(baseURL + '/user/' + uid, data).then(success, error);
             },
             getCurrentUser: function() {
-                if (new Date().getTime() > $localStorage.tokenInfo.expireTime)
-                    return undefined;
-                return $localStorage.user;
+                var storedUser = $localStorage.user;
+                if (storedUser) {
+                    if (new Date().getTime() <= $localStorage.tokenInfo.expireTime)
+                        return storedUser;
+                }
+                return undefined;
             }
         }
     }]);

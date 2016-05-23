@@ -41,8 +41,6 @@ describe('loginController', function() {
         expect(storage.user.uname).toEqual("clt");
         expect(storage.user.uid).toEqual('4');
         expect(location.path()).toBe('/');
-        expect(user.getCurrentUser().uname).toEqual("clt");
-        expect(user.getCurrentUser().uid).toEqual('4');
     });
 });
 
