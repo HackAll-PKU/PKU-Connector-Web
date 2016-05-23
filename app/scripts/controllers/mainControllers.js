@@ -30,7 +30,9 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
         UserRelation.queryFollowers({uid: $scope.me.uid}, function (res) {
             $scope.me.followers = res.data.length;
         });
-        $scope.me.talkings = 10;
+        Talking.userCountGet({uid: $scope.me.uid}, function (res) {
+            $scope.me.talkings = res.data;
+        });
     });
     $scope.name = "index"
 }])
