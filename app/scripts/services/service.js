@@ -6,10 +6,6 @@ var PCServices = angular.module('PCServices', ['ngStorage', 'ngResource']);
 
 PCServices.factory('User', ['$http', '$localStorage', function ($http, $localStorage) {
 
-        function getUserFromToken() {
-            return $localStorage.user;
-        }
-
         return {
             save: function(data, success, error) {
                 $http.post(baseURL + '/user', data).then(success, error);
@@ -19,7 +15,11 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
                     $localStorage.token = response.data.token;
                     $localStorage.user = {
                         uid: response.data.uid,
-                        uname: uname
+                        uname: response.data.uname
+                    };
+                    $localStorage.tokenInfo = {
+                        signTime: response.data.iat * 1000,
+                        expireTime: response.data.exp * 1000
                     };
                     success();
                 }, error);
@@ -31,7 +31,9 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
                 $http.put(baseURL + '/user/' + uid, data).then(success, error);
             },
             getCurrentUser: function() {
-                return getUserFromToken();
+                if (new Date().getTime() > $localStorage.tokenInfo.expireTime)
+                    return undefined;
+                return $localStorage.user;
             }
         }
     }]);
