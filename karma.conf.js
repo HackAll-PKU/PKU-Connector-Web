@@ -9,6 +9,7 @@ module.exports = function(config){
         'app/bower_components/angular-mocks/angular-mocks.js',
         'app/bower_components/ngstorage/ngStorage.js',
         'app/bower_components/angular-resource/angular-resource.js',
+        'app/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
         'app/scripts/app.js',
         'app/scripts/controllers/*.js',
         'app/scripts/services/*.js',
