@@ -6,23 +6,6 @@ var PCServices = angular.module('PCServices', ['ngStorage', 'ngResource']);
 
 PCServices.factory('User', ['$http', '$localStorage', function ($http, $localStorage) {
 
-        function urlBase64Decode(str) {
-            var output = str.replace('-', '+').replace('_', '/');
-            switch (output.length % 4) {
-                case 0:
-                    break;
-                case 2:
-                    output += '==';
-                    break;
-                case 3:
-                    output += '=';
-                    break;
-                default:
-                    throw 'Illegal base64url string!';
-            }
-            return window.atob(output);
-        }
-
         function getUserFromToken() {
             return $localStorage.user;
         }
@@ -34,8 +17,10 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
             login: function(uname, password, success, error) {
                 $http.post(baseURL + '/authentication', {uname: uname, password: password}).then(function successHandler(response) {
                     $localStorage.token = response.data.token;
-                    var encoded = response.data.token.split('.')[1];
-                    $localStorage.user = JSON.parse(urlBase64Decode(encoded));
+                    $localStorage.user = {
+                        uid: response.data.uid,
+                        uname: uname
+                    };
                     success();
                 }, error);
             },
