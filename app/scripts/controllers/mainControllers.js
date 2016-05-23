@@ -7,7 +7,7 @@ var PCControllers = angular.module('PCControllers', [
     'PCServices'
 ]);
 PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking', 
-    function ($scope, $location, User, Group, UserRelation, GroupRelation) {
+    function ($scope, $location, User, Group, UserRelation, GroupRelation, Talking) {
     if(!User.getCurrentUser()) {
         $location.path('#/login');
         return;
