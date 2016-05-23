@@ -32,7 +32,7 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
             },
             getCurrentUser: function() {
                 var storedUser = $localStorage.user;
-                if (storedUser) {
+                if (storedUser && $localStorage.tokenInfo) {
                     if (new Date().getTime() <= $localStorage.tokenInfo.expireTime)
                         return storedUser;
                 }

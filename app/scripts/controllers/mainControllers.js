@@ -106,7 +106,7 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
 .controller('homepageTalkingsController', ['$scope', 'Talking', 'User', '$interval', function ($scope, Talking, User, $interval) {
     if (!User.getCurrentUser()) return;
 
-    var lastCheckTime;
+    var lastUpdateTime;
     var currentPage = 0;
     var pages = 0;
 
@@ -115,8 +115,26 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
     $scope.hasNew = false;
     $scope.newCount = 0;
 
+    Date.prototype.format = function(fmt) {
+        var o = {
+            "M+" : this.getMonth()+1,                 //月份
+            "d+" : this.getDate(),                    //日
+            "h+" : this.getHours(),                   //小时
+            "m+" : this.getMinutes(),                 //分
+            "s+" : this.getSeconds(),                 //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S"  : this.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    };
+
     function getUserInfo(Array, index) {
-        Array[index].timestamp = new Date(Array[index].timestamp).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ").replace(/ GMT\+8 /g, "");
+        Array[index].timestamp = new Date(Array[index].timestamp).format("yyyy-MM-dd hh:mm:ss");
         User.query(Array[index].user_uid, function (res) {
             Array[index].user_nickname = res.data.data.nickname;
             Array[index].user_avatar = res.data.data.avatar;
@@ -125,7 +143,7 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
 
     $scope.getNextPageContents = function () {
         ++currentPage;
-        if (currentPage == 1) lastCheckTime = new Date().toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ").replace(/ GMT\+8 /g, "");
+        if (currentPage == 1) lastUpdateTime = Math.round(new Date().getTime() / 1000);
 
         Talking.query((currentPage == 1) ? null : {page: currentPage}, function (response) {
             var newRows = response.data.rows;
@@ -138,19 +156,19 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
     };
 
     $scope.getNewContents = function () {
-        Talking.query({after: lastCheckTime}, function (response) {
+        Talking.query({after: lastUpdateTime}, function (response) {
             var newRows = response.data.rows;
             for (var index in newRows) getUserInfo(newRows, index);
             $scope.contents = newRows.concat($scope.contents);
             $scope.hasNew = false;
         });
-        lastCheckTime = new Date().toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ").replace(/ GMT\+8 /g, "");
+        lastUpdateTime = Math.round(new Date().getTime() / 1000);
     };
 
     $scope.getNextPageContents();
 
     var interval = $interval(function () {
-        Talking.queryCount({after: lastCheckTime}, function (response) {
+        Talking.queryCount({after: lastUpdateTime}, function (response) {
             $scope.newCount = response.data;
             $scope.hasNew = $scope.newCount > 0;
         });
