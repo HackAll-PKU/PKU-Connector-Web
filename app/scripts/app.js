@@ -45,9 +45,6 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
                 return config;
             },
             'responseError': function(response) {
-                if(response.status === 401 || response.status === 403) {
-                    $location.path('#/login');
-                }
                 return $q.reject(response);
             }
         };

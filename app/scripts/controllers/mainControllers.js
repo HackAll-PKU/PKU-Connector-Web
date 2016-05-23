@@ -36,16 +36,34 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
     });
     $scope.name = "index"
 }])
-.controller('loginController', ['$scope', '$location', 'User', function ($scope, $location, User) {
-    $scope.indicator = 'welcome';
+.controller('loginController', ['$scope', '$location', 'User', '$timeout', function ($scope, $location, User, $timeout) {
+    $scope.indicator = 'Log in';
+    $scope.loading = false;
+    $scope.failed = false;
     $scope.login = function() {
         uname = $scope.uname;
         password = $scope.password;
-        User.login(uname, password, function successcallback(response) {
-            $scope.indicator = 'ok';
-            $location.path('/');
-        }, function errorcallback(response) {
-            $scope.indicator = response.data.msg;
+        $scope.loading = true;
+        User.login(uname, password, function successCallback(response) {
+            $scope.indicator = '登陆成功! 正在跳转.';
+            $timeout(function () {
+                $scope.indicator = '登陆成功! 正在跳转..';
+            }, 500);
+            $timeout(function () {
+                $scope.indicator = '登陆成功! 正在跳转...';
+            }, 1000);
+            $timeout(function () {
+                $location.path('/');
+            }, 1500);
+            $scope.loading = false;
+        }, function errorCallback(response) {
+            $scope.indicator = '登陆失败,' + response.data.msg;
+            $scope.failed = true;
+            $timeout(function () {
+                $scope.indicator = 'Log in';
+                $scope.failed = false;
+            }, 2000);
+            $scope.loading = false;
         });
     };
 }])

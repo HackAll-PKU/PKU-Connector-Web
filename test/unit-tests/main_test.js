@@ -40,7 +40,6 @@ describe('loginController', function() {
         expect(storage.token).toEqual("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmFtZSI6ImNsdCIsInVpZCI6NCwiaWF0IjoxNDYzODUwNjIxLCJleHAiOjE0NjQwMjM0MjF9.n22c1SBeeLsFl6-5Vqv03mDe8bX3VkdwBnY9q3wcl8c");
         expect(storage.user.uname).toEqual("clt");
         expect(storage.user.uid).toEqual('4');
-        expect(location.path()).toBe('/');
     });
 });
 

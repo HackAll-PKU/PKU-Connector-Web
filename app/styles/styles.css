@@ -590,8 +590,8 @@ ul.user_attention li a span {
 
 
 
-/* sign up page */
-#signup_whole {
+/* sign up & log in page */
+#signup_whole, #login_whole {
     background: linear-gradient(to bottom, rgba(91, 91, 120, 0.98) 30%, rgba(41, 40, 59, 0.98) 100%) no-repeat;
     position: fixed;
     top: 0;
@@ -602,7 +602,7 @@ ul.user_attention li a span {
     height: 100%;
     font-size: 16px;
 }
-#signup_whole section {
+#signup_whole section, #login_whole section {
     width: 500px;
     top: 50%;
     margin-top: -340px;
@@ -611,38 +611,38 @@ ul.user_attention li a span {
     text-align: center;
     position: absolute;
 }
-#signup_whole section span.already {
+#signup_whole section span.already, #login_whole section span.already {
     color: rgba(255, 255, 255, .5);
     font-size: 14px;
 }
-section span.already a {
+#signup_whole section span.already a, #login_whole section span.already a {
     padding-bottom: 2px;
     border-bottom: 1px solid rgba(255, 255, 255, .5);
     color: rgba(255, 255, 255, .8);
     text-decoration: none;
 }
-section span.already a:visited {
+#signup_whole section span.already a:visited, #login_whole section span.already a:visited {
     text-decoration: none;
 }
-section span.already a:hover {
+#signup_whole section span.already a:hover, #login_whole section span.already a:visited {
     border-bottom: 1px solid rgba(255, 255, 255, 1);
     color: rgba(255, 255, 255, 1);
     text-decoration: none;
 }
-#signup_whole h1 {
+#signup_whole h1, #login_whole h1 {
     color: white;
     font-weight: 500;
     font-size: 28px;
     margin: 0.2em 0;
 }
-#signup_whole h2 {
+#signup_whole h2, #login_whole h2 {
     color: rgba(255, 255, 255, .5);
     font-size: 17px;
     font-weight: 300;
     line-height: 1.3em;
     margin-bottom: 0.5em;
 }
-#signup_box {
+#signup_box, #login_box {
     background: white;
     padding: 40px;
     border-radius: 2px;
@@ -654,11 +654,14 @@ section span.already a:hover {
     float: left;
     padding: 20px 0 20px;
 }
-#signup_box .field {
+#signup_box .field, #login_box .field {
     margin: 10px 0;
     width: 100%;
     position: relative;
     float: left;
+}
+#login_box .field input {
+    width: 100%;
 }
 .field input {
     width: 80%;
@@ -691,7 +694,7 @@ section span.already a:hover {
     background-size: 40px;
     z-index: 100;
 }
-#signup_box button {
+#signup_box button, #login_box button {
     display: block;
     background-color: #39D393;
     border-radius: 100px;
@@ -706,10 +709,10 @@ section span.already a:hover {
     line-height: 62px;
     box-sizing: border-box;
 }
-#signup_box button.red {
+#signup_box button.red, #login_box button.red {
     background-color: red;
 }
-#signup_box button.disabled {
+#signup_box button.disabled, #login_box button.disabled {
     background-color: dimgray;
     color: darkgray;
 }

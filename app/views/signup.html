@@ -35,11 +35,11 @@
                     <span class="ok_icon" ng-show="signupForm.enrollmentYear.$valid && signupForm.enrollmentYear.$dirty"></span>
                 </div>
                 <div class="clear"></div>
+                <button ng-click="signup()" ng-disabled="!signupForm.$valid" ng-class="{disabled: !signupForm.$valid, red: failed}">
+                    <p ng-hide="loading">{{indicator}}</p>
+                    <div class="round_circle round_circle_large round_circle_green" ng-show="loading"></div>
+                </button>
             </form>
-            <button ng-click="signup()" ng-disabled="!signupForm.$valid" ng-class="{disabled: !signupForm.$valid, red: failed}">
-                <p ng-hide="loading">{{indicator}}</p>
-                <div class="round_circle round_circle_large round_circle_green" ng-show="loading"></div>
-            </button>
         </div>
         <span class="already">Already have an account? <a href="#/login">login</a> </span>
     </section>
