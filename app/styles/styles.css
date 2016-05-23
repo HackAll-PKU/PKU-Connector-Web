@@ -422,7 +422,7 @@ li.vertical a:hover {
     bottom: -20px;
     left: 50%;
     background-color: rgba(255, 255, 255, 0.3);
-    margin-left: -30px;
+    margin-left: -33px;
     padding: 3px;
 }
 
@@ -437,9 +437,9 @@ li.vertical a:hover {
 }
 
 .person_info_box .inner_info_box .name_box {
-    height: 16px;
-    line-height: 16px;
-    padding-top: 5px;
+    height: 20px;
+    line-height: 20px;
+    padding-top: 10px;
     text-align: center;
 }
 

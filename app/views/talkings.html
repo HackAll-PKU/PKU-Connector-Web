@@ -9,11 +9,12 @@
 
     <div class="talking background_dark_blue" ng-repeat="talking in contents">
         <div class="thumb_image">
-            <a ng-href ="#/user/{{talking.user_uid}}"><img ng-src="../{{talking.user_avatar}}"></a>
+            <a ng-href="#/user/{{talking.user_uid}}"><img ng-src="../{{talking.user_avatar}}"></a>
         </div>
         <div class="detail">
             <div class="username color_light_gray">
-                <a class="no_decoration always_inherit" ng-href ="#/user/{{talking.user_uid}}">{{talking.user_nickname}}</a>
+                <a class="no_decoration always_inherit"
+                   ng-href="#/user/{{talking.user_uid}}">{{talking.user_nickname}}</a>
             </div>
             <div class="info font-size12">{{talking.timestamp}}</div>
             <div class="text color_light_gray">{{talking.text}}</div>
@@ -21,10 +22,13 @@
         </div>
     </div>
 
-    <div ng-show="hasNextPage">
+    <div>
         <a href="" class="no_decoration color_black" ng-click="getNextPageContents()">
-            <div class="notice background_white">点击加载下一页</div>
+            <div class="notice background_white" ng-show="hasNextPage && !busy">点击加载下一页</div>
         </a>
+        <div class="notice background_white" ng-show="busy">
+            <span class="round_circle round_circle_small round_circle_green">正在加载中，请稍候...</span></div>
         <div class="clear"></div>
     </div>
+
 </div>

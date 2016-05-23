@@ -116,6 +116,7 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
     $scope.hasNextPage = false;
     $scope.hasNew = false;
     $scope.newCount = 0;
+    $scope.busy = false;
 
     Date.prototype.format = function(fmt) {
         var o = {
@@ -144,6 +145,7 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
     }
 
     $scope.getNextPageContents = function () {
+        $scope.busy = true;
         ++currentPage;
         if (currentPage == 1) lastUpdateTime = Math.round(new Date().getTime() / 1000);
 
@@ -153,6 +155,7 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
             $scope.contents = $scope.contents.concat(newRows);
             if(response.data.pages) pages = response.data.pages;
             $scope.hasNextPage = pages > currentPage;
+            $scope.busy = false
         });
 
     };
