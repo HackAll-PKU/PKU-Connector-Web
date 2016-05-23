@@ -4,7 +4,8 @@
 
 var PCControllers = angular.module('PCControllers', [
     'ngStorage',
-    'PCServices'
+    'PCServices',
+    'infinite-scroll'
 ]);
 PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking', 
     function ($scope, $location, User, Group, UserRelation, GroupRelation, Talking) {

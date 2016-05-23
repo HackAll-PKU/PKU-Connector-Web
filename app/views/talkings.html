@@ -1,5 +1,5 @@
 <div class="talking_whole" ng-controller="homepageTalkingsController">
-
+<div infinite-scroll="getNextPageContents()" infinite-scroll-disabled="busy || !hasNextPage" infinite-scroll-distance='1'>
     <div ng-show="hasNew">
         <a href="" class="no_decoration color_orange" ng-click="getNewContents()">
             <div class="notice background_light_yellow">有{{newCount}}条新说说，点击查看</div>
@@ -30,5 +30,5 @@
             <span class="round_circle round_circle_small round_circle_green">正在加载中，请稍候...</span></div>
         <div class="clear"></div>
     </div>
-
+</div>
 </div>
