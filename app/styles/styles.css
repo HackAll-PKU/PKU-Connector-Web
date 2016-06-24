@@ -361,6 +361,7 @@ li.vertical a:hover {
     padding: 0;
 }
 
+
 .talking_whole .talking div.detail div.username {
     margin-bottom: 7px;
     padding: 5px 0 0 0;
@@ -381,9 +382,21 @@ li.vertical a:hover {
     border-top: 1px solid rgba(22,45,66,0.8);
 }
 /*talking 底下实现comment,like功能*/
-.talking_whole .talking div.function{
+.talking_whole .talking ul.function li{
+    text-decoration: none;
+    list-style: none;
     margin-bottom: 5px;
+    float: left;
+    width: 100px;
+    text-align: center;
+    border-right: solid 1px;
+    border-color: #162e4f;
 }
+.talking_whole .talking ul.function li a {
+    text-decoration: none;
+    display: block;
+}
+
 .talking_whole div.notice{
     margin-top: 10px;
     display: block;
