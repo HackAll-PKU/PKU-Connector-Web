@@ -125,7 +125,7 @@ PCControllers
         for (var index in $scope.persons) getUserInfo(index);
     });
 }])
-.controller('homepageTalkingsController', ['$scope', 'Talking', 'User', '$interval', function ($scope, Talking, User, $interval) {
+.controller('homepageTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$interval', function ($scope, Talking, User, Group, $interval) {
     if (!User.getCurrentUser()) return;
 
     var lastUpdateTime;
@@ -162,6 +162,11 @@ PCControllers
             Array[index].user_nickname = res.data.data.nickname;
             Array[index].user_avatar = res.data.data.avatar;
         });
+        if(Array[index].group_gid){
+            Group.get({gid: Array[index].group_gid}, function (res) {
+                Array[index].group_gname = res.data.gname;
+            });
+        }
     }
 
     $scope.getNextPageContents = function () {
@@ -204,17 +209,70 @@ PCControllers
         $interval.cancel(interval);
     });
 
-    $scope.submit = function () {
-        Talking.save({text: $scope.text},function () {
-            alert('您的说说发布成功!');
-        },function (res) {
-            alert('您的说说发布失败!');
-        });
-    };
-
 }])
 .controller('navController', ['$scope', 'User', function ($scope, User) {
     $scope.logout = function () {
         User.logout();
     }
+}])
+.controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', function ($scope, Talking, Group, GroupRelation) {
+    $scope.topicSelecting = false;
+    $scope.submit = function () {
+        //创建话题
+        if ($scope.gid == -1) {
+            Group.save({gname: $scope.gname}, function (res) {
+                $scope.gid = res.data.gid;
+                submitNext();
+            });
+        } else submitNext();
+
+        function submitNext() {
+            //关注话题
+            if($scope.gid) GroupRelation.save({gid: $scope.gid}, null);
+
+            var rawText = $scope.text;
+            Talking.save({text: rawText, gid: $scope.gid, image: $scope.image},function () {
+                $scope.text = "";
+                $scope.topicSelecting = false;
+                $scope.gid = undefined;
+                $scope.image = undefined;
+                alert('您的说说发布成功!');
+            },function (res) {
+                alert('您的说说发布失败!');
+            });
+        }
+    };
+
+    $scope.selectTopic = function () {
+        $scope.topicSelecting = !$scope.topicSelecting;
+        if(!$scope.topicSelecting) {
+            $scope.gid = undefined;
+            $scope.gname = undefined;
+            $scope.topicInput = undefined;
+        }
+    };
+
+    $scope.topicSelected = function (gid, gname) {
+        $scope.gid = gid;
+        $scope.gname = gname;
+        $scope.topicInput = gname;
+        $scope.groupResult = undefined;
+    };
+
+    $scope.$watch('topicInput', function(newValue, oldValue, scope) {
+        if(!newValue) {
+            scope.groupResult = undefined;
+            return;
+        }
+        Group.query({gname: newValue}, function (res) {
+            if(res.data.length == 0) res.data = [{gid: -1, gname: newValue}];
+            else for (var index in res.data) {
+                if (res.data[index].gname == newValue) break;
+                if(index == res.data.length - 1) {
+                    res.data = res.data.concat([{gid: -1, gname: newValue}]);
+                }
+            }
+            scope.groupResult = res.data;
+        });
+    });
 }]);

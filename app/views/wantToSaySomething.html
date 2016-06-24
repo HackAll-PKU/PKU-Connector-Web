@@ -1,18 +1,39 @@
-<div class="say_something background_dark_blue" ng-controller="homepageTalkingsController">
+<div class="say_something background_dark_blue" ng-controller="talkingPostController">
     <div class="title">
-        <span class="font-size25">W</span><span class="font-size18">ant to</span><span class="font-size25"> S</span><span class="font-size18">ay something</span><span class="font-size25">?</span>
+        <span class="font-size25">W</span><span class="font-size18">ant to</span><span
+            class="font-size25"> S</span><span class="font-size18">ay something</span><span class="font-size25">?</span>
     </div>
     <div class="input">
         <textarea class="color_light_gray font-size12" data-ng-model="text"></textarea>
     </div>
     <div class="func_area">
         <div class="func_kind">
-            <a>expression</a>
-            <a>image</a>
-            <a>video</a>
-            <a>topic</a>
+            <a class="no_decoration" href="">expression</a>
+            <a class="no_decoration" href="">image</a>
+            <a class="no_decoration" href="">@mention</a>
+            <a class="no_decoration" href="" ng-click="selectTopic()">#topic</a>
         </div>
         <a class="submit no_decoration" href="" ng-click="submit()">发布</a>
         <div class="clear"></div>
+    </div>
+    <div class="topic_box" ng-show="topicSelecting">
+        <span class="color_light_gray">将此说说发送到用户组：#</span>
+        <a class="no_decoration always_white" href="" ng-click="gid = undefined" ng-show="gid">{{gname}}</a>
+        <span ng-hide="gid">
+            <input ng-model="topicInput">
+        </span>
+        <span class="color_light_gray">#</span>
+
+        <div class="topic_dropdown_content" ng-show="groupResult && !gid">
+            <ul>
+                <li ng-repeat="group in groupResult">
+                    <a class="no_decoration always_black" href=""
+                       ng-click="topicSelected(group.gid, group.gname)">
+                        <span ng-show="group.gid == -1">创建 #</span>{{group.gname}}<span
+                            ng-show="group.gid == -1"># 话题</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

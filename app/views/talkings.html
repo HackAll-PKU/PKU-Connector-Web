@@ -17,7 +17,10 @@
                    ng-href="#/user/{{talking.user_uid}}">{{talking.user_nickname}}</a>
             </div>
             <div class="info font-size12">{{talking.timestamp}}</div>
-            <div class="text color_light_gray">{{talking.text}}</div>
+            <div class="text color_light_gray">
+                <a class="no_decoration always_white" href="" ng-show="talking.group_gid" ng-href="#/group/{{talking.group_gid}}">#{{talking.group_gname}}#</a>
+                {{talking.text}}
+            </div>
             <div class="clear"></div>
         </div>
     </div>
