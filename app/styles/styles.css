@@ -202,11 +202,12 @@ input, textarea{
     float: left;
     margin: 14px 20px 14px 0;
     padding: 0 10px 0 0;
-    border-right: 1px solid #ccc;
 }
 
 ul.nav_list {
     list-style: none;
+    margin: 0;
+    padding: 0;
     float: left;
 }
 
@@ -217,6 +218,7 @@ ul.nav_list li.horizontal, ul.nav_list li.vertical {
 
 ul.nav_list li.horizontal {
     display: inline;
+    width: 5em;
 }
 
 ul.nav_list li.vertical {
@@ -231,6 +233,31 @@ ul.nav_list li.vertical {
 li.horizontal a, li.vertical a {
     display: block;
     padding: 5px 0 5px 10px;
+    text-decoration: none;
+}
+
+li.horizontal a:hover {
+    color: #eb7350
+}
+
+li.horizontal ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    float: left;
+    background-color: white;
+    position: absolute;
+    left: -999em;
+}
+
+li.horizontal ul li {
+    float: left;
+    display: block;
+}
+
+li.horizontal:hover ul {
+    left: auto;
+    position: relative;
 }
 
 li.vertical a:hover {

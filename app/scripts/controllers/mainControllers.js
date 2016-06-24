@@ -8,7 +8,7 @@ var PCControllers = angular.module('PCControllers', [
     'infinite-scroll'
 ]);
 PCControllers
-.controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking', 
+.controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking',
     function ($scope, $location, User, Group, UserRelation, GroupRelation, Talking) {
     if(!User.getCurrentUser()) {
         $location.path('#/login');
@@ -212,4 +212,9 @@ PCControllers
         });
     };
 
+}])
+.controller('navController', ['$scope', 'User', function ($scope, User) {
+    $scope.logout = function () {
+        User.logout();
+    }
 }]);

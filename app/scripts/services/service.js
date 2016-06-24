@@ -36,6 +36,11 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
                         return storedUser;
                 }
                 return undefined;
+            },
+            logout: function() {
+                $localStorage.token = null;
+                $localStorage.user = null;
+                $localStorage.tokenInfo = null;
             }
         }
     }]);
