@@ -5,7 +5,6 @@ var baseURL = 'http://pikkacho.cn/api/v1';
 var PCServices = angular.module('PCServices', ['ngStorage', 'ngResource']);
 
 PCServices.factory('User', ['$http', '$localStorage', function ($http, $localStorage) {
-
         return {
             save: function(data, success, error) {
                 $http.post(baseURL + '/user', data).then(success, error);
@@ -40,7 +39,6 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
             }
         }
     }]);
-
 
 PCServices.factory('Talking', ['$resource', function ($resource) {
     return $resource(baseURL + '/talking/:tid', null,

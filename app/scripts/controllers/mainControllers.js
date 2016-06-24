@@ -7,7 +7,8 @@ var PCControllers = angular.module('PCControllers', [
     'PCServices',
     'infinite-scroll'
 ]);
-PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking', 
+PCControllers
+.controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking', 
     function ($scope, $location, User, Group, UserRelation, GroupRelation, Talking) {
     if(!User.getCurrentUser()) {
         $location.path('#/login');
@@ -42,8 +43,8 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
     $scope.loading = false;
     $scope.failed = false;
     $scope.login = function() {
-        uname = $scope.uname;
-        password = $scope.password;
+        var uname = $scope.uname;
+        var password = $scope.password;
         $scope.loading = true;
         User.login(uname, password, function successCallback(response) {
             $scope.indicator = '登录成功! 正在跳转.';
@@ -74,11 +75,11 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
     $scope.failed = false;
     $scope.signup = function() {
         $scope.loading = true;
-        uname = $scope.uname;
-        password = $scope.password;
-        nickname = $scope.nickname;
-        signature = $scope.signature;
-        enrollmentYear = $scope.enrollmentYear;
+        var uname = $scope.uname;
+        var password = $scope.password;
+        var nickname = $scope.nickname;
+        var signature = $scope.signature;
+        var enrollmentYear = $scope.enrollmentYear;
         User.save({uname: uname, password: password, nickname: nickname, signature: signature, enrollmentYear: enrollmentYear}, function(response) {
             $scope.indicator = '注册成功! 正在跳转.';
             $timeout(function () {
