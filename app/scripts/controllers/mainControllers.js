@@ -167,6 +167,24 @@ PCControllers
                 Array[index].group_gname = res.data.gname;
             });
         }
+        var strs = Array[index].text.split('@');
+
+        if (strs.length > 1) {
+            var mentionedUid = eval('['+strs[strs.length - 1]+']');
+            strs.splice(strs.length - 1, 1);
+            Array[index].text = strs.join('@');
+
+            Array[index].mentionedUsers = [];
+            for (var i in mentionedUid) {
+                fetchNickname(Array[index].mentionedUsers, mentionedUid, i);
+            }
+        }
+    }
+
+    function fetchNickname(Array, Uids, index) {
+        User.query(Uids[index], function (res) {
+            Array[index] = {uid: Uids[index], nickname: res.data.data.nickname};
+        });
     }
 
     $scope.getNextPageContents = function () {
@@ -215,8 +233,11 @@ PCControllers
         User.logout();
     }
 }])
-.controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', '$timeout', function ($scope, Talking, Group, GroupRelation, $timeout) {
+.controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', 'UserRelation', '$timeout', function ($scope, Talking, Group, GroupRelation, UserRelation, $timeout) {
     $scope.topicSelecting = false;
+    $scope.userSelecting = false;
+
+    //发表
     $scope.submit = function () {
         //创建话题
         if ($scope.gid == -1) {
@@ -231,10 +252,18 @@ PCControllers
             if($scope.gid) GroupRelation.save({gid: $scope.gid}, null);
 
             var rawText = $scope.text;
+            var uidArray = [];
+            for (var index in $scope.userList) {
+                uidArray[index] = $scope.userList[index].uid;
+            }
+            rawText += '@' + uidArray.toString();
             Talking.save({text: rawText, gid: $scope.gid, image: $scope.image},function () {
                 $scope.text = "";
                 $scope.topicSelecting = false;
+                $scope.userSelecting = false;
                 $scope.gid = undefined;
+                $scope.gname = undefined;
+                $scope.userList = undefined;
                 $scope.image = undefined;
                 alert('您的说说发布成功!');
             },function (res) {
@@ -243,6 +272,7 @@ PCControllers
         }
     };
 
+    //话题
     $scope.selectTopic = function () {
         $scope.topicSelecting = !$scope.topicSelecting;
         if(!$scope.topicSelecting) {
@@ -259,15 +289,15 @@ PCControllers
         $scope.groupResult = undefined;
     };
 
-    var timeout;
+    var timeout_group;
     $scope.$watch('topicInput', function(newValue, oldValue, scope) {
-        $timeout.cancel(timeout);
+        $timeout.cancel(timeout_group);
         if(!newValue) {
             scope.groupResult = undefined;
             return;
         }
         //用timeout减少输入时的网络请求次数
-        timeout = $timeout(function () {
+        timeout_group = $timeout(function () {
             Group.query({gname: newValue}, function (res) {
                 if(res.data.length == 0) res.data = [{gid: -1, gname: newValue}];
                 else for (var index in res.data) {
@@ -279,6 +309,51 @@ PCControllers
                 scope.groupResult = res.data;
             });
         }, 100);
+    });
 
+    //提及
+    $scope.userList = [];//{uid:1, nickname: "user1"}, {uid:2, nickname: "user2"}, {uid:3, nickname: "user3"}, {uid:4, nickname: "user4"}
+
+    $scope.selectUser = function () {
+        $scope.userSelecting = !$scope.userSelecting;
+        if(!$scope.userSelecting) {
+            $scope.userList = [];
+            $scope.userInput = undefined;
+            $scope.userResult = undefined;
+        }
+    };
+
+    $scope.userSelected = function (uid, nickname) {
+        if(uid != -1) $scope.userList = $scope.userList.concat([{uid:uid, nickname: nickname}]);
+        $scope.userInput = undefined;
+        $scope.userResult = undefined;
+    };
+
+    $scope.deleteFromList = function (uid) {
+        for (var index in $scope.userList) {
+            if ($scope.userList[index].uid == uid) $scope.userList.splice(index, 1);
+        }
+    };
+
+    var timeout_user;
+    $scope.$watch('userInput', function(newValue, oldValue, scope) {
+        $timeout.cancel(timeout_user);
+        if(!newValue) {
+            scope.userResult = undefined;
+            return;
+        }
+        //用timeout减少输入时的网络请求次数
+        timeout_user = $timeout(function () {
+            UserRelation.querySuggestion({nickname: newValue}, function (res) {
+                //去掉已在列表中的
+                for (var i1 in res.data) {
+                    for (var i2 in scope.userList) {
+                        if (res.data[i1].uid == scope.userList[i2].uid) res.data.splice(i1, 1);
+                    }
+                }
+                if (res.data.length == 0) res.data = [{uid: -1, nickname: newValue}];
+                scope.userResult = res.data;
+            });
+        }, 100);
     });
 }]);

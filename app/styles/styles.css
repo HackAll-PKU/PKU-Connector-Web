@@ -350,6 +350,10 @@ li.vertical a:hover {
     margin: 10px 10px;
 }
 
+.say_something div.func_area div.func_kind a:hover {
+    color: #eb7350
+}
+
 .say_something .topic_box {
     min-width: 160px;
     padding: 12px 16px;
@@ -426,8 +430,9 @@ li.vertical a:hover {
     margin-bottom: 2px;
 }
 
-.talking_whole .talking div.detail div.text a:hover {
-    color: #eb7350
+.talking_whole .talking div.detail div.text a {
+    color: #eb7350;
+    text-decoration: none;
 }
 
 .talking_whole div.notice{
