@@ -5,7 +5,8 @@
 var PCControllers = angular.module('PCControllers', [
     'ngStorage',
     'PCServices',
-    'infinite-scroll'
+    'infinite-scroll',
+    'ngFileUpload'
 ]);
 PCControllers
 .controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking',
@@ -69,7 +70,7 @@ PCControllers
         });
     };
 }])
-.controller('signupController', ['$scope', '$location', 'User' , '$timeout', function ($scope, $location, User, $timeout) {
+.controller('signupController', ['$scope', '$location', 'User', '$timeout', function ($scope, $location, User, $timeout) {
     $scope.indicator = 'Sign Up';
     $scope.loading = false;
     $scope.failed = false;
@@ -107,6 +108,48 @@ PCControllers
             scope.nickname = newValue;
         }
     });
+}])
+.controller('profileController', ['$scope', '$location', 'User', '$timeout', 'Upload', 'CONFIGURATIONS', function ($scope, $location, User, $timeout, Upload, CONFIGURATIONS) {
+    $scope.uploadAvatar = function(file) {
+        console.log($scope.file);
+        if (file) {
+            Upload.upload({
+                url: CONFIGURATIONS.baseURL + '/image',
+                data: {
+                    image: file
+                }
+            }).then(function (res) {
+                console.log(res.data);
+            }, function (res) {
+                console.log(res)
+            }, function (evt) {
+                console.log("progress: " + Math.min(100, parseInt(100.0 * evt.loaded / evt.total)));
+            });
+        }
+    };
+    $scope.uploadBackground = function () {
+        alert("background!");
+    };
+    $scope.indicator = '正在加载个人信息';
+    $scope.loading = true;
+    $scope.failed = false;
+    User.query(User.getCurrentUser().uid, function(res) {
+        $scope.uname = res.data.data.uname;
+        $scope.nickname = res.data.data.nickname;
+        $scope.signature = res.data.data.signature;
+        $scope.enrollmentYear = res.data.data.enrollmentYear;
+        $scope.avatar = "http://www.pikkacho.cn/" + res.data.data.avatar;
+        $scope.backgroundImage = "http://www.pikkacho.cn/" + res.data.data.background;
+        $scope.loading = false;
+        $scope.indicator = '保存'
+    }, function() {
+        $scope.indicator = '无法获取个人信息,请检查网络';
+        $scope.failed = true;
+        $scope.loading = false;
+        $timeout(function () {
+            $location.path('/profile');
+        }, 2000);
+    })
 }])
 .controller('youMayBeKnowController', ['$scope', 'UserRelation', 'User', function ($scope, UserRelation, User) {
     if (!User.getCurrentUser()) return;

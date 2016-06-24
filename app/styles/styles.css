@@ -754,7 +754,7 @@ ul.user_attention li a span {
     background-size: 40px;
     z-index: 100;
 }
-#signup_box button, #login_box button {
+#signup_box button.submit, #login_box button.submit {
     display: block;
     background-color: #39D393;
     border-radius: 100px;
@@ -769,6 +769,7 @@ ul.user_attention li a span {
     line-height: 62px;
     box-sizing: border-box;
 }
+
 #signup_box button.red, #login_box button.red {
     background-color: red;
 }
@@ -777,7 +778,38 @@ ul.user_attention li a span {
     color: darkgray;
 }
 
+#signup_box .image_box button {
+    border: none;
+    background: none;
+}
 
+#signup_box .image_box {
+    margin: 0 0 50px 0;
+    padding: 0;
+    height: 100px;
+    z-index: 1;
+    display: block;
+    position: relative;
+}
+
+#signup_box .image_box .thumb_image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin-left: -50px;
+    padding: 0;
+}
+
+#signup_box .image_box .thumb_image img {
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    margin-top: 5px;
+}
 
 
 /*  round_circle  */

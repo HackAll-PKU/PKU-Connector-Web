@@ -4,6 +4,12 @@
 var baseURL = 'http://pikkacho.cn/api/v1';
 var PCServices = angular.module('PCServices', ['ngStorage', 'ngResource']);
 
+PCServices.factory('CONFIGURATIONS', function() {
+   return {
+       baseURL: baseURL
+   }
+});
+
 PCServices.factory('User', ['$http', '$localStorage', function ($http, $localStorage) {
         return {
             save: function(data, success, error) {
@@ -102,4 +108,12 @@ PCServices.factory('Group', ['$resource', function ($resource) {
             'get': {method: 'GET'},
             'query': {url: baseURL + '/group/suggest/name/:gname', method: 'GET'}
         });
+}]);
+
+PCServices.factory('Image', ['$http', function($http) {
+    return {
+        getImage: function(path, success, error) {
+            $http.get(baseURL + '/user/' + uid).then(success, error);
+        }
+    }
 }]);
