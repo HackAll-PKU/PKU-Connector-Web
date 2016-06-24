@@ -375,6 +375,15 @@ li.vertical a:hover {
     margin-bottom: 2px;
 }
 
+/*talking功能区的分界线*/
+.talking_whole .border {
+    margin: 5px -20px 10px;
+    border-top: 1px solid rgba(22,45,66,0.8);
+}
+/*talking 底下实现comment,like功能*/
+.talking_whole .talking div.function{
+    margin-bottom: 5px;
+}
 .talking_whole div.notice{
     margin-top: 10px;
     display: block;
