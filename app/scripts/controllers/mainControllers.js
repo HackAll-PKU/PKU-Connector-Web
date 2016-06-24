@@ -215,7 +215,7 @@ PCControllers
         User.logout();
     }
 }])
-.controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', function ($scope, Talking, Group, GroupRelation) {
+.controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', '$timeout', function ($scope, Talking, Group, GroupRelation, $timeout) {
     $scope.topicSelecting = false;
     $scope.submit = function () {
         //创建话题
@@ -259,20 +259,26 @@ PCControllers
         $scope.groupResult = undefined;
     };
 
+    var timeout;
     $scope.$watch('topicInput', function(newValue, oldValue, scope) {
+        $timeout.cancel(timeout);
         if(!newValue) {
             scope.groupResult = undefined;
             return;
         }
-        Group.query({gname: newValue}, function (res) {
-            if(res.data.length == 0) res.data = [{gid: -1, gname: newValue}];
-            else for (var index in res.data) {
-                if (res.data[index].gname == newValue) break;
-                if(index == res.data.length - 1) {
-                    res.data = res.data.concat([{gid: -1, gname: newValue}]);
+        //用timeout减少输入时的网络请求次数
+        timeout = $timeout(function () {
+            Group.query({gname: newValue}, function (res) {
+                if(res.data.length == 0) res.data = [{gid: -1, gname: newValue}];
+                else for (var index in res.data) {
+                    if (res.data[index].gname == newValue) break;
+                    if(index == res.data.length - 1) {
+                        res.data = res.data.concat([{gid: -1, gname: newValue}]);
+                    }
                 }
-            }
-            scope.groupResult = res.data;
-        });
+                scope.groupResult = res.data;
+            });
+        }, 100);
+
     });
 }]);
