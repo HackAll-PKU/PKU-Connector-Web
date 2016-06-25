@@ -51,7 +51,7 @@
                 <div class="input">
                     <input class="color_light_gray font-size12" data-ng-model="talking.commentText">
                 </div>
-                 <a class="submit no_decoration" href="" ng-click="submit($index)">发布</a>
+                 <a class="submit no_decoration" href="" ng-click="submit($index)">发表</a>
                 <div class="clear"></div>
                 <div class="comment background_dark_blue" ng-repeat="comment in talking.comments">
                     <div class="commentThumb_image">
@@ -62,6 +62,7 @@
                             <a class="no_decoration always_inherit"
                                ng-href="#/user/{{comment.user_uid}}">{{comment.user_nickname}}</a>
                         </div>
+                        <div class="info font-size12">{{comment.timestamp}}</div>
                         <div class="text color_light_gray">
                               <span>{{comment.commentText}}</span>
                         </div>

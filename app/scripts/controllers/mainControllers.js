@@ -275,22 +275,8 @@ PCControllers
         //获取评论的数组
         Comment.query({tid:Array[index].tid}, function (res) {
             Array[index].comments = res.data;
-            for (i in Array[index].comments) {
-                fetchComment(Array[index].comments, i);
-            }
         });
 
-        function fetchComment(Array, i){
-            Comment.get({cid:Array[i].cid},function (res){
-                Array[i].commentText = res.data.text;
-                Array[i].user_uid = res.data.user_uid;
-                Array[i].parent_cid = res.data.parent_cid;
-                User.query(Array[i].user_uid, function (res) {
-                    Array[i].user_nickname = res.data.data.nickname;
-                    Array[i].user_avatar = res.data.data.avatar;
-                });
-            })
-        }
         //解析image数组
         Array[index].image = JSON.parse(Array[index].image);
         Array[index].showLargeImage = -1;
@@ -331,25 +317,48 @@ PCControllers
     };
 
     $scope.commentTalkings = function (index) {
+        //获取评论详情
+        for (var i in $scope.contents[index].comments) {
+            fetchComment($scope.contents[index].comments, i);
+        }
         $scope.contents[index].showComment = !$scope.contents[index].showComment;
     };
 
+    function fetchComment(Array, i){
+        Comment.get({cid:Array[i].cid},function (res){
+            Array[i].commentText = res.data.text;
+            Array[i].user_uid = res.data.user_uid;
+            Array[i].parent_cid = res.data.parent_cid;
+            Array[i].timestamp = new Date(res.data.timestamp).format("yyyy-MM-dd hh:mm:ss");
+            User.query(Array[i].user_uid, function (res) {
+                Array[i].user_nickname = res.data.data.nickname;
+                Array[i].user_avatar = res.data.data.avatar;
+            });
+        })
+    }
+
     //发布评论
     $scope.submit = function (index) {
-
             if (!$scope.contents[index].commentText) {
                 alert('内容为空!');
                 return;
             }
             var rawText = $scope.contents[index].commentText;
 
-            Comment.save( null,{text: rawText,talking_tid:$scope.contents[index].tid},function () {
+            Comment.save(null,{text: rawText,talking_tid:$scope.contents[index].tid}, function () {
                 $scope.contents[index].commentText = "";
+                Comment.query({tid:$scope.contents[index].tid}, function (res) {
+                    $scope.contents[index].comments = res.data;
+                    for (var i in $scope.contents[index].comments) {
+                        fetchComment($scope.contents[index].comments, i);
+                    }
+                });
                 alert('您的评论发布成功!');
             },function (r) {
                 alert('您的评论发布失败('+r.data.msg+')!');
             });
     };
+
     $scope.getNewContents = function () {
         Talking.query({after: lastUpdateTime}, function (response) {
             var newRows = response.data.rows;

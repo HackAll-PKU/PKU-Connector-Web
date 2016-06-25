@@ -564,6 +564,11 @@ li.vertical a:hover, li.vertical a.selected {
     margin-bottom: 1px;
 }
 
+.talking_whole .comment div.commentDetail div.info {
+    margin-bottom: 2px;
+    color: #38547b;
+}
+
 .talking_whole div.notice{
     margin-top: 10px;
     display: block;
