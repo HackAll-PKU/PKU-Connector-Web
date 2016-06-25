@@ -426,6 +426,7 @@ li.vertical a:hover {
 }
 
 .talking_whole .talking div.thumb_image img {
+    width: 50px;
     border-radius: 50%;
 }
 
