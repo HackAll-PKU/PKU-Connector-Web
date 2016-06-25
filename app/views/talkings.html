@@ -53,9 +53,22 @@
                 </div>
                  <a class="submit no_decoration" href="" ng-click="submit($index)">发布</a>
                 <div class="clear"></div>
-                <div class="comment background_dark_blue" ng-repeat="comment in talking.contents">
-                这儿应该是评论</span>
-
+                <div class="comment background_dark_blue" ng-repeat="comment in talking.comments">
+                    <div class="thumb_image">
+                        <a ng-href="#/user/{{comment.user_avatar}}"><img ng-src="{{comment.user_avatar}}"></a>
+                    </div>
+                    <div class="detail">
+                        <div class="username color_light_gray">
+                            <a class="no_decoration always_inherit"
+                               ng-href="#/user/{{comment.user_uid}}">{{comment.user_nickname}}</a>
+                        </div>
+                        <div class="text color_light_gray">
+                              <span>{{comment.commentText}}</span>
+                        </div>
+                    </div>
+                </div>
+            </span>
+        </ul>>
     </div>
 
     <div>

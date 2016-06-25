@@ -539,9 +539,19 @@ li.vertical a:hover {
     float: left;
     width: 50px;
 }
-.talking_whole .talking div.detail div.text a {
-    color: #eb7350;
-    text-decoration: none;
+
+.talking_whole .comment div.detail {
+    margin: 0 0 0 60px;
+    padding: 0;
+}
+
+.talking_whole .comment div.detail div.username {
+    margin-bottom: 7px;
+    padding: 5px 0 0 0;
+}
+
+.talking_whole .comment div.detail div.text {
+    margin-bottom: 2px;
 }
 
 .talking_whole div.notice{

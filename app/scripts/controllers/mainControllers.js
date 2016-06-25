@@ -312,7 +312,6 @@ PCControllers
             $scope.hasNextPage = pages > currentPage;
             $scope.busy = false;
         });
-
     };
 
     $scope.likeTalkings = function (index) {
