@@ -261,7 +261,7 @@ li.horizontal:hover ul {
     position: relative;
 }
 
-li.vertical a:hover {
+li.vertical a:hover, li.vertical a.selected {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -284,7 +284,7 @@ li.vertical a:hover {
 .PC_left div.nav_list {
     display: block;
     width: 100%;
-    margin: 10px 0;
+    margin: 0 0 10px;
 }
 
 /* 左栏中的分隔线 */
@@ -943,6 +943,81 @@ ul.user_attention li a span {
 .header_box #attention a.has_attentioned {
     background: #5f636d;
 }
+
+
+/*  Friends  */
+.friends_main {
+    width: 850px;
+    margin: 10px 0;
+    float: left;
+}
+
+.friends_main .friend {
+    margin: 0;
+    padding: 20px 20px 20px 20px;
+    border-radius: 2px;
+    border-bottom: 1px solid #22456b;
+}
+
+.friends_main .friend div.thumb_image {
+    float: left;
+    width: 50px;
+}
+
+.friends_main .friend div.thumb_image img {
+    width: 50px;
+    border-radius: 50%;
+}
+
+.friends_main .friend div.detail {
+    margin: 0 0 0 60px;
+    padding: 0;
+}
+
+.friends_main .friend div.detail div.username {
+    margin-bottom: 7px;
+    padding: 5px 0 0 0;
+}
+
+.friends_main .talking div.detail div.signature {
+    margin-bottom: 2px;
+}
+
+.friends_main .attention {
+    background: #eb7350;
+    color: #fff;
+    text-align: center;
+    margin: 0 auto;
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 0;
+    vertical-align: middle;
+    float: right;
+}
+
+.friends_main .attention a {
+    background: inherit;
+    color: inherit;
+    margin: auto auto;
+    vertical-align: middle;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    line-height: 30px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.friends_main .attention a.has_attentioned {
+    background: #5f636d;
+}
+
+#friend_left {
+    position: relative;
+}
+
 
 
 
