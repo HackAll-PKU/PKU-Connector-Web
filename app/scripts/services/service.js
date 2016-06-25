@@ -4,29 +4,14 @@
 var baseURL = 'http://pikkacho.cn/api/v1';
 var PCServices = angular.module('PCServices', ['ngStorage', 'ngResource']);
 
+PCServices.factory('CONFIGURATIONS', function() {
+   return {
+       baseURL: baseURL,
+       serverURL: 'http://pikkacho.cn'
+   }
+});
+
 PCServices.factory('User', ['$http', '$localStorage', function ($http, $localStorage) {
-
-        function urlBase64Decode(str) {
-            var output = str.replace('-', '+').replace('_', '/');
-            switch (output.length % 4) {
-                case 0:
-                    break;
-                case 2:
-                    output += '==';
-                    break;
-                case 3:
-                    output += '=';
-                    break;
-                default:
-                    throw 'Illegal base64url string!';
-            }
-            return window.atob(output);
-        }
-
-        function getUserFromToken() {
-            return $localStorage.user;
-        }
-
         return {
             save: function(data, success, error) {
                 $http.post(baseURL + '/user', data).then(success, error);
@@ -34,8 +19,14 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
             login: function(uname, password, success, error) {
                 $http.post(baseURL + '/authentication', {uname: uname, password: password}).then(function successHandler(response) {
                     $localStorage.token = response.data.token;
-                    var encoded = response.data.token.split('.')[1];
-                    $localStorage.user = JSON.parse(urlBase64Decode(encoded));
+                    $localStorage.user = {
+                        uid: response.data.uid,
+                        uname: response.data.uname
+                    };
+                    $localStorage.tokenInfo = {
+                        signTime: response.data.iat * 1000,
+                        expireTime: response.data.exp * 1000
+                    };
                     success();
                 }, error);
             },
@@ -46,11 +37,20 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
                 $http.put(baseURL + '/user/' + uid, data).then(success, error);
             },
             getCurrentUser: function() {
-                return getUserFromToken();
+                var storedUser = $localStorage.user;
+                if (storedUser && $localStorage.tokenInfo) {
+                    if (new Date().getTime() <= $localStorage.tokenInfo.expireTime)
+                        return storedUser;
+                }
+                return undefined;
+            },
+            logout: function() {
+                $localStorage.token = null;
+                $localStorage.user = null;
+                $localStorage.tokenInfo = null;
             }
         }
     }]);
-
 
 PCServices.factory('Talking', ['$resource', function ($resource) {
     return $resource(baseURL + '/talking/:tid', null,
@@ -61,7 +61,9 @@ PCServices.factory('Talking', ['$resource', function ($resource) {
             'query': {url: baseURL + '/talkings', method: 'GET'},
             'queryCount': {url: baseURL + '/talkings/new', method: 'GET'},
             'userGet': {url: baseURL + '/talkings/u/:uid', method: 'GET'},
-            'groupGet': {url: baseURL + '/talkings/g/:gid', method: 'GET'}
+            'userCountGet': {url: baseURL + '/talkings/u/:uid/count', method: 'GET'},
+            'groupGet': {url: baseURL + '/talkings/g/:gid', method: 'GET'},
+            'groupCountGet': {url: baseURL + '/talkings/g/:gid/count', method: 'GET'}
         });
 }]);
 
@@ -83,7 +85,8 @@ PCServices.factory('UserRelation', ['$resource', function ($resource) {
             'get': {url: baseURL + '/relation/user/:uid/me', method: 'GET'},
             'queryFollows': {url: baseURL + '/relation/user/:uid/follows', method: 'GET'},
             'queryFollowers': {url: baseURL + '/relation/user/:uid/followers', method: 'GET'},
-            'maybeknow': {url: baseURL + '/relation/maybeknow', method: 'GET'}
+            'maybeknow': {url: baseURL + '/relation/maybeknow', method: 'GET'},
+            'querySuggestion': {url: baseURL + '/suggest/user/nickname/:nickname', method: 'GET'}
         });
 }]);
 
@@ -106,4 +109,12 @@ PCServices.factory('Group', ['$resource', function ($resource) {
             'get': {method: 'GET'},
             'query': {url: baseURL + '/group/suggest/name/:gname', method: 'GET'}
         });
+}]);
+
+PCServices.factory('Image', ['$http', function($http) {
+    return {
+        getImage: function(path, success, error) {
+            $http.get(baseURL + '/user/' + uid).then(success, error);
+        }
+    }
 }]);

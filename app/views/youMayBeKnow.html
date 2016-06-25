@@ -1,21 +1,24 @@
 <!---U may be know小模块-->
-<div class="maybe_know background_dark_blue">
-    <div claas="title_box">
+<div class="maybe_know background_dark_blue" ng-controller='youMayBeKnowController'>
+    <div class="title_box">
         <h3 class="color_light_gray">U maybe know...</h3>
     </div>
     <div class="inner_box clear_fix">
-       <div ng-repeat='person in persons'>
-           <div class="one_friend clear_fix">
-               <div class="thumb_image">
-                  <img ng-src="../images/default_avatar.jpg">
-               </div>
-           </div>
-       </div>
+        <div class="one_friend clear_fix" ng-repeat='person in persons'>
+            <div class="thumb_image">
+                <a href="#/user/{{person.uid}}"><img ng-src="{{person.avatar}}"></a>
+            </div>
+            <div class="detail">
+                <a class="no_decoration always_white" href="#/user/{{person.uid}}"><h5>{{person.nickname}}</h5></a>
+                <span class="words">你关注的</span>
+                <a class="no_decoration always_white" ng-href="#/user/{{person.mid}}">{{person.midNick}}</a>
+                       <span ng-show="person.cnt > 1">
+                           <span class="words">等</span>
+                           <span class="number color_light_gray">{{person.cnt}}</span>
+                           <span class="words">个好友</span>
+                       </span>
+                <span class="words">也关注了Ta</span>
+            </div>
+        </div>
     </div>
 </div>
-<!--
-.detail
-h5.color_light_gray= person.username
-span.number.color_light_gray= person.numberOfCommmonFriends
-span.words  common friends
--->

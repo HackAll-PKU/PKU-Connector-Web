@@ -5,11 +5,6 @@
 describe('indexController', function() {
     beforeEach(module('PCControllers'));
 
-    it('should bind name', inject(function($controller) {
-        var scope = {},
-            controller = $controller('indexController', {$scope: scope});
-        expect(scope.name).toBe("index")
-    }));
 });
 
 describe('loginController', function() {
@@ -19,7 +14,11 @@ describe('loginController', function() {
 
     beforeEach(inject(function($controller, $localStorage, $rootScope, _$httpBackend_, $location, User) {
         $httpBackend = _$httpBackend_;
-        $httpBackend.expectPOST('http://pikkacho.cn/api/v1/authentication').respond({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmFtZSI6ImNsdCIsInVpZCI6NCwiaWF0IjoxNDYzODUwNjIxLCJleHAiOjE0NjQwMjM0MjF9.n22c1SBeeLsFl6-5Vqv03mDe8bX3VkdwBnY9q3wcl8c'});
+        $httpBackend.expectPOST('http://pikkacho.cn/api/v1/authentication').respond({
+            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmFtZSI6ImNsdCIsInVpZCI6NCwiaWF0IjoxNDYzODUwNjIxLCJleHAiOjE0NjQwMjM0MjF9.n22c1SBeeLsFl6-5Vqv03mDe8bX3VkdwBnY9q3wcl8c',
+            uid: '4',
+            uname: 'clt'
+        });
         scope = $rootScope.$new();
         controller = $controller('loginController', {$scope: scope});
         storage = $localStorage;
@@ -40,10 +39,7 @@ describe('loginController', function() {
         $httpBackend.flush();
         expect(storage.token).toEqual("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmFtZSI6ImNsdCIsInVpZCI6NCwiaWF0IjoxNDYzODUwNjIxLCJleHAiOjE0NjQwMjM0MjF9.n22c1SBeeLsFl6-5Vqv03mDe8bX3VkdwBnY9q3wcl8c");
         expect(storage.user.uname).toEqual("clt");
-        expect(storage.user.uid).toEqual(4);
-        expect(location.path()).toBe('/');
-        expect(user.getCurrentUser().uname).toEqual("clt");
-        expect(user.getCurrentUser().uid).toEqual(4);
+        expect(storage.user.uid).toEqual('4');
     });
 });
 

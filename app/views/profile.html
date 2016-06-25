@@ -1,0 +1,44 @@
+<div id="signup_whole">
+    <section>
+        <h1>Change Profile for PKU Connector</h1>
+        <h2>Let others know you better</h2>
+        <div id="signup_box">
+            <div class="image_box" style='background: url("{{background}}")' ngf-select="uploadBackground($file); $event.stopPropagation();" accept="image/*" ngf-max-height="2000" ngf-max-size="2MB">
+                <div class="thumb_image">
+                    <button ngf-select="uploadAvatar($file); $event.stopPropagation();" accept="image/*" ngf-max-height="2000" ngf-max-size="2MB"><img ng-src="{{avatar}}"></button>
+                </div>
+            </div>
+            <form name="signupForm">
+                <div class="field">
+                    <div class="instruction_box"><label>用户名</label></div>
+                    <input name="uname" ng-model="uname" type="text" required>
+                    <span class="error_icon" ng-hide="signupForm.uname.$valid || signupForm.uname.$pristine"></span>
+                    <span class="ok_icon" ng-show="signupForm.uname.$valid && signupForm.uname.$dirty"></span>
+                </div>
+                <div class="field">
+                    <div class="instruction_box"><label>昵称</label></div>
+                    <input name="nickname" ng-model="nickname" type="text">
+                    <span class="error_icon" ng-hide="signupForm.nickname.$valid || signupForm.nickname.$pristine"></span>
+                    <span class="ok_icon" ng-show="signupForm.nickname.$valid && signupForm.uname.$dirty"></span>
+                </div>
+                <div class="field">
+                    <div class="instruction_box"><label>个性签名</label></div>
+                    <input name="signature" ng-model="signature" type="text">
+                    <span class="error_icon" ng-hide="signupForm.signature.$valid || singupForm.signature.$pristine"></span>
+                    <span class="ok_icon" ng-show="signupForm.signature.$valid && signupForm.signature.$dirty"></span>
+                </div>
+                <div class="field">
+                    <div class="instruction_box"><label>入学年份</label></div>
+                    <input name="enrollmentYear" ng-model="enrollmentYear" min="2010" max="2017" type="number">
+                    <span class="error_icon" ng-hide="signupForm.enrollmentYear.$valid || singupForm.enrollmentYear.$pristine"></span>
+                    <span class="ok_icon" ng-show="signupForm.enrollmentYear.$valid && signupForm.enrollmentYear.$dirty"></span>
+                </div>
+                <div class="clear"></div>
+                <button ng-click="save()" ng-disabled="!signupForm.$valid" ng-class="{disabled: !signupForm.$valid, red: failed, submit: true}">
+                    <p ng-hide="loading">{{indicator}}</p>
+                    <div class="round_circle round_circle_large round_circle_green" ng-show="loading"></div>
+                </button>
+            </form>
+        </div>
+    </section>
+</div>

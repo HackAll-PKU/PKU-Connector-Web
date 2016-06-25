@@ -33,6 +33,14 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
         templateUrl: '/app/views/profile.html',
         controller: 'profileController'
     }).
+    when('/user/:uid', {
+        templateUrl: '/app/views/userhome.html',
+        controller: 'userhomeController'
+    }).
+    when('/group/:gid', {
+        templateUrl: '/app/views/grouphome.html',
+        controller: 'grouphomeController'
+    }).
     otherwise({redirectTo: '/login'});
 
     $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
@@ -45,12 +53,15 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
                 return config;
             },
             'responseError': function(response) {
-                if(response.status === 401 || response.status === 403) {
-                    $location.path('#/signin');
-                }
                 return $q.reject(response);
             }
         };
     }]);
 
-}]);
+}]).filter("emoji",function($sce){
+    return function(input){
+        var regex = /\[:(.+?):]/gm;
+        var out = input.replace(regex,'<span class="ep-emojies-c"><span class="ep-e" data-index="$1"></span></span>');
+        return $sce.trustAsHtml(out);
+    }
+});

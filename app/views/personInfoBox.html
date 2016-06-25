@@ -1,1 +1,29 @@
-<p>here is personInfoBox</p>
+<div class="person_info_box background_dark_blue" ng-controller="indexController">
+    <div class="image_box" style='background: url("{{me.background}}")'>
+        <div class="thumb_image">
+            <a ng-href="#/user/{{me.uid}}"><img ng-src="{{me.avatar}}"></a>
+        </div>
+    </div>
+    <div class="inner_info_box">
+        <div class="name_box">
+            <a class="color_light_gray font-size18" ng-href="#/user/{{me.uid}}">{{me.nickname}}</a>
+        </div>
+        <ul class="user_attention font-size18">
+            <li>
+                <a class="color_light_gray" href="/">
+                    <strong>{{me.follows}}</strong><span class="font-size12">关注</span>
+                </a>
+            </li>
+            <li>
+                <a class="color_light_gray" href="/">
+                    <strong>{{me.followers}}</strong><span class="font-size12">粉丝</span>
+                </a>
+            </li>
+            <li>
+                <a class="color_light_gray" href="/">
+                    <strong>{{me.talkings}}</strong><span class="font-size12">说说</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
