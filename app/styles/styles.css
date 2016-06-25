@@ -503,9 +503,9 @@ li.vertical a:hover, li.vertical a.selected {
 
 /*评论框输入功能*/
 .talking_whole div.input {
-    padding: 5px;
+    padding: 0 5px;
     width: 88%;
-    margin: 3px;
+    margin: 0 3px;
     border: 1px solid #163156;
     background-color: #0c2343;
     border-radius: 2px;
@@ -513,7 +513,7 @@ li.vertical a:hover, li.vertical a.selected {
 }
 .talking_whole div.input input {
     background-color: transparent;
-    height: 10px;
+    height: 20px;
     width: 100%;
     outline: none;
     border: none;
