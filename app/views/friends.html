@@ -1,0 +1,51 @@
+<div class="global_whole">
+    <div class="global_nav">
+        <div class="center1000" ng-include="'nav.html'" ng-controller="navController"></div>
+    </div>
+    <div class="global_main center1000 clear_fix">
+        <div class="header_box" style='background: url("{{me.background}}") no-repeat center center; background-size: cover;'>
+            <div class="thumb_image">
+                <img ng-src="{{me.avatar}}">
+            </div>
+            <div class="name_box">
+                <a class="always_white font-size25" ng-href="#/user/{{me.uid}}">{{me.nickname}}</a>
+            </div>
+            <div class="name_box">
+                <p class="font-size12">{{me.signature}}</p>
+            </div>
+        </div>
+        <div class="PC_left" id="friend_left">
+            <div class="nav_list">
+                <ul class="nav_list">
+                    <li class="vertical"><a class="always_white no_decoration" href="javascript:void(0)" ng-class="{selected: selected == 0}" ng-click="select(0)">我关注的人</a></li>
+                    <li class="vertical"><a class="always_white no_decoration" href="javascript:void(0)" ng-class="{selected: selected == 1}" ng-click="select(1)">关注我的人</a></li>
+                    <li class="vertical"><a class="always_white no_decoration" href="javascript:void(0)" ng-class="{selected: selected == 2}" ng-click="select(2)">我关注的群组</a></li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="border"></div>
+        </div>
+        <div class="friends_main">
+            <div class="friend background_dark_blue" ng-repeat="user in users">
+                <div class="thumb_image">
+                    <a ng-href="#/user/{{user.uid}}"><img ng-src="{{user.avatar}}"></a>
+                </div>
+                <div class="detail">
+                    <div class="username color_light_gray font-size18">
+                        <a class="no_decoration always_inherit"
+                           ng-href="#/user/{{user.uid}}">{{user.nickname}}</a>
+                    </div>
+                    <div class="signature color_light_gray">
+                        <span>{{user.signature}}</span>
+                    </div>
+                    <div class="attention">
+                        <a href="javascript:void(0)" ng-click="alterAttention($index)" ng-class="{has_attentioned: !user.hasAttentioned}">{{user.attentionIndicator}}</a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="global_footer" ng-include="'./footer.html'"></div>
+</div>
+

@@ -41,7 +41,7 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
         templateUrl: '/app/views/grouphome.html',
         controller: 'grouphomeController'
     }).
-    when('/friends', {
+    when('/friends/:uid/:selected', {
         templateUrl: '/app/views/friends.html',
         controller: 'friendsController'
     }).

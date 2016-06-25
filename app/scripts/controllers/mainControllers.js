@@ -754,7 +754,7 @@ PCControllers
     };
 
     $scope.getNextPageContents();
-}]).controller('friendsController', ['$scope', 'Talking', 'User', 'Group', '$interval', '$routeParams', function ($scope, Talking, User, Group, $interval, $routeParams) {
+}]).controller('friendsController', ['$scope', 'Talking', 'User', 'Group', '$interval', '$routeParams', 'UserRelation', 'GroupRelation', function ($scope, Talking, User, Group, $interval, $routeParams, UserRelation, GroupRelation) {
     if (!User.getCurrentUser()) return;
     var thisUid = $routeParams.uid;
 
@@ -765,6 +765,7 @@ PCControllers
     });
 
     $scope.select = function (which) {
+        $scope.selected = which;
         switch (which) {
             case 0: //关注列表
                 UserRelation.queryFollows({uid: thisUid}, function (res) {
@@ -827,8 +828,10 @@ PCControllers
     function fetchGroupInfo(Array, index) {
         //获取组基本信息
         Group.get({gid: Array[index].gid}, function (res) {
-            Array[index].gname = res.data.gname;
+            Array[index].uid = res.data.gid;
+            Array[index].nickname = res.data.gname;
             Array[index].avatar = res.data.avatar;
+            Array[index].signature = "";
         });
 
         //获取组关系信息
@@ -844,5 +847,7 @@ PCControllers
             }
         });
     }
+
+    $scope.select(Number.parseInt($routeParams.selected));
 
 }]);
