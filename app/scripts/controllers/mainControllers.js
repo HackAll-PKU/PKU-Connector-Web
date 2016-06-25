@@ -519,10 +519,17 @@ PCControllers
         });
     });
 }])
-.controller('grouphomeController', ['$scope', '$routeParams', 'User', 'UserRelation', 'Talking', 'Group', function($scope, $routeParams, User, UserRelation, Talking, Group) {
+.controller('grouphomeController', ['$scope', '$routeParams', 'User', 'UserRelation', 'Talking', 'Group', 'GroupRelation', function($scope, $routeParams, User, UserRelation, Talking, Group, GroupRelation) {
     $scope.gid = $routeParams.gid;
-    Group.query($scope.gid, function (res) {
-        $scope.me = res.data.data;
+    Group.get({gid: $scope.gid}, function (res) {
+        $scope.me = res.data;
         $scope.me.background = "http:/pikkacho.cn/uploads/default_background.jpg"
+        Talking.groupCountGet({gid: $scope.gid}, function (res) {
+            $scope.me.talkings = res.data;
+        });
+        GroupRelation.queryFollowers({gid: $scope.gid}, function (res) {
+            $scope.me.followers = res.data;
+            $scope.me.followersCount = res.data.length;
+        });
     });
 }]);

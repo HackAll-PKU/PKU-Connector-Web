@@ -10,6 +10,20 @@
             <div class="name_box">
                 <a class="always_white font-size25" ng-href="#/user/{{me.gid}}">{{me.gname}}</a>
             </div>
+            <div class="bottom_box background_dark_blue" id="group_user_attention">
+                <ul class="user_attention font-size18">
+                    <li>
+                        <a class="color_light_gray" href="/">
+                            <strong>{{me.followersCount}}</strong><span class="font-size12">粉丝</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="color_light_gray" href="/">
+                            <strong>{{me.talkings}}</strong><span class="font-size12">说说</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="PC_main">
             <ng-include src="'./talkings.html'"></ng-include>

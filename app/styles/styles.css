@@ -907,9 +907,14 @@ ul.user_attention li a span {
     margin-left: -100px;
 }
 
+#group_user_attention {
+    width: 130px;
+    margin-left: -65px;
+}
 
-
-
+#group_user_attention .user_attention {
+    width: 123px;
+}
 
 
 /*  round_circle  */
