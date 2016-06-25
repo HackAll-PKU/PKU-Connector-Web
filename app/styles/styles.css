@@ -1007,9 +1007,10 @@ ul.user_attention li a span {
     border-radius: 5px;
     line-height: 30px;
     text-decoration: none;
+    display: inline-block;
 }
 
-.header_box .attention a.has_attentioned {
+.friends_main .attention a.has_attentioned {
     background: #5f636d;
 }
 

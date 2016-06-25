@@ -39,7 +39,7 @@
                         <span>{{user.signature}}</span>
                     </div>
                     <div class="attention">
-                        <a href="javascript:void(0)" ng-click="alterAttention($index)" ng-class="{has_attentioned: !user.hasAttentioned}">{{user.attentionIndicator}}</a>
+                        <a href="javascript:void(0)" ng-click="alterAttention($index)" ng-class="{has_attentioned: user.hasAttentioned}">{{user.attentionIndicator}}</a>
                     </div>
                     <div class="clear"></div>
                 </div>
