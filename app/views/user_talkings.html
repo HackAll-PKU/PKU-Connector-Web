@@ -1,12 +1,5 @@
-<div class="talking_whole" ng-controller="homepageTalkingsController">
+<div class="talking_whole" ng-controller="userhomeTalkingsController">
 <div infinite-scroll="getNextPageContents()" infinite-scroll-disabled="busy || !hasNextPage" infinite-scroll-distance='1'>
-    <div ng-show="hasNew">
-        <a href="" class="no_decoration color_orange" ng-click="getNewContents()">
-            <div class="notice background_light_yellow">有{{newCount}}条新说说，点击查看</div>
-        </a>
-        <div class="clear"></div>
-    </div>
-
     <div class="talking background_dark_blue" ng-repeat="talking in contents">
         <div class="thumb_image">
             <a ng-href="#/user/{{talking.user_uid}}"><img ng-src="{{talking.user_avatar}}"></a>

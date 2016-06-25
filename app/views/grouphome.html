@@ -10,6 +10,10 @@
             <div class="name_box">
                 <a class="always_white font-size25" ng-href="#/user/{{me.gid}}">{{me.gname}}</a>
             </div>
+            <div id="attention">
+                <a href="javascript:void(0)" ng-click="attention()" ng-hide="hasAttentioned">{{attentionIndicator}}</a>
+                <a href="javascript:void(0)" ng-click="unattention()" class="has_attentioned" ng-show="hasAttentioned">{{attentionIndicator}}</a>
+            </div>
             <div class="bottom_box background_dark_blue" id="group_user_attention">
                 <ul class="user_attention font-size18">
                     <li>
@@ -18,7 +22,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="color_light_gray" href="/">
+                        <a class="color_light_gray" href="#/group/{{me.gid}}">
                             <strong>{{me.talkings}}</strong><span class="font-size12">说说</span>
                         </a>
                     </li>
@@ -26,7 +30,7 @@
             </div>
         </div>
         <div class="PC_main">
-            <ng-include src="'./talkings.html'"></ng-include>
+            <ng-include src="'./group_talkings.html'"></ng-include>
         </div>
     </div>
     <div class="global_footer" ng-include="'./footer.html'"></div>

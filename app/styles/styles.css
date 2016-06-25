@@ -209,6 +209,7 @@ ul.nav_list {
     margin: 0;
     padding: 0;
     float: left;
+    width: 100%;
 }
 
 ul.nav_list li.horizontal, ul.nav_list li.vertical {
@@ -889,7 +890,6 @@ ul.user_attention li a span {
 }
 
 .header_box a {
-    max-width: 114px;
     display: inline-block;
     overflow: hidden;
     font-weight: bold;
@@ -915,6 +915,37 @@ ul.user_attention li a span {
 #group_user_attention .user_attention {
     width: 123px;
 }
+
+.header_box #attention {
+    background: #eb7350;
+    color: #fff;
+    text-align: center;
+    margin: 0 auto;
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 0;
+    vertical-align: middle;
+}
+
+.header_box #attention a {
+    background: inherit;
+    color: inherit;
+    margin: auto auto;
+    vertical-align: middle;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    line-height: 30px;
+}
+
+.header_box #attention a.has_attentioned {
+    background: #5f636d;
+}
+
+
+
 
 
 /*  round_circle  */
