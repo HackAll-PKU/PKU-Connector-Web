@@ -495,12 +495,23 @@ li.vertical a:hover {
     text-decoration: none;
     display: block;
 }
+
+/*评论框输入功能*/
 .talking_whole div.input {
     padding: 5px;
     margin: 5px -10px 10px;
     border: 1px solid #163156;
     background-color: #0c2343;
     border-radius: 2px;
+}
+.talking_whole div.input input {
+    background-color: transparent;
+    height: 10px;
+    width: 100%;
+    outline: none;
+    border: none;
+    overflow: hidden;
+    resize: none;
 }
 .talking_whole .talking div.detail div.text a {
     color: #eb7350;
