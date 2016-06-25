@@ -19,8 +19,6 @@ PCControllers
     }
     User.query(User.getCurrentUser().uid, function (res) {
         $scope.me = res.data.data;
-        $scope.me.avatar = CONFIGURATIONS.serverURL + $scope.me.avatar;
-        $scope.me.background = CONFIGURATIONS.serverURL + $scope.me.avatar;
         UserRelation.queryFollows({uid: $scope.me.uid}, function (res) {
             $scope.me.follows = res.data.users.length + res.data.groups.length;
             $scope.groups = res.data.groups;
