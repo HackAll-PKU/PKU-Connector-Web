@@ -496,7 +496,10 @@ PCControllers
 }])
 .controller('userhomeController', ['$scope', '$routeParams', 'User', 'UserRelation', 'Talking', function($scope, $routeParams, User, UserRelation, Talking) {
     $scope.uid = $routeParams.uid;
-
+    $scope.isme = false;
+    if ($scope.uid == User.getCurrentUser().uid) {
+        $scope.isme = true;
+    }
     function getUserRelation() {
         UserRelation.get({uid: $scope.uid}, function (res) {
             switch (res.data.flag) {
