@@ -399,13 +399,37 @@ li.vertical a:hover {
 
 .upload_thumb_image {
     display: inline-block;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     overflow: hidden;
 }
 .upload_thumb_image img {
-    min-width: 100px;
-    height: 100px;
+    padding: 4px;
+    min-width: 80px;
+    height: 80px;
+}
+
+.talking_large_image_box {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: block;
+    width: 450px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.talking_large_image {
+    text-align:center;
+}
+
+.talking_large_image img {
+    padding:10px;
+    max-width: 430px;
+    max-height: 500px;
+}
+
+.talking_large_image_box a:hover {
+    color: #eb7350
 }
 
 /*  talking  */
@@ -416,7 +440,7 @@ li.vertical a:hover {
 
 .talking_whole .talking {
     margin-top: 10px;
-    padding: 20px 20px 4px 20px;
+    padding: 20px 20px 20px 20px;
     border-radius: 2px;
 }
 

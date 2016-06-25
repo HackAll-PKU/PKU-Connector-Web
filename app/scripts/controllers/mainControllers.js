@@ -274,6 +274,7 @@ PCControllers
         }
         //解析image数组
         Array[index].image = JSON.parse(Array[index].image);
+        Array[index].showLargeImage = -1;
     }
 
     function fetchNickname(Array, Uids, index) {

@@ -22,7 +22,16 @@
                 {{talking.text}}
                 <a class="no_decoration always_white" href="" ng-repeat="user in talking.mentionedUsers" ng-href="#/user/{{user.uid}}"> @{{user.nickname}}</a>
             </div>
-            <div><span class="upload_thumb_image" ng-repeat="img in talking.image"><img ng-src="{{img}}" ng-click=""></span></div>
+            <div class="talking_large_image_box" ng-show="talking.showLargeImage >= 0">
+                <p>
+                    <a class="no_decoration always_white" href="" ng-click="talking.showLargeImage = -1">收起</a>
+                    <a class="no_decoration always_white" href="{{talking.image[talking.showLargeImage]}}" target="_blank">查看原图</a>
+                </p>
+                <div class="talking_large_image">
+                    <img ng-src="{{talking.image[talking.showLargeImage]}}" ng-click="talking.showLargeImage = talking.showLargeImage == talking.image.length - 1 ? 0 : talking.showLargeImage + 1">
+                </div>
+            </div>
+            <div><span class="upload_thumb_image" ng-repeat="img in talking.image"><img ng-src="{{img}}" ng-click="talking.showLargeImage = $index"></span></div>
             <div class="clear"></div>
         </div>
     </div>
