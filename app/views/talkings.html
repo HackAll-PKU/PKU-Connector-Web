@@ -28,9 +28,8 @@
                 </a>
             </li>
             <li>
-                <a class="color_light_gray">
-                   点赞（{{newCount}}）
-                </a>
+                <a class="color_light_gray" ng-click="likeTalkings()">
+                    <span ng-show="talking.liked">已</span>赞({{talking.likes}})</ a>
             </li>
             <div class="clear"></div>
     </div>

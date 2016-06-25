@@ -179,6 +179,10 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
 
     };
 
+    $scope.likeTalkings = function () {
+      
+
+    }
     $scope.getNewContents = function () {
         Talking.query({after: lastUpdateTime}, function (response) {
             var newRows = response.data.rows;
