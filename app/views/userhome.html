@@ -3,7 +3,39 @@
         <div class="center1000" ng-include="'nav.html'" ng-controller="navController"></div>
     </div>
     <div class="global_main center1000 clear_fix">
-        <p>{{uid}}</p>
+        <div class="header_box" style='background: url("{{me.background}}") no-repeat center center; background-size: cover;'>
+            <div class="thumb_image">
+                <img ng-src="{{me.avatar}}">
+            </div>
+            <div class="name_box">
+                <a class="always_white font-size25" ng-href="#/user/{{me.uid}}">{{me.nickname}}</a>
+            </div>
+            <div class="name_box">
+                <p class="font-size12">{{me.signature}}</p>
+            </div>
+            <div class="bottom_box background_dark_blue">
+                <ul class="user_attention font-size18">
+                    <li>
+                        <a class="color_light_gray" href="/">
+                            <strong>{{me.follows}}</strong><span class="font-size12">关注</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="color_light_gray" href="/">
+                            <strong>{{me.followers}}</strong><span class="font-size12">粉丝</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="color_light_gray" href="/">
+                            <strong>{{me.talkings}}</strong><span class="font-size12">说说</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="PC_main">
+            <ng-include src="'./talkings.html'"></ng-include>
+        </div>
     </div>
     <div class="global_footer" ng-include="'./footer.html'"></div>
 </div>

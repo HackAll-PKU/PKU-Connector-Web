@@ -3,8 +3,17 @@
         <div class="center1000" ng-include="'nav.html'" ng-controller="navController"></div>
     </div>
     <div class="global_main center1000 clear_fix">
-        <p>{{gid}}</p>
+        <div class="header_box" style='background: url("{{me.background}}") no-repeat center center; background-size: cover;'>
+            <div class="thumb_image">
+                <img ng-src="{{me.avatar}}">
+            </div>
+            <div class="name_box">
+                <a class="always_white font-size25" ng-href="#/user/{{me.gid}}">{{me.gname}}</a>
+            </div>
+        </div>
+        <div class="PC_main">
+            <ng-include src="'./talkings.html'"></ng-include>
+        </div>
     </div>
     <div class="global_footer" ng-include="'./footer.html'"></div>
 </div>
-

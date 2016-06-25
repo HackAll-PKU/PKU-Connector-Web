@@ -494,9 +494,35 @@ PCControllers
         }
     }
 }])
-.controller('userhomeController', ['$scope', '$routeParams', function($scope, $routeParams) {
+.controller('userhomeController', ['$scope', '$routeParams', 'User', 'UserRelation', 'Talking', function($scope, $routeParams, User, UserRelation, Talking) {
     $scope.uid = $routeParams.uid;
+    User.query($scope.uid, function(res) {
+        $scope.me = res.data.data;
+        UserRelation.queryFollows({uid: $scope.me.uid}, function (res) {
+            $scope.me.follows = res.data.users.length + res.data.groups.length;
+            $scope.groups = res.data.groups;
+            function getGroupInfo(index) {
+                Group.get({gid: $scope.groups[index].gid}, function (res) {
+                    $scope.groups[index].gname = res.data.gname;
+                    $scope.groups[index].avatar = res.data.avatar;
+                });
+            }
+            for (var index in res.data.groups){
+                getGroupInfo(index);
+            }
+        });
+        UserRelation.queryFollowers({uid: $scope.me.uid}, function (res) {
+            $scope.me.followers = res.data.length;
+        });
+        Talking.userCountGet({uid: $scope.me.uid}, function (res) {
+            $scope.me.talkings = res.data;
+        });
+    });
 }])
-.controller('grouphomeController', ['$scope', '$routeParams', function($scope, $routeParams) {
+.controller('grouphomeController', ['$scope', '$routeParams', 'User', 'UserRelation', 'Talking', 'Group', function($scope, $routeParams, User, UserRelation, Talking, Group) {
     $scope.gid = $routeParams.gid;
+    Group.query($scope.gid, function (res) {
+        $scope.me = res.data.data;
+        $scope.me.background = "http:/pikkacho.cn/uploads/default_background.jpg"
+    });
 }]);

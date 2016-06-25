@@ -560,11 +560,11 @@ li.vertical a:hover {
     color: #257cde;
 }
 
-.person_info_box .inner_info_box ul.user_attention {
+ul.user_attention {
     overflow: hidden;
     padding: 0;
     width: 182px;
-    margin: 10px auto 0;
+    margin: 5px auto 5px;
 }
 
 ul.user_attention li {
@@ -852,6 +852,64 @@ ul.user_attention li a span {
     height: 90px;
     margin-top: 5px;
 }
+
+
+/*   用户主页和组主页的头部    */
+.header_box {
+    width: 100%;
+    height: 300px;
+    margin: 50px 0;
+    padding: 70px 0 0;
+    z-index: 1;
+    display: block;
+    position: relative;
+}
+
+.header_box .thumb_image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 0;
+}
+
+.header_box .thumb_image img {
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    margin: 5px;
+}
+
+.header_box .name_box {
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.header_box a {
+    max-width: 114px;
+    display: inline-block;
+    overflow: hidden;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+.header_box .bottom_box {
+    position: absolute;
+    bottom: 0;
+    width: 200px;
+    left: 50%;
+    margin-left: -100px;
+}
+
+
+
+
 
 
 /*  round_circle  */
