@@ -4,14 +4,14 @@
 </div>
 
 <div class="search" ng-controller="navController">
-    <span class="placeholder">searching</span>
+    <span class="placeholder" ng-hide="search_input">查找用户</span>
     <input ng-model="search_input">
 
     <div id="top_search" class="topic_dropdown_content" ng-show="userResult && search_input">
         <ul>
             <li ng-repeat="user in userResult">
                 <a class="no_decoration always_black" ng-href="{{user.uid > 0 ? '#/user/'+user.uid : ''}}"
-                   ng-click="">
+                   ng-click="clearInput()">
                     <span ng-show="user.uid == -1">没有找到用户 </span>@{{user.nickname}}</a>
             </li>
         </ul>

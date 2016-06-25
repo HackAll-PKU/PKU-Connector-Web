@@ -86,7 +86,8 @@ PCServices.factory('UserRelation', ['$resource', function ($resource) {
             'queryFollows': {url: baseURL + '/relation/user/:uid/follows', method: 'GET'},
             'queryFollowers': {url: baseURL + '/relation/user/:uid/followers', method: 'GET'},
             'maybeknow': {url: baseURL + '/relation/maybeknow', method: 'GET'},
-            'querySuggestion': {url: baseURL + '/suggest/user/nickname/:nickname', method: 'GET'}
+            'querySuggestion': {url: baseURL + '/suggest/user/nickname/:nickname', method: 'GET'},
+            'searchUser': {url: baseURL + '/search/users/:nickname', method: 'GET'}
         });
 }]);
 

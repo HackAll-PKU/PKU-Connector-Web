@@ -340,12 +340,16 @@ PCControllers
         }
         //用timeout减少输入时的网络请求次数
         timeout = $timeout(function () {
-            UserRelation.querySuggestion({nickname: newValue}, function (res) {
+            UserRelation.searchUser({nickname: newValue}, function (res) {
                 if (res.data.length == 0) res.data = [{uid: -1, nickname: newValue}];
                 scope.userResult = res.data;
             });
         }, 100);
     });
+
+    $scope.clearInput = function () {
+        $scope.search_input = '';
+    }
 }])
 .controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', 'UserRelation', '$timeout', 'Upload', 'CONFIGURATIONS', function ($scope, Talking, Group, GroupRelation, UserRelation, $timeout, Upload, CONFIGURATIONS) {
     $scope.topicSelecting = false;
