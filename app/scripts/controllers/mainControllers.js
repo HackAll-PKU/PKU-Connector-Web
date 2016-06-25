@@ -276,17 +276,21 @@ PCControllers
         Comment.query({tid:Array[index].tid}, function (res) {
             Array[index].comments = res.data;
             for (i in Array[index].comments) {
-                Comment.get({cid:Array[index].comments[i].cid},function (res){
-                    Array[index].comments[i].commentText = res.data.text;
-                    Array[index].comments[i].user_uid = res.data.user_uid;
-                    Array[index].comments[i].parent_cid = res.data.parent_cid;
-                    User.query(Array[index].comments[i].user_uid, function (res) {
-                        Array[index].comments[i].user_nickname = res.data.data.nickname;
-                        Array[index].comments[i].user_avatar = res.data.data.avatar;
-                    });
-                })
+                fetchComment(Array[index].comments, i);
             }
         });
+
+        function fetchComment(Array, i){
+            Comment.get({cid:Array[i].cid},function (res){
+                Array[i].commentText = res.data.text;
+                Array[i].user_uid = res.data.user_uid;
+                Array[i].parent_cid = res.data.parent_cid;
+                User.query(Array[i].user_uid, function (res) {
+                    Array[i].user_nickname = res.data.data.nickname;
+                    Array[i].user_avatar = res.data.data.avatar;
+                });
+            })
+        }
         //解析image数组
         Array[index].image = JSON.parse(Array[index].image);
         Array[index].showLargeImage = -1;

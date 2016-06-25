@@ -55,7 +55,7 @@
                 <div class="clear"></div>
                 <div class="comment background_dark_blue" ng-repeat="comment in talking.comments">
                     <div class="thumb_image">
-                        <a ng-href="#/user/{{comment.user_avatar}}"><img ng-src="{{comment.user_avatar}}"></a>
+                        <a ng-href="#/user/{{comment.user_uid}}"><img ng-src="{{comment.user_avatar}}"></a>
                     </div>
                     <div class="detail">
                         <div class="username color_light_gray">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </span>
-        </ul>>
+        </ul>
     </div>
 
     <div>
