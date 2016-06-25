@@ -33,6 +33,14 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
         templateUrl: '/app/views/profile.html',
         controller: 'profileController'
     }).
+    when('/user/:uid', {
+        templateUrl: '/app/views/userhome.html',
+        controller: 'userhomeController'
+    }).
+    when('/group/:gid', {
+        templateUrl: '/app/views/grouphome.html',
+        controller: 'grouphomeController'
+    }).
     otherwise({redirectTo: '/login'});
 
     $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {

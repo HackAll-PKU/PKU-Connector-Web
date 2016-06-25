@@ -492,4 +492,10 @@ PCControllers
             if ($scope.image[index] == path) $scope.image.splice(index, 1);
         }
     }
+}])
+.controller('userhomeController', ['$scope', '$routeParams', function($scope, $routeParams) {
+    $scope.uid = $routeParams.uid;
+}])
+.controller('grouphomeController', ['$scope', '$routeParams', function($scope, $routeParams) {
+    $scope.gid = $routeParams.gid;
 }]);
