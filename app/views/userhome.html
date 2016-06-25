@@ -20,17 +20,17 @@
             <div class="bottom_box background_dark_blue">
                 <ul class="user_attention font-size18">
                     <li>
-                        <a class="color_light_gray" href="/">
+                        <a class="color_light_gray" ng-href="#/friends/{{me.uid}}/0">
                             <strong>{{me.follows}}</strong><span class="font-size12">关注</span>
                         </a>
                     </li>
                     <li>
-                        <a class="color_light_gray" href="/">
+                        <a class="color_light_gray" ng-href="#/friends/{{me.uid}}/1">
                             <strong>{{me.followers}}</strong><span class="font-size12">粉丝</span>
                         </a>
                     </li>
                     <li>
-                        <a class="color_light_gray" href="#/user/{{me.uid}}">
+                        <a class="color_light_gray" ng-href="#/user/{{me.uid}}">
                             <strong>{{me.talkings}}</strong><span class="font-size12">说说</span>
                         </a>
                     </li>
