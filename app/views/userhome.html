@@ -13,6 +13,10 @@
             <div class="name_box">
                 <p class="font-size12">{{me.signature}}</p>
             </div>
+            <div id="attention" ng-hide="isme">
+                <a href="javascript:void(0)" ng-click="attention()" ng-hide="hasAttentioned">{{attentionIndicator}}</a>
+                <a href="javascript:void(0)" ng-click="unattention()" class="has_attentioned" ng-show="hasAttentioned">{{attentionIndicator}}</a>
+            </div>
             <div class="bottom_box background_dark_blue">
                 <ul class="user_attention font-size18">
                     <li>
@@ -26,7 +30,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="color_light_gray" href="/">
+                        <a class="color_light_gray" href="#/user/{{me.uid}}">
                             <strong>{{me.talkings}}</strong><span class="font-size12">说说</span>
                         </a>
                     </li>
@@ -34,7 +38,7 @@
             </div>
         </div>
         <div class="PC_main">
-            <ng-include src="'./talkings.html'"></ng-include>
+            <ng-include src="'./user_talkings.html'"></ng-include>
         </div>
     </div>
     <div class="global_footer" ng-include="'./footer.html'"></div>
