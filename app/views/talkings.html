@@ -9,7 +9,7 @@
 
     <div class="talking background_dark_blue" ng-repeat="talking in contents">
         <div class="thumb_image">
-            <a ng-href="#/user/{{talking.user_uid}}"><img ng-src="../{{talking.user_avatar}}"></a>
+            <a ng-href="#/user/{{talking.user_uid}}"><img ng-src="{{talking.user_avatar}}"></a>
         </div>
         <div class="detail">
             <div class="username color_light_gray">
