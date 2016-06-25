@@ -332,7 +332,7 @@ PCControllers
 .controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', 'UserRelation', '$timeout', 'Upload', 'CONFIGURATIONS', function ($scope, Talking, Group, GroupRelation, UserRelation, $timeout, Upload, CONFIGURATIONS) {
     $scope.topicSelecting = false;
     $scope.userSelecting = false;
-
+    $scope.text = "";
     //发表
     $scope.submit = function () {
         //创建话题
@@ -463,7 +463,8 @@ PCControllers
 
     new EmojiPanel(document.getElementById('emoji-panel'), {
         onClick: function(emoji) {
-            //$scope.text += unescape(('%ue415'+emoji.unified));
+            $scope.text += '[:' + emoji.index + ':]';//emoji.unified
+            //TODO:效率不行啊!!!
         }
     });
 

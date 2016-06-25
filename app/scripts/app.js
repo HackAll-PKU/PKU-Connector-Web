@@ -58,4 +58,10 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
         };
     }]);
 
-}]);
+}]).filter("emoji",function($sce){
+    return function(input){
+        var regex = /\[:(.+?):]/gm;
+        var out = input.replace(regex,'<span class="ep-emojies-c"><span class="ep-e" data-index="$1"></span></span>');
+        return $sce.trustAsHtml(out);
+    }
+});

@@ -19,7 +19,7 @@
             <div class="info font-size12">{{talking.timestamp}}</div>
             <div class="text color_light_gray">
                 <a class="no_decoration always_white" href="" ng-show="talking.group_gid" ng-href="#/group/{{talking.group_gid}}">#{{talking.group_gname}}#</a>
-                {{talking.text}}
+                <span data-ng-bind-html="talking.text | emoji"></span>
                 <a class="no_decoration always_white" href="" ng-repeat="user in talking.mentionedUsers" ng-href="#/user/{{user.uid}}"> @{{user.nickname}}</a>
             </div>
             <div class="talking_large_image_box" ng-show="talking.showLargeImage >= 0">
