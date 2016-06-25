@@ -371,10 +371,31 @@ PCControllers
     });
 
 }])
-.controller('navController', ['$scope', 'User', function ($scope, User) {
+.controller('navController', ['$scope', 'User', '$timeout', 'UserRelation', function ($scope, User, $timeout, UserRelation) {
     $scope.logout = function () {
         User.logout();
-    }
+    };
+    
+    $scope.search_input = '';
+    var timeout;
+    $scope.$watch('search_input', function(newValue, oldValue, scope) {
+        $timeout.cancel(timeout);
+        if(!newValue) {
+            scope.userResult = undefined;
+            return;
+        }
+        //用timeout减少输入时的网络请求次数
+        timeout = $timeout(function () {
+            UserRelation.searchUser({nickname: newValue}, function (res) {
+                if (res.data.length == 0) res.data = [{uid: -1, nickname: newValue}];
+                scope.userResult = res.data;
+            });
+        }, 200);
+    });
+
+    $scope.clearInput = function () {
+        $scope.search_input = '';
+    };
 }])
 .controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', 'UserRelation', '$timeout', 'Upload', 'CONFIGURATIONS', function ($scope, Talking, Group, GroupRelation, UserRelation, $timeout, Upload, CONFIGURATIONS) {
     $scope.topicSelecting = false;
@@ -459,7 +480,7 @@ PCControllers
                 }
                 scope.groupResult = res.data;
             });
-        }, 100);
+        }, 200);
     });
 
     //提及
@@ -505,7 +526,7 @@ PCControllers
                 if (res.data.length == 0) res.data = [{uid: -1, nickname: newValue}];
                 scope.userResult = res.data;
             });
-        }, 100);
+        }, 200);
     });
 
     new EmojiPanel(document.getElementById('emoji-panel'), {
