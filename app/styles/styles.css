@@ -493,6 +493,7 @@ li.vertical a:hover {
 .talking_whole .talking ul.function li a {
     text-decoration: none;
     display: block;
+}
 
 .talking_whole .talking div.detail div.text a {
     color: #eb7350;
