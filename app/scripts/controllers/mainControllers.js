@@ -758,8 +758,8 @@ PCControllers
     var currentUser = User.getCurrentUser();
     if (!currentUser) return;
     var thisUid = $routeParams.uid;
-    var isMe = currentUser.uid == thisUid;
-
+    $scope.isMe = currentUser.uid == thisUid;
+    $scope.myUid = currentUser.uid;
     $scope.users = [];
 
     User.query(thisUid, function (res) {
