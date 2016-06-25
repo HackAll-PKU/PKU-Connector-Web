@@ -446,7 +446,7 @@ li.vertical a:hover, li.vertical a.selected {
 
 .talking_whole .talking {
     margin-top: 10px;
-    padding: 20px 20px 20px 20px;
+    padding: 10px 20px 10px 20px;
     border-radius: 2px;
 }
 
@@ -465,6 +465,7 @@ li.vertical a:hover, li.vertical a.selected {
     padding: 0;
 }
 
+
 .talking_whole .talking div.detail div.username {
     margin-bottom: 7px;
     padding: 5px 0 0 0;
@@ -479,9 +480,93 @@ li.vertical a:hover, li.vertical a.selected {
     margin-bottom: 2px;
 }
 
-.talking_whole .talking div.detail div.text a {
-    color: #eb7350;
+/*talking功能区的分界线*/
+.talking_whole .border {
+    margin: 5px -20px 10px;
+    border-top: 1px solid rgba(22,45,66,0.8);
+}
+/*talking 底下实现comment,like功能*/
+.talking_whole .talking ul.function li{
     text-decoration: none;
+    list-style: none;
+    margin-bottom: 0px;
+    float: left;
+    width: 100px;
+    text-align: center;
+    border-right: solid 1px;
+    border-color: #162e4f;
+}
+.talking_whole .talking ul.function li a {
+    text-decoration: none;
+    display: block;
+}
+
+/*评论框输入功能*/
+.talking_whole div.input {
+    padding: 0 5px;
+    width: 88%;
+    margin: 0 3px;
+    border: 1px solid #163156;
+    background-color: #0c2343;
+    border-radius: 2px;
+    float: left;
+}
+.talking_whole div.input input {
+    background-color: transparent;
+    height: 20px;
+    width: 100%;
+    outline: none;
+    border: none;
+    overflow: hidden;
+    resize: none;
+}
+.talking_whole a.submit {
+    display: inline;
+    float: right;
+    color: white;
+    hight:10px;
+    width: 40px;
+    background-color: #ff8140;
+    padding: 5px 0;
+    margin: 3px 0;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/*显示评论*/
+.talking_whole .comment {
+    margin-top: 5px;
+    padding: 5px 10px 5px 5px;
+    border-radius: 2px;
+}
+
+.talking_whole .comment div.commentThumb_image {
+    float: left;
+    width: 30px;
+}
+
+.talking_whole .comment div.commentThumb_image img {
+    width: 30px;
+    border-radius: 50%;
+}
+
+.talking_whole .comment div.commentDetail {
+    margin: 0 0 0 40px;
+    padding: 0;
+}
+
+.talking_whole .comment div.commentDetail div.username {
+    margin-bottom: 3px;
+    padding: 2px 0 0 0;
+}
+
+.talking_whole .comment div.commentDetail div.text {
+    margin-bottom: 1px;
+}
+
+.talking_whole .comment div.commentDetail div.info {
+    margin-bottom: 2px;
+    color: #38547b;
 }
 
 .talking_whole div.notice{

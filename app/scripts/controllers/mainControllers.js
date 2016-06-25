@@ -213,7 +213,7 @@ PCControllers
         for (var index in $scope.persons) getUserInfo(index);
     });
 }])
-.controller('homepageTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$interval', function ($scope, Talking, User, Group, $interval) {
+.controller('homepageTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$interval', 'Comment', function ($scope, Talking, User, Group, $interval, Comment) {
     if (!User.getCurrentUser()) return;
 
     var lastUpdateTime;
@@ -272,9 +272,15 @@ PCControllers
                 }
             }
         }
+        //获取评论的数组
+        Comment.query({tid:Array[index].tid}, function (res) {
+            Array[index].comments = res.data;
+        });
+
         //解析image数组
         Array[index].image = JSON.parse(Array[index].image);
         Array[index].showLargeImage = -1;
+        Array[index].showComment = false;
     }
 
     function fetchNickname(Array, Uids, index) {
@@ -294,9 +300,63 @@ PCControllers
             $scope.contents = $scope.contents.concat(newRows);
             if(response.data.pages) pages = response.data.pages;
             $scope.hasNextPage = pages > currentPage;
-            $scope.busy = false
+            $scope.busy = false;
         });
+    };
 
+    $scope.likeTalkings = function (index) {
+        if ($scope.contents[index].liked == 1) {
+            $scope.contents[index].liked = 0;
+            --$scope.contents[index].likes;
+            Talking.unlikeTalking({tid: $scope.contents[index].tid},null);
+        } else {
+            $scope.contents[index].liked = 1;
+            ++$scope.contents[index].likes;
+            Talking.likeTalking({tid: $scope.contents[index].tid},null);
+        }
+    };
+
+    $scope.commentTalkings = function (index) {
+        //获取评论详情
+        for (var i in $scope.contents[index].comments) {
+            fetchComment($scope.contents[index].comments, i);
+        }
+        $scope.contents[index].showComment = !$scope.contents[index].showComment;
+    };
+
+    function fetchComment(Array, i){
+        Comment.get({cid:Array[i].cid},function (res){
+            Array[i].commentText = res.data.text;
+            Array[i].user_uid = res.data.user_uid;
+            Array[i].parent_cid = res.data.parent_cid;
+            Array[i].timestamp = new Date(res.data.timestamp).format("yyyy-MM-dd hh:mm:ss");
+            User.query(Array[i].user_uid, function (res) {
+                Array[i].user_nickname = res.data.data.nickname;
+                Array[i].user_avatar = res.data.data.avatar;
+            });
+        })
+    }
+
+    //发布评论
+    $scope.submit = function (index) {
+            if (!$scope.contents[index].commentText) {
+                alert('内容为空!');
+                return;
+            }
+            var rawText = $scope.contents[index].commentText;
+
+            Comment.save(null,{text: rawText,talking_tid:$scope.contents[index].tid}, function () {
+                $scope.contents[index].commentText = "";
+                Comment.query({tid:$scope.contents[index].tid}, function (res) {
+                    $scope.contents[index].comments = res.data;
+                    for (var i in $scope.contents[index].comments) {
+                        fetchComment($scope.contents[index].comments, i);
+                    }
+                });
+                alert('您的评论发布成功!');
+            },function (r) {
+                alert('您的评论发布失败('+r.data.msg+')!');
+            });
     };
 
     $scope.getNewContents = function () {
@@ -608,7 +668,7 @@ PCControllers
             getGroupRelation();
         });
     };
-}]).controller('userhomeTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$routeParams', function ($scope, Talking, User, Group, $routeParams) {
+}]).controller('userhomeTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$routeParams', 'Comment', function ($scope, Talking, User, Group, $routeParams, Comment) {
     //if (!User.getCurrentUser()) return;
     var thisUid = $routeParams.uid;
     
@@ -665,9 +725,16 @@ PCControllers
                 }
             }
         }
+
+        //获取评论的数组
+        Comment.query({tid:Array[index].tid}, function (res) {
+            Array[index].comments = res.data;
+        });
+
         //解析image数组
         Array[index].image = JSON.parse(Array[index].image);
         Array[index].showLargeImage = -1;
+        Array[index].showComment = false;
     }
 
     function fetchNickname(Array, Uids, index) {
@@ -690,8 +757,64 @@ PCControllers
         });
 
     };
+
+    $scope.likeTalkings = function (index) {
+        if ($scope.contents[index].liked == 1) {
+            $scope.contents[index].liked = 0;
+            --$scope.contents[index].likes;
+            Talking.unlikeTalking({tid: $scope.contents[index].tid},null);
+        } else {
+            $scope.contents[index].liked = 1;
+            ++$scope.contents[index].likes;
+            Talking.likeTalking({tid: $scope.contents[index].tid},null);
+        }
+    };
+
+    $scope.commentTalkings = function (index) {
+        //获取评论详情
+        for (var i in $scope.contents[index].comments) {
+            fetchComment($scope.contents[index].comments, i);
+        }
+        $scope.contents[index].showComment = !$scope.contents[index].showComment;
+    };
+
+    function fetchComment(Array, i){
+        Comment.get({cid:Array[i].cid},function (res){
+            Array[i].commentText = res.data.text;
+            Array[i].user_uid = res.data.user_uid;
+            Array[i].parent_cid = res.data.parent_cid;
+            Array[i].timestamp = new Date(res.data.timestamp).format("yyyy-MM-dd hh:mm:ss");
+            User.query(Array[i].user_uid, function (res) {
+                Array[i].user_nickname = res.data.data.nickname;
+                Array[i].user_avatar = res.data.data.avatar;
+            });
+        })
+    }
+
+    //发布评论
+    $scope.submit = function (index) {
+        if (!$scope.contents[index].commentText) {
+            alert('内容为空!');
+            return;
+        }
+        var rawText = $scope.contents[index].commentText;
+
+        Comment.save(null,{text: rawText,talking_tid:$scope.contents[index].tid}, function () {
+            $scope.contents[index].commentText = "";
+            Comment.query({tid:$scope.contents[index].tid}, function (res) {
+                $scope.contents[index].comments = res.data;
+                for (var i in $scope.contents[index].comments) {
+                    fetchComment($scope.contents[index].comments, i);
+                }
+            });
+            alert('您的评论发布成功!');
+        },function (r) {
+            alert('您的评论发布失败('+r.data.msg+')!');
+        });
+    };
+
     $scope.getNextPageContents();
-}]).controller('grouphomeTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$routeParams', function ($scope, Talking, User, Group, $routeParams) {
+}]).controller('grouphomeTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$routeParams', 'Comment', function ($scope, Talking, User, Group, $routeParams, Comment) {
     //if (!User.getCurrentUser()) return;
     var thisGid = $routeParams.gid;
 
@@ -748,9 +871,16 @@ PCControllers
                 }
             }
         }
+
+        //获取评论的数组
+        Comment.query({tid:Array[index].tid}, function (res) {
+            Array[index].comments = res.data;
+        });
+
         //解析image数组
         Array[index].image = JSON.parse(Array[index].image);
         Array[index].showLargeImage = -1;
+        Array[index].showComment = false;
     }
 
     function fetchNickname(Array, Uids, index) {
@@ -772,6 +902,61 @@ PCControllers
             $scope.busy = false
         });
 
+    };
+
+    $scope.likeTalkings = function (index) {
+        if ($scope.contents[index].liked == 1) {
+            $scope.contents[index].liked = 0;
+            --$scope.contents[index].likes;
+            Talking.unlikeTalking({tid: $scope.contents[index].tid},null);
+        } else {
+            $scope.contents[index].liked = 1;
+            ++$scope.contents[index].likes;
+            Talking.likeTalking({tid: $scope.contents[index].tid},null);
+        }
+    };
+
+    $scope.commentTalkings = function (index) {
+        //获取评论详情
+        for (var i in $scope.contents[index].comments) {
+            fetchComment($scope.contents[index].comments, i);
+        }
+        $scope.contents[index].showComment = !$scope.contents[index].showComment;
+    };
+
+    function fetchComment(Array, i){
+        Comment.get({cid:Array[i].cid},function (res){
+            Array[i].commentText = res.data.text;
+            Array[i].user_uid = res.data.user_uid;
+            Array[i].parent_cid = res.data.parent_cid;
+            Array[i].timestamp = new Date(res.data.timestamp).format("yyyy-MM-dd hh:mm:ss");
+            User.query(Array[i].user_uid, function (res) {
+                Array[i].user_nickname = res.data.data.nickname;
+                Array[i].user_avatar = res.data.data.avatar;
+            });
+        })
+    }
+
+    //发布评论
+    $scope.submit = function (index) {
+        if (!$scope.contents[index].commentText) {
+            alert('内容为空!');
+            return;
+        }
+        var rawText = $scope.contents[index].commentText;
+
+        Comment.save(null,{text: rawText,talking_tid:$scope.contents[index].tid}, function () {
+            $scope.contents[index].commentText = "";
+            Comment.query({tid:$scope.contents[index].tid}, function (res) {
+                $scope.contents[index].comments = res.data;
+                for (var i in $scope.contents[index].comments) {
+                    fetchComment($scope.contents[index].comments, i);
+                }
+            });
+            alert('您的评论发布成功!');
+        },function (r) {
+            alert('您的评论发布失败('+r.data.msg+')!');
+        });
     };
 
     $scope.getNextPageContents();

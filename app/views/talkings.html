@@ -34,6 +34,43 @@
             <div><span class="upload_thumb_image" ng-repeat="img in talking.image"><img ng-src="{{img}}" ng-click="talking.showLargeImage = $index"></span></div>
             <div class="clear"></div>
         </div>
+        <div class="border"></div>
+        <ul class="function font-size12 ">
+            <li>
+                <a class="color_light_gray" ng-click="commentTalkings($index)" href="javascript:void(0)">
+                    评论（{{talking.comments.length}}）
+                </a>
+            </li>
+            <li>
+                <a class="color_light_gray" ng-click="likeTalkings($index)" href="javascript:void(0)">
+                    <span ng-show="talking.liked">已</span>赞（{{talking.likes}}）</a>
+            </li>
+            <div class="clear"></div>
+            <span ng-show="talking.showComment">
+                <div class="border"></div>
+                <div class="input">
+                    <input class="color_light_gray font-size12" data-ng-model="talking.commentText">
+                </div>
+                 <a class="submit no_decoration" href="" ng-click="submit($index)">发表</a>
+                <div class="clear"></div>
+                <div class="comment background_dark_blue" ng-repeat="comment in talking.comments">
+                    <div class="commentThumb_image">
+                        <a ng-href="#/user/{{comment.user_uid}}"><img ng-src="{{comment.user_avatar}}"></a>
+                    </div>
+                    <div class="commentDetail">
+                        <div class="username color_light_gray">
+                            <a class="no_decoration always_inherit"
+                               ng-href="#/user/{{comment.user_uid}}">{{comment.user_nickname}}</a>
+                        </div>
+                        <div class="info font-size12">{{comment.timestamp}}</div>
+                        <div class="text color_light_gray">
+                              <span>{{comment.commentText}}</span>
+                        </div>
+                    </div>
+                    <div class="border"></div>
+                </div>
+            </span>
+        </ul>
     </div>
 
     <div>
