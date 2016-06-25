@@ -587,7 +587,7 @@ PCControllers
             getGroupRelation();
         });
     };
-}]).controller('userhomeTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$interval', '$routeParams', function ($scope, Talking, User, Group, $interval, $routeParams) {
+}]).controller('userhomeTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$routeParams', function ($scope, Talking, User, Group, $routeParams) {
     //if (!User.getCurrentUser()) return;
     var thisUid = $routeParams.uid;
     
@@ -658,7 +658,6 @@ PCControllers
     $scope.getNextPageContents = function () {
         $scope.busy = true;
         ++currentPage;
-        if (currentPage == 1) lastUpdateTime = Math.round(new Date().getTime() / 1000);
 
         Talking.userGet((currentPage == 1) ? {uid: thisUid} : {uid: thisUid, page: currentPage}, function (response) {
             var newRows = response.data.rows;
@@ -671,7 +670,7 @@ PCControllers
 
     };
     $scope.getNextPageContents();
-}]).controller('grouphomeTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$interval', '$routeParams', function ($scope, Talking, User, Group, $interval, $routeParams) {
+}]).controller('grouphomeTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$routeParams', function ($scope, Talking, User, Group, $routeParams) {
     //if (!User.getCurrentUser()) return;
     var thisGid = $routeParams.gid;
 
@@ -742,7 +741,6 @@ PCControllers
     $scope.getNextPageContents = function () {
         $scope.busy = true;
         ++currentPage;
-        if (currentPage == 1) lastUpdateTime = Math.round(new Date().getTime() / 1000);
 
         Talking.groupGet((currentPage == 1) ? {gid: thisGid} : {gid: thisGid, page: currentPage}, function (response) {
             var newRows = response.data.rows;
@@ -756,4 +754,95 @@ PCControllers
     };
 
     $scope.getNextPageContents();
+}]).controller('friendsController', ['$scope', 'Talking', 'User', 'Group', '$interval', '$routeParams', function ($scope, Talking, User, Group, $interval, $routeParams) {
+    if (!User.getCurrentUser()) return;
+    var thisUid = $routeParams.uid;
+
+    $scope.users = [];
+
+    User.query(thisUid, function (res) {
+        $scope.me = res.data.data;
+    });
+
+    $scope.select = function (which) {
+        switch (which) {
+            case 0: //关注列表
+                UserRelation.queryFollows({uid: thisUid}, function (res) {
+                    $scope.users = res.data.users;
+                    for (var index in $scope.users){
+                        fetchUserInfo($scope.users, index);
+                    }
+                });
+                break;
+            case 1: //粉丝列表
+                UserRelation.queryFollowers({uid: thisUid}, function (res) {
+                    $scope.users = res.data;
+                    for (var index in $scope.users){
+                        fetchUserInfo($scope.users, index);
+                    }
+                });
+                break;
+            case 2: //用户组列表
+                UserRelation.queryFollows({uid: thisUid}, function (res) {
+                    $scope.users = res.data.groups;
+                    for (var index in $scope.users){
+                        fetchGroupInfo($scope.users, index);
+                    }
+                });
+                break;
+        }
+    };
+
+    function fetchUserInfo(Array, index) {
+        //获取用户基本信息
+        User.query(Array[index].uid, function (res) {
+            Array[index].nickname = res.data.data.nickname;
+            Array[index].avatar = res.data.data.avatar;
+            Array[index].signature = res.data.data.signature;
+        });
+
+        //获取用户关系信息
+        UserRelation.get({uid: Array[index].uid}, function (res) {
+            Array[index].flag = res.data.flag;
+            switch (res.data.flag) {
+                case 0:
+                    Array[index].hasAttentioned = false;
+                    Array[index].attentionIndicator = "+ 关注";
+                    break;
+                case 1:
+                    Array[index].hasAttentioned = true;
+                    Array[index].attentionIndicator = "已关注";
+                    break;
+                case 2:
+                    Array[index].hasAttentioned = false;
+                    Array[index].attentionIndicator = "已被Ta关注";
+                    break;
+                case 3:
+                    Array[index].hasAttentioned = true;
+                    Array[index].attentionIndicator = "已互相关注";
+            }
+        });
+    }
+
+    function fetchGroupInfo(Array, index) {
+        //获取组基本信息
+        Group.get({gid: Array[index].gid}, function (res) {
+            Array[index].gname = res.data.gname;
+            Array[index].avatar = res.data.avatar;
+        });
+
+        //获取组关系信息
+        GroupRelation.get({gid: Array[index].gid}, function (res) {
+            Array[index].flag = res.data.flag;
+            if (res.data.flag) {
+                Array[index].hasAttentioned = true;
+                Array[index].attentionIndicator = "已关注"
+            }
+            else {
+                Array[index].hasAttentioned = false;
+                Array[index].attentionIndicator = "+ 关注"
+            }
+        });
+    }
+
 }]);
