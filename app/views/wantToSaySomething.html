@@ -8,8 +8,8 @@
     </div>
     <div class="func_area">
         <div class="func_kind">
-            <a class="no_decoration" href="">expression</a>
-            <a class="no_decoration" href="">image</a>
+            <a class="no_decoration" href="" ng-click="showEmojiPanel = !showEmojiPanel">:)emoji</a>
+            <a class="no_decoration" href="" ng-click="imageSelecting = !imageSelecting">image</a>
             <a class="no_decoration" href="" ng-click="selectUser()">@mention</a>
             <a class="no_decoration" href="" ng-click="selectTopic()">#topic</a>
         </div>
@@ -55,4 +55,16 @@
             </ul>
         </div>
     </div>
+
+    <div class="topic_box" ng-show="imageSelecting">
+        <span class="color_light_gray">上传图片({{image.length}}/9)：</span>
+        <span class="upload_thumb_image" ng-repeat="img in image"><img ng-src="{{img}}" ng-click="deleteImage(img)"></span>
+        <button ngf-select="uploadImage($file); $event.stopPropagation();" accept="image/*" ngf-max-height="2000" ngf-max-size="2MB" ng-show="image.length < 9">+</button>
+    </div>
+
+    <div id="emoji-panel-container" ng-show="showEmojiPanel">
+        <div id="emoji-panel"></div>
+    </div>
+
+
 </div>

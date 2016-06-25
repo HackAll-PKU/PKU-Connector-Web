@@ -390,6 +390,24 @@ li.vertical a:hover {
     border-radius: 5px;
 }
 
+#emoji-panel {
+    display: block;
+    position: absolute;
+    height: 300px;
+    width: 500px;
+}
+
+.upload_thumb_image {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+}
+.upload_thumb_image img {
+    min-width: 100px;
+    height: 100px;
+}
+
 /*  talking  */
 
 .talking_whole {

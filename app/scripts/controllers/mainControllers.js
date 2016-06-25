@@ -1,7 +1,6 @@
 /**
  * created by chenletian on 16/5/21.
  */
-
 var PCControllers = angular.module('PCControllers', [
     'ngStorage',
     'PCServices',
@@ -245,29 +244,36 @@ PCControllers
         return fmt;
     };
 
-    function getUserInfo(Array, index) {
+    function fetchExtraInfo(Array, index) {
+        //设置时间格式
         Array[index].timestamp = new Date(Array[index].timestamp).format("yyyy-MM-dd hh:mm:ss");
+        //查询发表者信息
         User.query(Array[index].user_uid, function (res) {
             Array[index].user_nickname = res.data.data.nickname;
             Array[index].user_avatar = res.data.data.avatar;
         });
+        //查询用户组信息
         if(Array[index].group_gid){
             Group.get({gid: Array[index].group_gid}, function (res) {
                 Array[index].group_gname = res.data.gname;
             });
         }
+        //查询mention信息
         var strs = Array[index].text.split('@');
-
         if (strs.length > 1) {
-            var mentionedUid = eval('['+strs[strs.length - 1]+']');
+            var mentionedUid = JSON.parse('['+strs[strs.length - 1]+']');
             strs.splice(strs.length - 1, 1);
             Array[index].text = strs.join('@');
 
-            Array[index].mentionedUsers = [];
-            for (var i in mentionedUid) {
-                fetchNickname(Array[index].mentionedUsers, mentionedUid, i);
+            if(mentionedUid.length > 0){
+                Array[index].mentionedUsers = [];
+                for (var i in mentionedUid) {
+                    fetchNickname(Array[index].mentionedUsers, mentionedUid, i);
+                }
             }
         }
+        //解析image数组
+        Array[index].image = JSON.parse(Array[index].image);
     }
 
     function fetchNickname(Array, Uids, index) {
@@ -283,7 +289,7 @@ PCControllers
 
         Talking.query((currentPage == 1) ? null : {page: currentPage}, function (response) {
             var newRows = response.data.rows;
-            for (var index in newRows) getUserInfo(newRows, index);
+            for (var index in newRows) fetchExtraInfo(newRows, index);
             $scope.contents = $scope.contents.concat(newRows);
             if(response.data.pages) pages = response.data.pages;
             $scope.hasNextPage = pages > currentPage;
@@ -295,7 +301,7 @@ PCControllers
     $scope.getNewContents = function () {
         Talking.query({after: lastUpdateTime}, function (response) {
             var newRows = response.data.rows;
-            for (var index in newRows) getUserInfo(newRows, index);
+            for (var index in newRows) fetchExtraInfo(newRows, index);
             $scope.contents = newRows.concat($scope.contents);
             $scope.hasNew = false;
         });
@@ -322,7 +328,7 @@ PCControllers
         User.logout();
     }
 }])
-.controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', 'UserRelation', '$timeout', function ($scope, Talking, Group, GroupRelation, UserRelation, $timeout) {
+.controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', 'UserRelation', '$timeout', 'Upload', 'CONFIGURATIONS', function ($scope, Talking, Group, GroupRelation, UserRelation, $timeout, Upload, CONFIGURATIONS) {
     $scope.topicSelecting = false;
     $scope.userSelecting = false;
 
@@ -346,17 +352,18 @@ PCControllers
                 uidArray[index] = $scope.userList[index].uid;
             }
             rawText += '@' + uidArray.toString();
-            Talking.save({text: rawText, gid: $scope.gid, image: $scope.image},function () {
+            var image = $scope.imageSelecting ? JSON.stringify($scope.image) : undefined;
+            Talking.save({text: rawText, gid: $scope.gid, image: image},function () {
                 $scope.text = "";
                 $scope.topicSelecting = false;
                 $scope.userSelecting = false;
                 $scope.gid = undefined;
                 $scope.gname = undefined;
                 $scope.userList = undefined;
-                $scope.image = undefined;
+                $scope.image = [];
                 alert('您的说说发布成功!');
-            },function (res) {
-                alert('您的说说发布失败!');
+            },function (r) {
+                alert('您的说说发布失败('+r.data.msg+')!');
             });
         }
     };
@@ -445,4 +452,36 @@ PCControllers
             });
         }, 100);
     });
+
+    new EmojiPanel(document.getElementById('emoji-panel'), {
+        onClick: function(emoji) {
+            //$scope.text += unescape(('%ue415'+emoji.unified));
+        }
+    });
+
+    $scope.imageSelecting = false;
+    $scope.image = [];
+    $scope.uploadImage = function(file) {
+        console.log($scope.file);
+        if (file) {
+            Upload.upload({
+                url: CONFIGURATIONS.baseURL + '/image',
+                data: {
+                    image: file
+                }
+            }).then(function (res) {
+                $scope.image = $scope.image.concat([res.data.data[0]]);
+            }, function (res) {
+                alert("图片上传失败!\n" + res);
+            }, function (evt) {
+                console.log("progress: " + Math.min(100, parseInt(100.0 * evt.loaded / evt.total)));
+            });
+        }
+    };
+
+    $scope.deleteImage = function (path) {
+        for (var index in $scope.image) {
+            if ($scope.image[index] == path) $scope.image.splice(index, 1);
+        }
+    }
 }]);

@@ -22,6 +22,7 @@
                 {{talking.text}}
                 <a class="no_decoration always_white" href="" ng-repeat="user in talking.mentionedUsers" ng-href="#/user/{{user.uid}}"> @{{user.nickname}}</a>
             </div>
+            <div><span class="upload_thumb_image" ng-repeat="img in talking.image"><img ng-src="{{img}}" ng-click=""></span></div>
             <div class="clear"></div>
         </div>
     </div>
