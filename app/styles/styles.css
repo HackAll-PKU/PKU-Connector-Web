@@ -540,22 +540,22 @@ li.vertical a:hover, li.vertical a.selected {
     border-radius: 2px;
 }
 
-.talking_whole .comment div.thumb_image {
+.talking_whole .comment div.commentThumb_image {
     float: left;
-    width: 50px;
+    width: 10px;
 }
 
-.talking_whole .comment div.detail {
+.talking_whole .comment div.commentDetail {
     margin: 0 0 0 60px;
     padding: 0;
 }
 
-.talking_whole .comment div.detail div.username {
+.talking_whole .comment div.commentDetail div.username {
     margin-bottom: 7px;
     padding: 5px 0 0 0;
 }
 
-.talking_whole .comment div.detail div.text {
+.talking_whole .comment div.commentDetail div.text {
     margin-bottom: 2px;
 }
 
