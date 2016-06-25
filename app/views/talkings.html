@@ -38,7 +38,7 @@
         <ul class="function font-size12 ">
             <li>
                 <a class="color_light_gray" ng-click="commentTalkings($index)" href="javascript:void(0)">
-                    评论（{{newCount}}）
+                    评论（{{talking.comments.length}}）
                 </a>
             </li>
             <li>
@@ -53,7 +53,7 @@
                 </div>
                  <a class="submit no_decoration" href="" ng-click="submit($index)">发布</a>
                 <div class="clear"></div>
-
+                <div class="comment background_dark_blue" ng-repeat="comment in talking.contents">
                 这儿应该是评论</span>
 
     </div>

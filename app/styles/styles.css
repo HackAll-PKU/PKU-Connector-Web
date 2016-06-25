@@ -527,6 +527,18 @@ li.vertical a:hover {
     text-align: center;
     border-radius: 5px;
 }
+
+/*显示评论*/
+.talking_whole .comment {
+    margin-top: 10px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 2px;
+}
+
+.talking_whole .comment div.thumb_image {
+    float: left;
+    width: 50px;
+}
 .talking_whole .talking div.detail div.text a {
     color: #eb7350;
     text-decoration: none;

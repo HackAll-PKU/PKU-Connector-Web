@@ -272,6 +272,21 @@ PCControllers
                 }
             }
         }
+        //获取评论的数组
+        Comment.query({tid:Array[index].tid}, function (res) {
+            Array[index].comments = res.data;
+            for (i in Array[index].comments) {
+                Comment.get({cid:Array[index].comments[i].cid},function (res){
+                    Array[index].comments[i].commentText = res.data.text;
+                    Array[index].comments[i].user_uid = res.data.user_uid;
+                    Array[index].comments[i].parent_cid = res.data.parent_cid;
+                    User.query(Array[index].comments[i].user_uid, function (res) {
+                        Array[index].comments[i].user_nickname = res.data.data.nickname;
+                        Array[index].comments[i].user_avatar = res.data.data.avatar;
+                    });
+                })
+            }
+        });
         //解析image数组
         Array[index].image = JSON.parse(Array[index].image);
         Array[index].showLargeImage = -1;
