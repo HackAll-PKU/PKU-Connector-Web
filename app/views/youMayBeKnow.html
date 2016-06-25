@@ -6,7 +6,7 @@
     <div class="inner_box clear_fix">
         <div class="one_friend clear_fix" ng-repeat='person in persons'>
             <div class="thumb_image">
-                <a href="#/user/{{person.uid}}"><img ng-src="../{{person.avatar}}"></a>
+                <a href="#/user/{{person.uid}}"><img ng-src="{{person.avatar}}"></a>
             </div>
             <div class="detail">
                 <a class="no_decoration always_white" href="#/user/{{person.uid}}"><h5>{{person.nickname}}</h5></a>

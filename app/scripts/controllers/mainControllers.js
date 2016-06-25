@@ -343,6 +343,12 @@ PCControllers
         } else submitNext();
 
         function submitNext() {
+            var image = ($scope.imageSelecting && $scope.image.length > 0) ? JSON.stringify($scope.image) : undefined;
+            if (!$scope.text && !image) {
+                alert('内容为空!');
+                return;
+            }
+
             //关注话题
             if($scope.gid) GroupRelation.save({gid: $scope.gid}, null);
 
@@ -352,7 +358,7 @@ PCControllers
                 uidArray[index] = $scope.userList[index].uid;
             }
             rawText += '@' + uidArray.toString();
-            var image = $scope.imageSelecting ? JSON.stringify($scope.image) : undefined;
+
             Talking.save({text: rawText, gid: $scope.gid, image: image},function () {
                 $scope.text = "";
                 $scope.topicSelecting = false;
