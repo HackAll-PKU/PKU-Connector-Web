@@ -521,6 +521,20 @@ PCControllers
 }])
 .controller('grouphomeController', ['$scope', '$routeParams', 'User', 'UserRelation', 'Talking', 'Group', 'GroupRelation', function($scope, $routeParams, User, UserRelation, Talking, Group, GroupRelation) {
     $scope.gid = $routeParams.gid;
+
+    function getGroupRelation() {
+        GroupRelation.get({gid: $scope.gid}, function (res) {
+            if (res.data.flag) {
+                $scope.has_attentioned = true;
+                $scope.attentionIndicator = "已关注"
+            }
+            else {
+                $scope.has_attentioned = false;
+                $scope.attentionIndicator = "+ 关注"
+            }
+        });
+    }
+
     Group.get({gid: $scope.gid}, function (res) {
         $scope.me = res.data;
         $scope.me.background = "http:/pikkacho.cn/uploads/default_background.jpg"
@@ -531,5 +545,16 @@ PCControllers
             $scope.me.followers = res.data;
             $scope.me.followersCount = res.data.length;
         });
+        getGroupRelation();
     });
+    $scope.attention = function (res) {
+        GroupRelation.save({gid: $scope.gid}, null, function (req) {
+            getGroupRelation();
+        });
+    };
+    $scope.unattention = function (res) {
+        GroupRelation.delete({gid: $scope.gid}, function (req) {
+            getGroupRelation();
+        });
+    };
 }]);
