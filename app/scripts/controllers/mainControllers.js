@@ -348,7 +348,7 @@ PCControllers
                 alert('内容为空!');
                 return;
             }
-
+            if (!$scope.text) $scope.text = "";
             //关注话题
             if($scope.gid) GroupRelation.save({gid: $scope.gid}, null);
 
@@ -363,9 +363,10 @@ PCControllers
                 $scope.text = "";
                 $scope.topicSelecting = false;
                 $scope.userSelecting = false;
+                $scope.imageSelecting = false;
                 $scope.gid = undefined;
                 $scope.gname = undefined;
-                $scope.userList = undefined;
+                $scope.userList = [];
                 $scope.image = [];
                 alert('您的说说发布成功!');
             },function (r) {
