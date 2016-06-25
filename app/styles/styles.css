@@ -535,28 +535,33 @@ li.vertical a:hover, li.vertical a.selected {
 
 /*显示评论*/
 .talking_whole .comment {
-    margin-top: 10px;
-    padding: 10px 20px 10px 20px;
+    margin-top: 5px;
+    padding: 5px 10px 5px 5px;
     border-radius: 2px;
 }
 
 .talking_whole .comment div.commentThumb_image {
     float: left;
-    width: 10px;
+    width: 30px;
+}
+
+.talking_whole .comment div.commentThumb_image img {
+    width: 30px;
+    border-radius: 50%;
 }
 
 .talking_whole .comment div.commentDetail {
-    margin: 0 0 0 60px;
+    margin: 0 0 0 40px;
     padding: 0;
 }
 
 .talking_whole .comment div.commentDetail div.username {
-    margin-bottom: 7px;
-    padding: 5px 0 0 0;
+    margin-bottom: 3px;
+    padding: 2px 0 0 0;
 }
 
 .talking_whole .comment div.commentDetail div.text {
-    margin-bottom: 2px;
+    margin-bottom: 1px;
 }
 
 .talking_whole div.notice{
