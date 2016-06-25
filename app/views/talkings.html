@@ -49,9 +49,9 @@
             <span ng-show="talking.showComment">
                 <div class="border"></div>
                 <div class="input">
-                    <input class="color_light_gray font-size12" data-ng-model="text">
+                    <input class="color_light_gray font-size12" data-ng-model="talking.commentText">
                 </div>
-                 <a class="submit no_decoration" href="" ng-click="submit()">发布</a>
+                 <a class="submit no_decoration" href="" ng-click="submit($index)">发布</a>
                 <div class="clear"></div>
 
                 这儿应该是评论</span>

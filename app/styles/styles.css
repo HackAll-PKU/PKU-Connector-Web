@@ -499,10 +499,12 @@ li.vertical a:hover {
 /*评论框输入功能*/
 .talking_whole div.input {
     padding: 5px;
-    margin: 5px -10px 10px;
+    width: 88%;
+    margin: 3px;
     border: 1px solid #163156;
     background-color: #0c2343;
     border-radius: 2px;
+    float: left;
 }
 .talking_whole div.input input {
     background-color: transparent;
@@ -517,10 +519,11 @@ li.vertical a:hover {
     display: inline;
     float: right;
     color: white;
-    width: 50px;
+    hight:10px;
+    width: 40px;
     background-color: #ff8140;
     padding: 5px 0;
-    margin: 5px 0;
+    margin: 3px 0;
     text-align: center;
     border-radius: 5px;
 }

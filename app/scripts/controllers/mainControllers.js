@@ -213,7 +213,7 @@ PCControllers
         for (var index in $scope.persons) getUserInfo(index);
     });
 }])
-.controller('homepageTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$interval', function ($scope, Talking, User, Group, $interval) {
+.controller('homepageTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$interval', 'Comment', function ($scope, Talking, User, Group, $interval, Comment) {
     if (!User.getCurrentUser()) return;
 
     var lastUpdateTime;
@@ -316,6 +316,22 @@ PCControllers
         $scope.contents[index].showComment = !$scope.contents[index].showComment;
     };
 
+    //发布评论
+    $scope.submit = function (index) {
+
+            if (!$scope.contents[index].commentText) {
+                alert('内容为空!');
+                return;
+            }
+            var rawText = $scope.contents[index].commentText;
+
+            Comment.save( null,{text: rawText,talking_tid:$scope.contents[index].tid},function () {
+                $scope.contents[index].commentText = "";
+                alert('您的评论发布成功!');
+            },function (r) {
+                alert('您的评论发布失败('+r.data.msg+')!');
+            });
+    };
     $scope.getNewContents = function () {
         Talking.query({after: lastUpdateTime}, function (response) {
             var newRows = response.data.rows;
