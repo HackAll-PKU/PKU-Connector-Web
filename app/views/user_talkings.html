@@ -1,0 +1,41 @@
+<div class="talking_whole" ng-controller="userhomeTalkingsController">
+<div infinite-scroll="getNextPageContents()" infinite-scroll-disabled="busy || !hasNextPage" infinite-scroll-distance='1'>
+    <div class="talking background_dark_blue" ng-repeat="talking in contents">
+        <div class="thumb_image">
+            <a ng-href="#/user/{{talking.user_uid}}"><img ng-src="{{talking.user_avatar}}"></a>
+        </div>
+        <div class="detail">
+            <div class="username color_light_gray">
+                <a class="no_decoration always_inherit"
+                   ng-href="#/user/{{talking.user_uid}}">{{talking.user_nickname}}</a>
+            </div>
+            <div class="info font-size12">{{talking.timestamp}}</div>
+            <div class="text color_light_gray">
+                <a class="no_decoration always_white" href="" ng-show="talking.group_gid" ng-href="#/group/{{talking.group_gid}}">#{{talking.group_gname}}#</a>
+                <span>{{talking.text}}</span>
+                <a class="no_decoration always_white" href="" ng-repeat="user in talking.mentionedUsers" ng-href="#/user/{{user.uid}}"> @{{user.nickname}}</a>
+            </div>
+            <div class="talking_large_image_box" ng-show="talking.showLargeImage >= 0">
+                <p>
+                    <a class="no_decoration always_white" href="" ng-click="talking.showLargeImage = -1">收起</a>
+                    <a class="no_decoration always_white" href="{{talking.image[talking.showLargeImage]}}" target="_blank">查看原图</a>
+                </p>
+                <div class="talking_large_image">
+                    <img ng-src="{{talking.image[talking.showLargeImage]}}" ng-click="talking.showLargeImage = talking.showLargeImage == talking.image.length - 1 ? 0 : talking.showLargeImage + 1">
+                </div>
+            </div>
+            <div><span class="upload_thumb_image" ng-repeat="img in talking.image"><img ng-src="{{img}}" ng-click="talking.showLargeImage = $index"></span></div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div>
+        <a href="" class="no_decoration color_black" ng-click="getNextPageContents()">
+            <div class="notice background_white" ng-show="hasNextPage && !busy">点击加载下一页</div>
+        </a>
+        <div class="notice background_white" ng-show="busy">
+            <span class="round_circle round_circle_small round_circle_green">正在加载中，请稍候...</span></div>
+        <div class="clear"></div>
+    </div>
+</div>
+</div>

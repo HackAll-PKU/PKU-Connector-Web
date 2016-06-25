@@ -500,16 +500,6 @@ PCControllers
         $scope.me = res.data.data;
         UserRelation.queryFollows({uid: $scope.me.uid}, function (res) {
             $scope.me.follows = res.data.users.length + res.data.groups.length;
-            $scope.groups = res.data.groups;
-            function getGroupInfo(index) {
-                Group.get({gid: $scope.groups[index].gid}, function (res) {
-                    $scope.groups[index].gname = res.data.gname;
-                    $scope.groups[index].avatar = res.data.avatar;
-                });
-            }
-            for (var index in res.data.groups){
-                getGroupInfo(index);
-            }
         });
         UserRelation.queryFollowers({uid: $scope.me.uid}, function (res) {
             $scope.me.followers = res.data.length;
@@ -532,4 +522,174 @@ PCControllers
             $scope.me.followersCount = res.data.length;
         });
     });
+}]).controller('userhomeTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$interval', '$routeParams', function ($scope, Talking, User, Group, $interval, $routeParams) {
+    //if (!User.getCurrentUser()) return;
+    var thisUid = $routeParams.uid;
+    
+    var currentPage = 0;
+    var pages = 0;
+
+    $scope.contents = [];
+    $scope.hasNextPage = false;
+    $scope.busy = false;
+
+    Date.prototype.format = function(fmt) {
+        var o = {
+            "M+" : this.getMonth()+1,                 //月份
+            "d+" : this.getDate(),                    //日
+            "h+" : this.getHours(),                   //小时
+            "m+" : this.getMinutes(),                 //分
+            "s+" : this.getSeconds(),                 //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S"  : this.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    };
+
+    function fetchExtraInfo(Array, index) {
+        //设置时间格式
+        Array[index].timestamp = new Date(Array[index].timestamp).format("yyyy-MM-dd hh:mm:ss");
+        //查询发表者信息
+        User.query(Array[index].user_uid, function (res) {
+            Array[index].user_nickname = res.data.data.nickname;
+            Array[index].user_avatar = res.data.data.avatar;
+        });
+        //查询用户组信息
+        if(Array[index].group_gid){
+            Group.get({gid: Array[index].group_gid}, function (res) {
+                Array[index].group_gname = res.data.gname;
+            });
+        }
+        //查询mention信息
+        var strs = Array[index].text.split('@');
+        if (strs.length > 1) {
+            var mentionedUid = JSON.parse('['+strs[strs.length - 1]+']');
+            strs.splice(strs.length - 1, 1);
+            Array[index].text = strs.join('@');
+
+            if(mentionedUid.length > 0){
+                Array[index].mentionedUsers = [];
+                for (var i in mentionedUid) {
+                    fetchNickname(Array[index].mentionedUsers, mentionedUid, i);
+                }
+            }
+        }
+        //解析image数组
+        Array[index].image = JSON.parse(Array[index].image);
+        Array[index].showLargeImage = -1;
+    }
+
+    function fetchNickname(Array, Uids, index) {
+        User.query(Uids[index], function (res) {
+            Array[index] = {uid: Uids[index], nickname: res.data.data.nickname};
+        });
+    }
+
+    $scope.getNextPageContents = function () {
+        $scope.busy = true;
+        ++currentPage;
+        if (currentPage == 1) lastUpdateTime = Math.round(new Date().getTime() / 1000);
+
+        Talking.userGet((currentPage == 1) ? {uid: thisUid} : {uid: thisUid, page: currentPage}, function (response) {
+            var newRows = response.data.rows;
+            for (var index in newRows) fetchExtraInfo(newRows, index);
+            $scope.contents = $scope.contents.concat(newRows);
+            if(response.data.pages) pages = response.data.pages;
+            $scope.hasNextPage = pages > currentPage;
+            $scope.busy = false
+        });
+
+    };
+
+    $scope.getNextPageContents();
+}]).controller('grouphomeTalkingsController', ['$scope', 'Talking', 'User', 'Group', '$interval', '$routeParams', function ($scope, Talking, User, Group, $interval, $routeParams) {
+    //if (!User.getCurrentUser()) return;
+    var thisGid = $routeParams.gid;
+
+    var currentPage = 0;
+    var pages = 0;
+
+    $scope.contents = [];
+    $scope.hasNextPage = false;
+    $scope.busy = false;
+
+    Date.prototype.format = function(fmt) {
+        var o = {
+            "M+" : this.getMonth()+1,                 //月份
+            "d+" : this.getDate(),                    //日
+            "h+" : this.getHours(),                   //小时
+            "m+" : this.getMinutes(),                 //分
+            "s+" : this.getSeconds(),                 //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S"  : this.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    };
+
+    function fetchExtraInfo(Array, index) {
+        //设置时间格式
+        Array[index].timestamp = new Date(Array[index].timestamp).format("yyyy-MM-dd hh:mm:ss");
+        //查询发表者信息
+        User.query(Array[index].user_uid, function (res) {
+            Array[index].user_nickname = res.data.data.nickname;
+            Array[index].user_avatar = res.data.data.avatar;
+        });
+        //查询用户组信息
+        if(Array[index].group_gid){
+            Group.get({gid: Array[index].group_gid}, function (res) {
+                Array[index].group_gname = res.data.gname;
+            });
+        }
+        //查询mention信息
+        var strs = Array[index].text.split('@');
+        if (strs.length > 1) {
+            var mentionedUid = JSON.parse('['+strs[strs.length - 1]+']');
+            strs.splice(strs.length - 1, 1);
+            Array[index].text = strs.join('@');
+
+            if(mentionedUid.length > 0){
+                Array[index].mentionedUsers = [];
+                for (var i in mentionedUid) {
+                    fetchNickname(Array[index].mentionedUsers, mentionedUid, i);
+                }
+            }
+        }
+        //解析image数组
+        Array[index].image = JSON.parse(Array[index].image);
+        Array[index].showLargeImage = -1;
+    }
+
+    function fetchNickname(Array, Uids, index) {
+        User.query(Uids[index], function (res) {
+            Array[index] = {uid: Uids[index], nickname: res.data.data.nickname};
+        });
+    }
+
+    $scope.getNextPageContents = function () {
+        $scope.busy = true;
+        ++currentPage;
+        if (currentPage == 1) lastUpdateTime = Math.round(new Date().getTime() / 1000);
+
+        Talking.groupGet((currentPage == 1) ? {gid: thisGid} : {gid: thisGid, page: currentPage}, function (response) {
+            var newRows = response.data.rows;
+            for (var index in newRows) fetchExtraInfo(newRows, index);
+            $scope.contents = $scope.contents.concat(newRows);
+            if(response.data.pages) pages = response.data.pages;
+            $scope.hasNextPage = pages > currentPage;
+            $scope.busy = false
+        });
+
+    };
+
+    $scope.getNextPageContents();
 }]);
