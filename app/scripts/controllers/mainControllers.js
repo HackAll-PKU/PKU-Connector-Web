@@ -11,14 +11,16 @@ var PCControllers = angular.module('PCControllers', [
     'ngAnimate'
 ]);
 PCControllers
-.controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking',
-    function ($scope, $location, User, Group, UserRelation, GroupRelation, Talking) {
+.controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking', 'CONFIGURATIONS',
+    function ($scope, $location, User, Group, UserRelation, GroupRelation, Talking, CONFIGURATIONS) {
     if(!User.getCurrentUser()) {
         $location.path('#/login');
         return;
     }
     User.query(User.getCurrentUser().uid, function (res) {
         $scope.me = res.data.data;
+        $scope.me.avatar = CONFIGURATIONS.serverURL + $scope.me.avatar;
+        $scope.me.background = CONFIGURATIONS.serverURL + $scope.me.avatar;
         UserRelation.queryFollows({uid: $scope.me.uid}, function (res) {
             $scope.me.follows = res.data.users.length + res.data.groups.length;
             $scope.groups = res.data.groups;
@@ -121,8 +123,7 @@ PCControllers
                     image: file
                 }
             }).then(function (res) {
-                $scope.avatar = CONFIGURATIONS.serverURL + res.data.data[0];
-                $scope.avatarPath = res.data.data[0];
+                $scope.avatar = res.data.data[0];
             }, function (res) {
                 alert("图片上传失败!\n" + res);
             }, function (evt) {
@@ -138,8 +139,7 @@ PCControllers
                     image: file
                 }
             }).then(function (res) {
-                $scope.backgroundImage = CONFIGURATIONS.serverURL + res.data.data[0];
-                $scope.backgroundPath = res.data.data[0];
+                $scope.background = res.data.data[0];
             }, function (res) {
                 alert("图片上传失败!\n" + res);
             }, function (evt) {
@@ -155,10 +155,8 @@ PCControllers
         $scope.nickname = res.data.data.nickname;
         $scope.signature = res.data.data.signature;
         $scope.enrollmentYear = res.data.data.enrollment_year;
-        $scope.avatar = CONFIGURATIONS.serverURL + res.data.data.avatar;
-        $scope.avatarPath = res.data.data.avatar;
-        $scope.backgroundImage = CONFIGURATIONS.serverURL + res.data.data.background;
-        $scope.backgroundPath = res.data.data.background;
+        $scope.avatar = res.data.data.avatar;
+        $scope.background = res.data.data.background;
         $scope.loading = false;
         $scope.indicator = '保存'
     }, function() {
@@ -176,8 +174,8 @@ PCControllers
         var nickname = $scope.nickname;
         var signature = $scope.signature;
         var enrollmentYear = $scope.enrollmentYear;
-        var avatar = $scope.avatarPath;
-        var background = $scope.backgroundPath;
+        var avatar = $scope.avatar;
+        var background = $scope.background;
         User.update(User.getCurrentUser().uid, {uname: uname, nickname: nickname, signature: signature, enrollmentYear: enrollmentYear, avatar: avatar, background: background}, function(response) {
             $scope.indicator = '保存成功! 正在跳转.';
             $timeout(function () {

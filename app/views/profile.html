@@ -3,7 +3,7 @@
         <h1>Change Profile for PKU Connector</h1>
         <h2>Let others know you better</h2>
         <div id="signup_box">
-            <div class="image_box" style='background: url("{{backgroundImage}}")'  ngf-select="uploadBackground($file); $event.stopPropagation();" accept="image/*" ngf-max-height="2000" ngf-max-size="2MB">
+            <div class="image_box" style='background: url("{{background}}")' ngf-select="uploadBackground($file); $event.stopPropagation();" accept="image/*" ngf-max-height="2000" ngf-max-size="2MB">
                 <div class="thumb_image">
                     <button ngf-select="uploadAvatar($file); $event.stopPropagation();" accept="image/*" ngf-max-height="2000" ngf-max-size="2MB"><img ng-src="{{avatar}}"></button>
                 </div>
