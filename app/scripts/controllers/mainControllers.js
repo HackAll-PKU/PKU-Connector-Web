@@ -275,6 +275,7 @@ PCControllers
         //解析image数组
         Array[index].image = JSON.parse(Array[index].image);
         Array[index].showLargeImage = -1;
+        Array[index].showComment = false;
     }
 
     function fetchNickname(Array, Uids, index) {
@@ -312,7 +313,7 @@ PCControllers
     };
 
     $scope.commentTalkings = function (index) {
-        contents[index].showComment = !contents[index].showComment;
+        $scope.contents[index].showComment = !$scope.contents[index].showComment;
     };
 
     $scope.getNewContents = function () {

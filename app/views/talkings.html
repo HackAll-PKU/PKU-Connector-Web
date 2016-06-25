@@ -45,8 +45,10 @@
                 <a class="color_light_gray" ng-click="likeTalkings($index)" href="javascript:void(0)">
                     <span ng-show="talking.liked">已</span>赞（{{talking.likes}}）</a>
             </li>
-            <span ng-show="talking.showComment">这儿应该是评论</span>
             <div class="clear"></div>
+            <span ng-show="talking.showComment">
+                <div class="border"></div>
+                这儿应该是评论</span>
 
     </div>
 

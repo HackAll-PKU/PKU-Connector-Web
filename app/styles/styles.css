@@ -483,7 +483,7 @@ li.vertical a:hover {
 .talking_whole .talking ul.function li{
     text-decoration: none;
     list-style: none;
-    margin-bottom: 5px;
+    margin-bottom: -10px;
     float: left;
     width: 100px;
     text-align: center;
