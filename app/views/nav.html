@@ -3,9 +3,19 @@
     <a class="no_decoration always_black" href="#/"><h1>PKU-Connector</h1></a>
 </div>
 
-<div class="search">
+<div class="search" ng-controller="navController">
     <span class="placeholder">searching</span>
-    <input data-ng-model="search_input">
+    <input ng-model="search_input">
+
+    <div class="topic_dropdown_content" ng-show="userResult && search_input">
+        <ul>
+            <li ng-repeat="user in userResult">
+                <a class="no_decoration always_black" ng-href="{{user.uid > 0 ? '#/user/'+user.uid : ''}}"
+                   ng-click="">
+                    <span ng-show="user.uid == -1">没有找到用户 </span>@{{user.nickname}}</a>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <div class="right_position" ng-controller="indexController">

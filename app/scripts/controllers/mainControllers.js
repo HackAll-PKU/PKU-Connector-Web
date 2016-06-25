@@ -324,10 +324,28 @@ PCControllers
     });
 
 }])
-.controller('navController', ['$scope', 'User', function ($scope, User) {
+.controller('navController', ['$scope', 'User', '$timeout', 'UserRelation', function ($scope, User, $timeout, UserRelation) {
     $scope.logout = function () {
         User.logout();
-    }
+    };
+    
+    //TODO
+    $scope.search_input = '';
+    var timeout;
+    $scope.$watch('search_input', function(newValue, oldValue, scope) {
+        $timeout.cancel(timeout);
+        if(!newValue) {
+            scope.userResult = undefined;
+            return;
+        }
+        //用timeout减少输入时的网络请求次数
+        timeout = $timeout(function () {
+            UserRelation.querySuggestion({nickname: newValue}, function (res) {
+                if (res.data.length == 0) res.data = [{uid: -1, nickname: newValue}];
+                scope.userResult = res.data;
+            });
+        }, 100);
+    });
 }])
 .controller('talkingPostController', ['$scope', 'Talking', 'Group', 'GroupRelation', 'UserRelation', '$timeout', 'Upload', 'CONFIGURATIONS', function ($scope, Talking, Group, GroupRelation, UserRelation, $timeout, Upload, CONFIGURATIONS) {
     $scope.topicSelecting = false;
