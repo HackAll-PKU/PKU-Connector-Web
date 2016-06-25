@@ -174,15 +174,24 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
             $scope.contents = $scope.contents.concat(newRows);
             if(response.data.pages) pages = response.data.pages;
             $scope.hasNextPage = pages > currentPage;
-            $scope.busy = false
+            $scope.busy = false;
         });
 
     };
 
-    $scope.likeTalkings = function () {
-      
+    $scope.likeTalkings = function (index) {
+        if ($scope.contents[index].liked == 1) {
+            $scope.contents[index].liked = 0;
+            --$scope.contents[index].likes;
+            Talking.unlikeTalking({tid: $scope.contents[index].tid},null);
+        } else {
+            $scope.contents[index].liked = 1;
+            ++$scope.contents[index].likes;
+            Talking.likeTalking({tid: $scope.contents[index].tid},null);
+        }
+    };
 
-    }
+
     $scope.getNewContents = function () {
         Talking.query({after: lastUpdateTime}, function (response) {
             var newRows = response.data.rows;

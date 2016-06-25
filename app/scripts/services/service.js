@@ -53,7 +53,9 @@ PCServices.factory('Talking', ['$resource', function ($resource) {
             'userGet': {url: baseURL + '/talkings/u/:uid', method: 'GET'},
             'userCountGet': {url: baseURL + '/talkings/u/:uid/count', method: 'GET'},
             'groupGet': {url: baseURL + '/talkings/g/:gid', method: 'GET'},
-            'groupCountGet': {url: baseURL + '/talkings/g/:gid/count', method: 'GET'}
+            'groupCountGet': {url: baseURL + '/talkings/g/:gid/count', method: 'GET'},
+            'likeTalking':{url:baseURL+'/like/:tid', method: 'POST'},
+            'unlikeTalking':{url:baseURL+'/like/:tid', method: 'DELETE'}
         });
 }]);
 
