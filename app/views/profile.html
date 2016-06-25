@@ -3,9 +3,9 @@
         <h1>Change Profile for PKU Connector</h1>
         <h2>Let others know you better</h2>
         <div id="signup_box">
-            <div class="image_box" style='background: url("{{backgroundImage}}")'>
+            <div class="image_box" style='background: url("{{backgroundImage}}")'  ngf-select="uploadBackground($file); $event.stopPropagation();" accept="image/*" ngf-max-height="2000" ngf-max-size="2MB">
                 <div class="thumb_image">
-                    <button ngf-select="uploadAvatar($file); $event.stopPropagation();" accept="image/*" ngf-max-height="2000" ngf-max-size="1MB"><img ng-src="{{avatar}}"></button>
+                    <button ngf-select="uploadAvatar($file); $event.stopPropagation();" accept="image/*" ngf-max-height="2000" ngf-max-size="2MB"><img ng-src="{{avatar}}"></button>
                 </div>
             </div>
             <form name="signupForm">
@@ -34,7 +34,7 @@
                     <span class="ok_icon" ng-show="signupForm.enrollmentYear.$valid && signupForm.enrollmentYear.$dirty"></span>
                 </div>
                 <div class="clear"></div>
-                <button ng-click="signup()" ng-disabled="!signupForm.$valid" ng-class="{disabled: !signupForm.$valid, red: failed, submit: true}">
+                <button ng-click="save()" ng-disabled="!signupForm.$valid" ng-class="{disabled: !signupForm.$valid, red: failed, submit: true}">
                     <p ng-hide="loading">{{indicator}}</p>
                     <div class="round_circle round_circle_large round_circle_green" ng-show="loading"></div>
                 </button>

@@ -6,7 +6,8 @@ var PCServices = angular.module('PCServices', ['ngStorage', 'ngResource']);
 
 PCServices.factory('CONFIGURATIONS', function() {
    return {
-       baseURL: baseURL
+       baseURL: baseURL,
+       serverURL: 'http://pikkacho.cn'
    }
 });
 

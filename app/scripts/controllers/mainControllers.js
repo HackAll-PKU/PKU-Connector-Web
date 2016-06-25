@@ -6,7 +6,9 @@ var PCControllers = angular.module('PCControllers', [
     'ngStorage',
     'PCServices',
     'infinite-scroll',
-    'ngFileUpload'
+    'ngFileUpload',
+    'angular-loading-bar',
+    'ngAnimate'
 ]);
 PCControllers
 .controller('indexController', ['$scope', '$location', 'User', 'Group', 'UserRelation', 'GroupRelation', 'Talking',
@@ -119,16 +121,31 @@ PCControllers
                     image: file
                 }
             }).then(function (res) {
-                console.log(res.data);
+                $scope.avatar = CONFIGURATIONS.serverURL + res.data.data[0];
+                $scope.avatarPath = res.data.data[0];
             }, function (res) {
-                console.log(res)
+                alert("图片上传失败!\n" + res);
             }, function (evt) {
                 console.log("progress: " + Math.min(100, parseInt(100.0 * evt.loaded / evt.total)));
             });
         }
     };
-    $scope.uploadBackground = function () {
-        alert("background!");
+    $scope.uploadBackground = function (file) {
+        if (file) {
+            Upload.upload({
+                url: CONFIGURATIONS.baseURL + '/image',
+                data: {
+                    image: file
+                }
+            }).then(function (res) {
+                $scope.backgroundImage = CONFIGURATIONS.serverURL + res.data.data[0];
+                $scope.backgroundPath = res.data.data[0];
+            }, function (res) {
+                alert("图片上传失败!\n" + res);
+            }, function (evt) {
+                console.log("progress: " + Math.min(100, parseInt(100.0 * evt.loaded / evt.total)));
+            });
+        }
     };
     $scope.indicator = '正在加载个人信息';
     $scope.loading = true;
@@ -137,9 +154,11 @@ PCControllers
         $scope.uname = res.data.data.uname;
         $scope.nickname = res.data.data.nickname;
         $scope.signature = res.data.data.signature;
-        $scope.enrollmentYear = res.data.data.enrollmentYear;
-        $scope.avatar = "http://www.pikkacho.cn/" + res.data.data.avatar;
-        $scope.backgroundImage = "http://www.pikkacho.cn/" + res.data.data.background;
+        $scope.enrollmentYear = res.data.data.enrollment_year;
+        $scope.avatar = CONFIGURATIONS.serverURL + res.data.data.avatar;
+        $scope.avatarPath = res.data.data.avatar;
+        $scope.backgroundImage = CONFIGURATIONS.serverURL + res.data.data.background;
+        $scope.backgroundPath = res.data.data.background;
         $scope.loading = false;
         $scope.indicator = '保存'
     }, function() {
@@ -149,7 +168,38 @@ PCControllers
         $timeout(function () {
             $location.path('/profile');
         }, 2000);
-    })
+    });
+
+    $scope.save = function() {
+        $scope.loading = true;
+        var uname = $scope.uname;
+        var nickname = $scope.nickname;
+        var signature = $scope.signature;
+        var enrollmentYear = $scope.enrollmentYear;
+        var avatar = $scope.avatarPath;
+        var background = $scope.backgroundPath;
+        User.update(User.getCurrentUser().uid, {uname: uname, nickname: nickname, signature: signature, enrollmentYear: enrollmentYear, avatar: avatar, background: background}, function(response) {
+            $scope.indicator = '保存成功! 正在跳转.';
+            $timeout(function () {
+                $scope.indicator = '保存成功! 正在跳转..';
+            }, 500);
+            $timeout(function () {
+                $scope.indicator = '保存成功! 正在跳转...';
+            }, 1000);
+            $timeout(function () {
+                $location.path('/');
+            }, 1500);
+            $scope.loading = false;
+        }, function (response) {
+            $scope.indicator = '保存失败' + response.data.msg;
+            $scope.failed = true;
+            $timeout(function () {
+                $scope.indicator = '保存';
+                $scope.failed = false;
+            }, 2000);
+            $scope.loading = false;
+        });
+    };
 }])
 .controller('youMayBeKnowController', ['$scope', 'UserRelation', 'User', function ($scope, UserRelation, User) {
     if (!User.getCurrentUser()) return;
