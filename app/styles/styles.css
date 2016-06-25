@@ -440,7 +440,7 @@ li.vertical a:hover {
 
 .talking_whole .talking {
     margin-top: 10px;
-    padding: 20px 20px 20px 20px;
+    padding: 10px 20px 10px 20px;
     border-radius: 2px;
 }
 
@@ -483,7 +483,7 @@ li.vertical a:hover {
 .talking_whole .talking ul.function li{
     text-decoration: none;
     list-style: none;
-    margin-bottom: -10px;
+    margin-bottom: 0px;
     float: left;
     width: 100px;
     text-align: center;
@@ -494,7 +494,13 @@ li.vertical a:hover {
     text-decoration: none;
     display: block;
 }
-
+.talking_whole div.input {
+    padding: 5px;
+    margin: 5px -10px 10px;
+    border: 1px solid #163156;
+    background-color: #0c2343;
+    border-radius: 2px;
+}
 .talking_whole .talking div.detail div.text a {
     color: #eb7350;
     text-decoration: none;
