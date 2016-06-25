@@ -41,6 +41,10 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
         templateUrl: '/app/views/grouphome.html',
         controller: 'grouphomeController'
     }).
+    when('/friends/:uid/:selected', {
+        templateUrl: '/app/views/friends.html',
+        controller: 'friendsController'
+    }).
     otherwise({redirectTo: '/login'});
 
     $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
