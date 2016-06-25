@@ -755,8 +755,10 @@ PCControllers
 
     $scope.getNextPageContents();
 }]).controller('friendsController', ['$scope', 'Talking', 'User', 'Group', '$interval', '$routeParams', 'UserRelation', 'GroupRelation', function ($scope, Talking, User, Group, $interval, $routeParams, UserRelation, GroupRelation) {
-    if (!User.getCurrentUser()) return;
+    var currentUser = User.getCurrentUser();
+    if (!currentUser) return;
     var thisUid = $routeParams.uid;
+    var isMe = currentUser.uid == thisUid;
 
     $scope.users = [];
 
@@ -783,6 +785,7 @@ PCControllers
                     }
                 });
                 break;
+            /*
             case 2: //用户组列表
                 UserRelation.queryFollows({uid: thisUid}, function (res) {
                     $scope.users = res.data.groups;
@@ -791,6 +794,7 @@ PCControllers
                     }
                 });
                 break;
+            */
         }
     };
 
@@ -803,6 +807,10 @@ PCControllers
         });
 
         //获取用户关系信息
+        fetchUserRelation(Array, index);
+    }
+
+    function fetchUserRelation(Array, index) {
         UserRelation.get({uid: Array[index].uid}, function (res) {
             Array[index].flag = res.data.flag;
             switch (res.data.flag) {
@@ -825,6 +833,7 @@ PCControllers
         });
     }
 
+    /*
     function fetchGroupInfo(Array, index) {
         //获取组基本信息
         Group.get({gid: Array[index].gid}, function (res) {
@@ -847,7 +856,20 @@ PCControllers
             }
         });
     }
+    */
 
     $scope.select(Number.parseInt($routeParams.selected));
+
+    $scope.alterAttention = function (index) {
+        if ($scope.users[index].hasAttentioned) {//取关
+            UserRelation.delete({uid: $scope.users[index].uid}, function (req) {
+                fetchUserRelation($scope.users, index);
+            });
+        } else { //关注
+            UserRelation.save({uid: $scope.users[index].uid}, null, function (req) {
+                fetchUserRelation($scope.users, index);
+            });
+        }
+    };
 
 }]);
