@@ -191,6 +191,9 @@ PCControllers.controller('indexController', ['$scope', '$location', 'User', 'Gro
         }
     };
 
+    $scope.commentTalkings = function (index) {
+        contents[index].showComment = !contents[index].showComment;
+    };
 
     $scope.getNewContents = function () {
         Talking.query({after: lastUpdateTime}, function (response) {
