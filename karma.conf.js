@@ -10,6 +10,7 @@ module.exports = function(config){
         'app/bower_components/ngstorage/ngStorage.js',
         'app/bower_components/angular-resource/angular-resource.js',
         'app/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
+        'app/bower_components/ng-file-upload/ng-file-upload.js',
         'app/scripts/app.js',
         'app/scripts/controllers/*.js',
         'app/scripts/services/*.js',
