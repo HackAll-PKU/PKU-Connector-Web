@@ -496,6 +496,29 @@ PCControllers
 }])
 .controller('userhomeController', ['$scope', '$routeParams', 'User', 'UserRelation', 'Talking', function($scope, $routeParams, User, UserRelation, Talking) {
     $scope.uid = $routeParams.uid;
+
+    function getUserRelation() {
+        UserRelation.get({uid: $scope.uid}, function (res) {
+            switch (res.data.flag) {
+                case 0:
+                    $scope.hasAttentioned = false;
+                    $scope.attentionIndicator = "+ 关注";
+                    break;
+                case 1:
+                    $scope.hasAttentioned = true;
+                    $scope.attentionIndicator = "已关注";
+                    break;
+                case 2:
+                    $scope.hasAttentioned = false;
+                    $scope.attentionIndicator = "已被Ta关注";
+                    break;
+                case 3:
+                    $scope.hasAttentioned = true;
+                    $scope.attentionIndicator = "已互相关注";
+            }
+        });
+    }
+
     User.query($scope.uid, function(res) {
         $scope.me = res.data.data;
         UserRelation.queryFollows({uid: $scope.me.uid}, function (res) {
@@ -507,7 +530,20 @@ PCControllers
         Talking.userCountGet({uid: $scope.me.uid}, function (res) {
             $scope.me.talkings = res.data;
         });
+        getUserRelation();
     });
+
+    $scope.attention = function (res) {
+        UserRelation.save({uid: $scope.uid}, null, function (req) {
+            getUserRelation();
+        });
+    };
+    $scope.unattention = function (res) {
+        UserRelation.delete({uid: $scope.uid}, function (req) {
+            getUserRelation();
+        });
+    };
+
 }])
 .controller('grouphomeController', ['$scope', '$routeParams', 'User', 'UserRelation', 'Talking', 'Group', 'GroupRelation', function($scope, $routeParams, User, UserRelation, Talking, Group, GroupRelation) {
     $scope.gid = $routeParams.gid;
@@ -515,11 +551,11 @@ PCControllers
     function getGroupRelation() {
         GroupRelation.get({gid: $scope.gid}, function (res) {
             if (res.data.flag) {
-                $scope.has_attentioned = true;
+                $scope.hasAttentioned = true;
                 $scope.attentionIndicator = "已关注"
             }
             else {
-                $scope.has_attentioned = false;
+                $scope.hasAttentioned = false;
                 $scope.attentionIndicator = "+ 关注"
             }
         });
