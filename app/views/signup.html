@@ -35,7 +35,7 @@
                     <span class="ok_icon" ng-show="signupForm.enrollmentYear.$valid && signupForm.enrollmentYear.$dirty"></span>
                 </div>
                 <div class="clear"></div>
-                <button ng-click="signup()" ng-disabled="!signupForm.$valid" ng-class="{disabled: !signupForm.$valid, red: failed}">
+                <button ng-click="signup()" ng-disabled="!signupForm.$valid" ng-class="{disabled: !signupForm.$valid, red: failed, submit: true}">
                     <p ng-hide="loading">{{indicator}}</p>
                     <div class="round_circle round_circle_large round_circle_green" ng-show="loading"></div>
                 </button>

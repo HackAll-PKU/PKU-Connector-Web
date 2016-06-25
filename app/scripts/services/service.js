@@ -4,8 +4,14 @@
 var baseURL = 'http://pikkacho.cn/api/v1';
 var PCServices = angular.module('PCServices', ['ngStorage', 'ngResource']);
 
-PCServices.factory('User', ['$http', '$localStorage', function ($http, $localStorage) {
+PCServices.factory('CONFIGURATIONS', function() {
+   return {
+       baseURL: baseURL,
+       serverURL: 'http://pikkacho.cn'
+   }
+});
 
+PCServices.factory('User', ['$http', '$localStorage', function ($http, $localStorage) {
         return {
             save: function(data, success, error) {
                 $http.post(baseURL + '/user', data).then(success, error);
@@ -37,10 +43,14 @@ PCServices.factory('User', ['$http', '$localStorage', function ($http, $localSto
                         return storedUser;
                 }
                 return undefined;
+            },
+            logout: function() {
+                $localStorage.token = null;
+                $localStorage.user = null;
+                $localStorage.tokenInfo = null;
             }
         }
     }]);
-
 
 PCServices.factory('Talking', ['$resource', function ($resource) {
     return $resource(baseURL + '/talking/:tid', null,
@@ -77,7 +87,8 @@ PCServices.factory('UserRelation', ['$resource', function ($resource) {
             'get': {url: baseURL + '/relation/user/:uid/me', method: 'GET'},
             'queryFollows': {url: baseURL + '/relation/user/:uid/follows', method: 'GET'},
             'queryFollowers': {url: baseURL + '/relation/user/:uid/followers', method: 'GET'},
-            'maybeknow': {url: baseURL + '/relation/maybeknow', method: 'GET'}
+            'maybeknow': {url: baseURL + '/relation/maybeknow', method: 'GET'},
+            'querySuggestion': {url: baseURL + '/suggest/user/nickname/:nickname', method: 'GET'}
         });
 }]);
 
@@ -100,4 +111,12 @@ PCServices.factory('Group', ['$resource', function ($resource) {
             'get': {method: 'GET'},
             'query': {url: baseURL + '/group/suggest/name/:gname', method: 'GET'}
         });
+}]);
+
+PCServices.factory('Image', ['$http', function($http) {
+    return {
+        getImage: function(path, success, error) {
+            $http.get(baseURL + '/user/' + uid).then(success, error);
+        }
+    }
 }]);

@@ -1,6 +1,6 @@
 <!-- 导航栏的页面-->
 <div class="logo_large">
-    <a class="no_decoration always_black" href="/"><h1>PKU-Connector</h1></a>
+    <a class="no_decoration always_black" href="#/"><h1>PKU-Connector</h1></a>
 </div>
 
 <div class="search">
@@ -11,14 +11,20 @@
 <div class="right_position" ng-controller="indexController">
     <div class="nav_list">
         <ul class="nav_list">
-            <li class="horizontal">index</li>
-            <li class="horizontal">{{me.nickname}}</li>
+            <li class="horizontal"><a href="#/" class="always_black">首页</a></li>
+            <li class="horizontal"><a href="" class="always_black">{{me.nickname}}</a></li>
         </ul>
     </div>
     <div class="nav_list">
         <ul class="nav_list">
-            <li class="horizontal">未读消息</li>
-            <li class="horizontal">设置</li>
+            <li class="horizontal"><a href="#/" class="always_black">未读消息</a></li>
+            <li class="horizontal">
+                <a href="#/" class="always_black">设置</a>
+                <ul>
+                    <li><a href="#/profile" class="always_black">账号设置</a></li>
+                    <li><a ng-click="logout()" href="#/login" class="always_black">登出</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

@@ -14,7 +14,7 @@
                     <span class="error_icon" ng-hide="loginForm.password.$valid || loginForm.password.$pristine"></span>
                     <span class="ok_icon" ng-show="loginForm.password.$valid && loginForm.password.$dirty"></span>
                 </div>
-                <button ng-click="login()" ng-disabled="!loginForm.$valid" ng-class="{disabled: !loginForm.$valid, red: failed}">
+                <button ng-click="login()" ng-disabled="!loginForm.$valid" ng-class="{disabled: !loginForm.$valid, red: failed, submit: true}">
                     <p ng-hide="loading">{{indicator}}</p>
                     <div class="round_circle round_circle_large round_circle_green" ng-show="loading"></div>
                 </button>
