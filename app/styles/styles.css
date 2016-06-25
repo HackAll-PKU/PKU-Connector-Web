@@ -209,6 +209,7 @@ ul.nav_list {
     margin: 0;
     padding: 0;
     float: left;
+    width: 100%;
 }
 
 ul.nav_list li.horizontal, ul.nav_list li.vertical {
