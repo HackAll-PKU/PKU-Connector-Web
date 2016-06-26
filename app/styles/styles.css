@@ -453,10 +453,12 @@ li.vertical a:hover, li.vertical a.selected {
 .talking_whole .talking div.thumb_image {
     float: left;
     width: 50px;
+    hight: 50px;
 }
 
 .talking_whole .talking div.thumb_image img {
     width: 50px;
+    hight: 50px;
     border-radius: 50%;
 }
 
@@ -543,10 +545,12 @@ li.vertical a:hover, li.vertical a.selected {
 .talking_whole .comment div.commentThumb_image {
     float: left;
     width: 30px;
+    hight: 30px;
 }
 
 .talking_whole .comment div.commentThumb_image img {
     width: 30px;
+    hight: 30px;
     border-radius: 50%;
 }
 
